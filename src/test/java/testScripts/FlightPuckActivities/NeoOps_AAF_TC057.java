@@ -20,6 +20,7 @@ import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
 import pageObjects.IFlightNeo_ManageFilter;
+import pageObjects.IFlightNeo_MessageList;
 import utilities.CollectTestData;
 import utilities.Driver;
 
@@ -35,7 +36,7 @@ public class NeoOps_AAF_TC057 {
 
 	@BeforeMethod
 	void setUp() {
-		Driver.setUpTestExecution(tcName, "Registration Change Using Drag and Drop");
+		Driver.setUpTestExecution(tcName, "Registration Change Using Drag and Drop & Outbound Message generation");
 		CollectTestData.main(tcName);
 	}
 
@@ -50,6 +51,7 @@ public class NeoOps_AAF_TC057 {
 		String sit_Password = CollectTestData.password;
 		String Date = CollectTestData.flightDate;
 		String AflighNo = CollectTestData.flightNumber;
+		String messageDate= comm.dateCalendarEntry(0,0,0);
 		String[] flightNo=AflighNo.split(",",2);
 		String flighNo = flightNo[0];
 		String departureAirport = CollectTestData.origin;
@@ -204,22 +206,37 @@ public class NeoOps_AAF_TC057 {
 		scn.doubleClick(Flight1);
 		// gets aircraft registration of first flight after swap
 		String aircraftRegistrationafter = IFlightNeo_HomePage.AfterreadAircraftReg(driver);
+		// adding the code to close the flight leg details so that flight date element does not appear twice in the application ( Moumita on 25th mar,22)
+		comm.performAction(driver, IFlightNeo_HomePage.btn_CloseFlightDetailsWindow2ndsearch(driver), "click", "", "Closed the flight details");
 		// condition to check the flight swap and end the test case
 		boolean Swap_Sucess = aircraftRegistrationBefore.contentEquals(aircraftRegistrationafter);
 		if (!Swap_Sucess == true) {
 			htmlLib.logReport("Swap Flights Operation", "Swap flights success", "Pass", driver, true);
 		}
+		
+		
+		
+		 // added below method (line number 218 to 219)to check outbound messages after swap ( Moumita , 24/03/22)
+		 IFlightNeo_MessageList.click_Messagelist(driver);
+		 IFlightNeo_MessageList.set_Messagelistfilters_alloutbound(driver,flighNo,Date,messageDate);
+		 
 		// open the "Manage Filter" screen through the main menu
-				 //Moved the menuItem_ManageFilter method in ManageFilter Page object on 23rd Aug
-				 IFlightNeo_HomePage.menuItem_ManageFilter(driver);
-					htmlLib.logReport("Manage Filter Screen Opened", "Manage Filter Screen Open success", "Pass", driver, true);	
+		 //Moved the menuItem_ManageFilter method in ManageFilter Page object on 23rd Aug
+		 IFlightNeo_HomePage.menuItem_ManageFilter(driver);
+			htmlLib.logReport("Manage Filter Screen Opened", "Manage Filter Screen Open success", "Pass", driver, true);	
 
-					// deleting the previously created filter.
+			// deleting the previously created filter.
 
-				 if(IFlightNeo_ManageFilter.deleteFilterFromInManageFilter(driver))
-				 {
-					 System.out.println("Filter created for this TC is deleted");
-				 }
+		 if(IFlightNeo_ManageFilter.deleteFilterFromInManageFilter(driver))
+		 {
+			 System.out.println("Filter created for this TC is deleted");
+		 }
+		
+				 
+				 
+
+				 
+				 
 		}
 		catch(Exception e)
 		{
@@ -229,10 +246,10 @@ public class NeoOps_AAF_TC057 {
 		}
 	}
 
-	@AfterMethod
+	/*@AfterMethod
 	public void closeTest() {
 
 		Driver.tearDownTestExecution(driver);
-	}
+	}*/
 
 }
