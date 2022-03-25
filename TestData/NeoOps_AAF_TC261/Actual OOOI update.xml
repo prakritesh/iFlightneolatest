@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IATA_AIDX_FlightLegNotifRQ CodeContext="3" TimeStamp="2021-07-17T14:45:13.635Z" Version="16.1" SequenceNmbr="0" xsi:schemaLocation="http://www.iata.org/IATA/2007/00 IATA_AIDX_FlightLegNotifRQ.xsd" xmlns="http://www.iata.org/IATA/2007/00" xmlns:ns2="http://iflight.ibsplc.com/aidx/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Originator CompanyShortName="iFlight"/>
+	<FlightLeg>
+		<LegIdentifier>
+			<Airline CodeContext="3">EY</Airline>
+			<FlightNumber>101</FlightNumber>
+			<DepartureAirport CodeContext="3">AUH</DepartureAirport>
+			<ArrivalAirport CodeContext="3">JFK</ArrivalAirport>
+			<OriginDate>2021-07-18Z</OriginDate>
+			<RepeatNumber>1</RepeatNumber>
+		</LegIdentifier>
+		<LegData>
+			<OperationalStatus RepeatIndex="1" CodeContext="2005">OFB</OperationalStatus>
+			<OperationalStatus RepeatIndex="2" CodeContext="2005">SCH</OperationalStatus>
+			<ServiceType>J</ServiceType>
+			<EstFlightDuration>PT3H59M</EstFlightDuration>
+			<OwnerAirline>
+				<Airline>EY</Airline>
+			</OwnerAirline>
+			<PlannedArrivalAptHistory CodeContext="3" RepeatIndex="1">JFK</PlannedArrivalAptHistory>
+			<CabinClass Class="F" RepeatIndex="1">
+				<SeatCapacity>8</SeatCapacity>
+			</CabinClass>
+			<CabinClass Class="J" RepeatIndex="2">
+				<SeatCapacity>28</SeatCapacity>
+			</CabinClass>
+			<CabinClass Class="Y" RepeatIndex="3">
+				<SeatCapacity>190</SeatCapacity>
+			</CabinClass>
+			<CodeShareInfo RepeatIndex="1" xsi:nil="true"/>
+			<!--AssociatedFlightLegAircraft RepeatIndex="1" FlightSequence="upline">
+				<Airline CodeContext="3">EY</Airline>
+				<FlightNumber>074</FlightNumber>
+				<DepartureAirport CodeContext="3">ZRH</DepartureAirport>
+				<ArrivalAirport CodeContext="3">AUH</ArrivalAirport>
+				<OriginDate>2020-09-30Z</OriginDate>
+				<RepeatNumber>1</RepeatNumber>
+			</AssociatedFlightLegAircraft-->
+			<AssociatedFlightLegSchedule RepeatIndex="1" xsi:nil="true"/>
+			<AirportResources Usage="Actual">
+				<Resource DepartureOrArrival="Departure">
+					<AircraftParkingPosition Qualifier="Public" xsi:nil="true"/>
+					<PassengerGate RepeatIndex="1" xsi:nil="true"/>
+					<Runway xsi:nil="true"/>
+					<AircraftTerminal xsi:nil="true"/>
+					<PublicTerminal RepeatIndex="1" xsi:nil="true"/>
+				</Resource>
+				<Resource DepartureOrArrival="Arrival">
+					<AircraftParkingPosition Qualifier="Public" xsi:nil="true"/>
+					<PassengerGate RepeatIndex="1" xsi:nil="true"/>
+					<Runway xsi:nil="true"/>
+					<AircraftTerminal xsi:nil="true"/>
+					<PublicTerminal RepeatIndex="1" xsi:nil="true"/>
+					<BaggageClaimUnit RepeatIndex="1" xsi:nil="true"/>
+				</Resource>
+			</AirportResources>
+			<OperationTime OperationQualifier="OFB" CodeContext="9750" RepeatIndex="1" TimeType="SCT">2021-07-18T05:35:00Z</OperationTime>
+			<OperationTime OperationQualifier="OFB" CodeContext="9750" RepeatIndex="2" TimeType="PLN">2021-07-18T05:35:00Z</OperationTime>
+			<OperationTime OperationQualifier="OFB" CodeContext="9750" RepeatIndex="3" TimeType="EST">2021-07-18T05:53:00Z</OperationTime>
+			<OperationTime OperationQualifier="TKO" CodeContext="9750" RepeatIndex="4" TimeType="EST">2021-07-18T06:11:00Z</OperationTime>
+			<OperationTime OperationQualifier="TDN" CodeContext="9750" RepeatIndex="5" TimeType="EST">2021-07-18T19:30:00Z</OperationTime>
+			<OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="6" TimeType="SCT">2021-07-18T19:35:00Z</OperationTime>
+			<OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="7" TimeType="PLN">2021-07-18T19:35:00Z</OperationTime>
+			<OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="8" TimeType="EST">2021-07-18T19:45:00Z</OperationTime>
+			<!--OperationTime OperationQualifier="OFB" CodeContext="9750" RepeatIndex="4" TimeType="ACT">2020-09-30T21:57:00Z</OperationTime-->
+			<!-- <OperationTime OperationQualifier="TKO" CodeContext="9750" RepeatIndex="5" TimeType="EST">2021-03-24T14:20:00Z</OperationTime>
+			<OperationTime OperationQualifier="TDN" CodeContext="9750" RepeatIndex="6" TimeType="EST">2021-03-24T17:55:00Z</OperationTime>
+			<OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="7" TimeType="SCT">2021-03-24T17:55:00Z</OperationTime>
+			<OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="8" TimeType="PLN">2021-03-24T17:55:00Z</OperationTime>
+			<OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="9" TimeType="EST">2021-03-24T18:00:00Z</OperationTime> -->
+			<!--OperationTime OperationQualifier="DCL" CodeContext="9750" RepeatIndex="10" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="DOP" CodeContext="9750" RepeatIndex="11" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="CGT" CodeContext="9750" RepeatIndex="12" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="DIC" CodeContext="9750" RepeatIndex="13" TimeType="EST" xsi:nil="true"/>
+			<OperationTime OperationQualifier="DIC" CodeContext="9750" RepeatIndex="14" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="DIE" CodeContext="9750" RepeatIndex="15" TimeType="EST" xsi:nil="true"/>
+			<OperationTime OperationQualifier="DIE" CodeContext="9750" RepeatIndex="16" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="BST" CodeContext="9750" RepeatIndex="17" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="RDT" CodeContext="9750" RepeatIndex="18" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="SRT" CodeContext="9750" RepeatIndex="19" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="SAT" CodeContext="9750" RepeatIndex="20" TimeType="TAR" xsi:nil="true"/>
+			<OperationTime OperationQualifier="SAT" CodeContext="9750" RepeatIndex="21" TimeType="ACT" xsi:nil="true"/>
+			<OperationTime OperationQualifier="OFB" CodeContext="9750" RepeatIndex="22" TimeType="TAR">2020-09-30T21:45:00Z</OperationTime-->
+			<AircraftInfo>
+				<AircraftType>789</AircraftType>
+				<AircraftSubType>78E</AircraftSubType>
+				<Registration>A6BLU</Registration>
+				<CallSign>ETD11B</CallSign>
+			</AircraftInfo>
+			<FlightCrewAirline CodeContext="3">EY</FlightCrewAirline>
+			<CabinCrewAirline CodeContext="3">EY</CabinCrewAirline>
+		</LegData>
+		<TPA_Extension>
+			<ns2:TransactionIdentifiers>
+				<ns2:TransactionIdentifier>FLT:ESTONB</ns2:TransactionIdentifier>
+				<ns2:TransactionIdentifier>FLT:ESTLND</ns2:TransactionIdentifier>
+				<ns2:TransactionIdentifier>FLT:ACTOFB</ns2:TransactionIdentifier>
+				<ns2:TransactionIdentifier>FLT:IRRDELAY</ns2:TransactionIdentifier>
+				<ns2:TransactionIdentifier>FLT:ESTAIR</ns2:TransactionIdentifier>
+			</ns2:TransactionIdentifiers>
+			<ns2:TimeOffset DepartureOrArrival="Departure" RepeatIndex="1">+240</ns2:TimeOffset>
+			<ns2:TimeOffset DepartureOrArrival="Arrival" RepeatIndex="2">+330</ns2:TimeOffset>
+			<ns2:FlightIdentifierKey>782630</ns2:FlightIdentifierKey>
+			<ns2:FlightCycles>1</ns2:FlightCycles>
+			<ns2:SupplementaryInfo DepartureOrArrival="Departure" RepeatIndex="1" xsi:nil="true"/>
+			<ns2:SupplementaryInfo DepartureOrArrival="Arrival" RepeatIndex="2" xsi:nil="true"/>
+		</TPA_Extension>
+	</FlightLeg>
+</IATA_AIDX_FlightLegNotifRQ>
