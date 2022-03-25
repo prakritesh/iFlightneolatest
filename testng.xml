@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test name="Driver_Script" thread-count="1">
+    <classes>
+		<class name="utilities.Driver"/>
+    </classes>
+  </test>
+  <test name="Test_Script" thread-count="1" parallel="methods" preserve-order="true">
+    <classes>
+         <!-- <class name="testScripts.Aircraft.NeoOps_AAF_TC001"/>
+          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC007"/>
+         <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC027"/>
+           <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC040"/>
+          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC050"/>
+          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC054"/>
+          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC057"/>
+          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC151"/>
+           <class name="testScripts.FlightPuckActivities.NeoOps_RND_TC051"/>
+           <class name="testScripts.Interface.NeoOps_INTG_TC004"/> 
+         <class name="testScripts.Interface.NeoOps_INTG_TC001"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC002"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC003"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC005"/>-->
+           
+           
+       <!--<class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC042_043"/>-->
+       <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC058"/>
+       <!--<class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC059_2"/>
+        <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC059"/>-->
+       
+		 <!-- <class name="testScripts.LookAndFeel.NeoOps_AAF_TC024_124_025"/>-->
+       <!-- <class name="testScripts.Interface.NeoOps_INTG_TC025"/>  
+         <class name="testScripts.Interface.NeoOps_INTG_TC026"/>-->
+
+
+    	<!-- <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC027"/> 
+    	 <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC048"/>
+    	<class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC081_82"/> -->
+    	<!-- <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC048"/> -->
+    	<!-- <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC040_1"/> -->
+    	
+    	<!--  MAINTENANCE MODULE -->      	
+    	<!--  <class name="testScripts.Maintenance.NeoOps_MTCE_TC002"/> -->
+
+    	<!--  INTERFACE MODULE - PART 1 - ALL OF THOSE MUST BE EXECUTED WITH THE SAME FLIGHT NUMBER in the TESTDATA EXCEL SHEET -->      	
+
+    	<!-- <class name="testScripts.Interface.NeoOps_INTG_TC004"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC001"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC002"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC003"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC005"/>
+    	<class name="testScripts.Interface.NeoOps_INTG_TC006"/>-->
+    	
+    	<!--  INTERFACE MODULE - PART 2 -->      	
+    	    	  
+
+       <!--  <class name="testScripts.Interface.NeoOps_INTG_TC008"/>
+        <class name="testScripts.Interface.NeoOps_INTG_TC008"/>
+       	 <class name="testScripts.Interface.NeoOps_INTG_TC010"/>
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC011"/>  	
+    	<class name="testScripts.Interface.NeoOps_INTG_TC012"/>
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC014"/>
+         <class name="testScripts.Interface.NeoOps_INTG_TC015"/>
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC017"/>
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC023"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC024"/> 
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC007"/>
+    	 <class name="testScripts.Interface.NeoOps_INTG_TC013"/>
+         <class name="testScripts.Interface.NeoOps_INTG_TC025"/>  
+         <class name="testScripts.Interface.NeoOps_INTG_TC026"/>-->  
+    	
+    	<!--  not yet in execution order -->      	
+    	<!--  <class name="testScripts.Interface.NeoOps_INTG_TC016"/>--> <!--PRE-REQUISITE: <class name="testScripts.Interface.NeoOps_INTG_TC005"/> -->  
+
+    	<!--  LOOK & FEEL MODULE -->      	
+
+       <!--<class name="testScripts.LookAndFeel.NeoOps_AAF_TC024_124_025"/>
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC125"/> 
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC125_2"/> 
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC142"/>
+       <class name="testScripts.LookAndFeel.NeoOps_AAF_TC285"/>-->
+
+        <!--<class name="testScripts.LookAndFeel.NeoOps_AAF_TC024_124_025"/> 
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC125"/> 
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC125_2"/> 
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC142"/> 
+       	 <class name="testScripts.LookAndFeel.NeoOps_AAF_TC285"/> -->
+    	
+   </classes>
+  </test>
+  <test name="Closing_Script" thread-count="1">
+    <classes>
+		<class name="utilities.ReportLibrary">
+			<methods>
+				<include name="closeReport"/>
+			</methods>
+		</class>	
+    </classes>
+  </test> 
+</suite> 

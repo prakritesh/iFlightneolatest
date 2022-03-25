@@ -1,13 +1,11 @@
 # Ignore Gradle project-specific cache directory
-.gradle
-.settings
-gradle
+
 
 # Ignore Gradle build output directory
-build
+
 
 #Ignore resources directory
-resources
+
 
 # Ignore Reports
 Reports
@@ -17,9 +15,7 @@ bin
 test-output
 
 #Ignore all executable, image, javascript files
-*.exe
-*.jpg
-*.js
+
 
 #Ignore gradle build files
 build.gradle
@@ -30,4 +26,4 @@ gradlew.bat
 debug.log
 .project
 .classpath
-testng.xml
+

@@ -1,0 +1,111 @@
+body {
+    background-color: #ffffcc;
+    color: #000000;
+}
+
+.fixedButton{
+    height: 28px;
+    width: 72%;
+}
+
+table.one {
+    border-collapse: expanded;
+    border: 0px solid #ddd;
+    width: 92%;
+    align: center;
+}
+
+table.two {
+    border-collapse: expanded;
+    border: 0px solid #ddd;
+    width: 90%;
+    align: center;
+}
+
+td.one{
+    border: 1px solid #006666;
+    text-align: center;
+    padding: 8px;
+    font-family: "Trebuchet MS";
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+td.two{
+    border: 1px solid #006666;
+    text-align: left;
+    padding: 8px;
+    font-family: "Trebuchet MS";
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+tr:nth-child(odd){background-color: #e2e2d0}
+
+th.one1 {
+    border: 1px solid #006666;
+    text-align: left;
+    padding: 8px;
+    padding-left: 10px;
+    font-family: "Trebuchet MS";
+    max-width: 400px;
+    word-wrap: break-word;
+    background-color: #664d00;
+    color: white;
+}
+
+th.one2 {
+    border: 1px solid #006666;
+    text-align: center;
+    padding: 8px;
+    font-family: "Trebuchet MS";
+    max-width: 400px;
+    word-wrap: break-word;
+    background-color: #664d00;
+    color: white;
+}
+
+th.two {
+    border: 1px solid #006666;
+    text-align: center;
+    padding: 8px;
+    font-family: "Trebuchet MS";
+    max-width: 400px;
+    word-wrap: break-word;
+    background-color: #2c3865;
+    color: white;
+}
+
+.inner-container {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.centered-content1 {
+    display: inline-block;
+    background:#ffffcc;
+    padding-bottom: 62px;
+    border : 0px solid #000;
+    height: 130px;
+    width: 50%;
+}
+
+.centered-content2 {
+    display: inline-block;
+    background: #ffffcc;
+    padding-top: 16px;
+    border : 0px solid #000;
+    height: 130px;
+    width: 50%;
+}
+
+.centered-content3 {
+    background:#ffffcc;
+    padding-botton: 3px;
+	padding-left: 62px;
+    border: 0px solid #ddd;
+    height: 77px;
+	width: 92%;
+	float: left;
+}
