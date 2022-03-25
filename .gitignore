@@ -18,12 +18,8 @@ test-output
 
 
 #Ignore gradle build files
-build.gradle
-settings.gradle
-gradlew
-gradlew.bat
+
 
 debug.log
-.project
-.classpath
+
 
