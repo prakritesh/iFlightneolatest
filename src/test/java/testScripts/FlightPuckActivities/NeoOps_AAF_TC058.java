@@ -1,6 +1,6 @@
 package testScripts.FlightPuckActivities;
 
-import java.util.Date;
+//import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -140,7 +140,7 @@ public class NeoOps_AAF_TC058 {
 		 // Match m = scn.exists(Flight3.similar(0.97));
 		  scn.keyDown(Key.CTRL);  
 		  Pattern Flight4 = new Pattern(img_flight4);
-			scn.dragDrop(Flight3.similar(0.85).targetOffset(-100,0), Flight4.targetOffset(0, 10));
+			scn.dragDrop(Flight3.similar(0.75).targetOffset(-100,0), Flight4.targetOffset(0, 10));
 			scn.keyUp(Key.CTRL);
 			Pattern Flight4_color = new Pattern(img_flight4_color);
 			scn.rightClick(Flight4_color.similar(0.77));
@@ -197,7 +197,7 @@ public class NeoOps_AAF_TC058 {
 		 if(!Swap_Sucess==true) {
 			 htmlLib.logReport("Swap Flights Operation", "Swap flights success", "Pass", driver, true);
 		 }
-		 // added below method (line number 199 to 203)to check outbound messages after swap ( Moumita , 23/02/22)
+		 // added below method (line number 199 to 203)to check outbound messages after swap ( Moumita , 23/03/22)
 		 IFlightNeo_MessageList.click_Messagelist(driver);
 		 for(int flight_counter=0;flight_counter<flightNo.length;flight_counter++)
 		 {

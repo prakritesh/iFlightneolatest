@@ -13,9 +13,9 @@
          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC027"/>
            <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC040"/>
           <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC050"/>
-          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC054"/>
+          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC054"/>-->
           <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC057"/>
-          <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC151"/>
+        <!--  <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC151"/>
            <class name="testScripts.FlightPuckActivities.NeoOps_RND_TC051"/>
            <class name="testScripts.Interface.NeoOps_INTG_TC004"/> 
          <class name="testScripts.Interface.NeoOps_INTG_TC001"/> 
@@ -24,9 +24,9 @@
     	 <class name="testScripts.Interface.NeoOps_INTG_TC005"/>-->
            
            
-       <!--<class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC042_043"/>-->
+       <!--<class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC042_043"/>
        <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC058"/>
-       <!--<class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC059_2"/>
+       <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC059_2"/>
         <class name="testScripts.FlightPuckActivities.NeoOps_AAF_TC059"/>-->
        
 		 <!-- <class name="testScripts.LookAndFeel.NeoOps_AAF_TC024_124_025"/>-->

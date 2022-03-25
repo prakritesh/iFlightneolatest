@@ -321,7 +321,9 @@ public class IFlightNeo_MessageList {
 		driver.findElement(By.xpath("//div[text()='EY']")).click();
 		driver.findElement(By.xpath("//div[contains(@id,'flightIdFields')]//input[@ng-model='fltNo']")).click();
 		driver.findElement(By.xpath("//div[contains(@id,'flightIdFields')]//input[@ng-model='fltNo']")).sendKeys(flightNo);
+		
 		driver.findElement(By.xpath("//input[contains(@ng-model,'flightDate')]")).sendKeys(flightDate);
+
 	    driver.findElement(By.xpath("//li[@oh-compid='FMSG003_022']//button")).click();
 		Thread.sleep(200);
 //		List<WebElement> table_rows = driver.findElements(By.xpath("//table[contains(@id,'MessageGrid')]//tr[@role='row']"));
