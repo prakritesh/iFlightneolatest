@@ -973,13 +973,27 @@ public class IFlightNeo_HomePage {
 		driver.findElement(By.xpath("//li[@id='TabularPaneGrid_W1close']")).click();
 
 	}
+	
+	/*
+	 * wait till page refresh
+	 */
+	
+	public static void waitTillPageRefreshCompletes(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		wait.until(ExpectedConditions.attributeContains(By.className("body_custom_div"), "style", "zoom: 1;"));
+	}
 
 	/*******************************************
 	 * Select Seasonal Awareness Window from main menu ( modified on 14th june)
+	 * @throws InterruptedException 
 	 *******************************************/
-	public static void selectSeasonalAwarenessWindow(WebDriver driver) {
+	public static void selectSeasonalAwarenessWindow(WebDriver driver) throws InterruptedException {
+		//Wait till page refresh
+		waitTillPageRefreshCompletes(driver);
+		//Thread.sleep(2000);
 		// SAW
-		com.performAction(driver, mainMenu_SAW(driver), "click", "", "SAW option");
+		com.performAction(driver, mainMenu_SAW(driver), "HOVER", "", "SAW option");
+		//Thread.sleep(2000);
 		com.performAction(driver, subMenu_SeasonalAwareness(driver), "click", "", "SAW Menu option");	
 	}
 
