@@ -29,7 +29,7 @@ public class NeoOps_userrole_TC001 {
 	@BeforeMethod
 	void setUp() {
 		// Set Up Initial Script Requirement
-		Driver.setUpTestExecution(tcName, "User Able to open 4 LWs (1 AUTO ON and 3 AUTO OFF)");
+		Driver.setUpTestExecution(tcName, "User role (permission add/delete) and switch roles ");
 		// launch application
 		String browser = CollectTestData.browser;
 		String url = CollectTestData.url;
@@ -58,6 +58,7 @@ public class NeoOps_userrole_TC001 {
 			 */
 			IFlightNeo_ManageUsers.editUser(driver, userToEdit, userRole);
 			// Log out & Log in as the updated user
+			IFlightNeo_HomePage.waitTillPageRefreshCompletes(driver);
 			IFlightNeo_HomePage.signOut(driver);
 			IFlightNeo_LoginPage.login(driver, userToEdit, userToEditPwd);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
@@ -65,6 +66,7 @@ public class NeoOps_userrole_TC001 {
 			// Click on Switch Role
 			IFlightNeo_HomePage.switchUserRole(driver, "OPS_CONTROLLER");
 			// Log out & Log in as the admin user
+			IFlightNeo_HomePage.waitTillPageRefreshCompletes(driver);
 			IFlightNeo_HomePage.signOut(driver);
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
@@ -73,6 +75,7 @@ public class NeoOps_userrole_TC001 {
 			// Search the same Username available for Testing
 			IFlightNeo_ManageUsers.deselectRoles(driver, userToEdit, userRole);
 			// Log out & Log in as the updated user
+			IFlightNeo_HomePage.waitTillPageRefreshCompletes(driver);
 			IFlightNeo_HomePage.signOut(driver);
 			IFlightNeo_LoginPage.login(driver, userToEdit, userToEditPwd);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);

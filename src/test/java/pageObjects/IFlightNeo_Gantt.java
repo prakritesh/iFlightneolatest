@@ -1,6 +1,5 @@
 package pageObjects;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,12 +14,13 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import pageObjects.IFlightNeo_HomePage;
+
+import com.ibm.icu.text.DateFormat;
 
 public class IFlightNeo_Gantt {
 	static WebDriverWait wait;
@@ -29,6 +29,7 @@ public class IFlightNeo_Gantt {
 	public static utilities.CommonLibrary com = new utilities.CommonLibrary();
 	public static utilities.ReportLibrary report = new utilities.ReportLibrary();
 	public static utilities.BusinessFunctions bizCom = new utilities.BusinessFunctions();
+	static String blankSpaceInGantt = System.getProperty("user.dir") + "\\TestData\\blankSpaceInGantt.PNG";
 
 	public static WebElement tab_GANTT(WebDriver driver) {
 		List<WebElement> tab_GANTT = driver.findElements(By.xpath("//li//a[text()='OPS GANTT']"));
@@ -321,6 +322,47 @@ public class IFlightNeo_Gantt {
 	/** Cancel Option under Cancel flight in Flight Puck (right click) */
 	static WebElement link_cancelFlightOption(WebDriver driver) {
 		return driver.findElement(By.xpath("//li//span[text()='Cancel Flight']"));
+	}
+
+	// Add Miscellaneous on right click in blank space in gantt
+	public static WebElement link_AddMisc(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(
+				By.xpath("//ul[@class='context-menu-list context-menu-root']//li/span[contains(text(),'Add Misc')]"))));
+		return element;
+	}
+	
+	//Activity ID in misc pop up
+	public static WebElement activityIDMisc(WebDriver driver) {
+
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(
+				By.xpath("//li/label[contains(text(),'Activity ID')]/following-sibling::input"))));
+		return element;
+	
+	}
+	//arrow to expand station in misc
+	public static WebElement stationArrowMisc(WebDriver driver) {
+		element = driver.findElement(By.xpath("//li/label[contains(text(),'Station')]/following-sibling::div/a/span[@class='select2-arrow']"));
+		return element;
+	}
+	
+	//search station in misc
+	public static WebElement searchStationMisc(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120) ;
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']")));
+		return element;
+	}
+	//select station from list
+	public static WebElement stationDropdownValueMisc(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']/parent::div/following-sibling::ul/li/div[@class='select2-result-label']")));
+		return element;
+	}
+	//save buttom in add misc popup
+	public static WebElement saveMisc(WebDriver driver) {
+		element = driver.findElement(By.xpath("//div[@class='list-right']//li[@class='btn_padding btn_primary']/button[contains(text(),'Save')]"));
+		return element;
 	}
 
 	/**
@@ -1121,7 +1163,7 @@ public class IFlightNeo_Gantt {
 	}
 
 	public static String calculatecustomized_Zoomdate(WebDriver driver, String date_zoom) throws ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 		Date newdate_zoom = dateFormat.parse(date_zoom);
 
 		// TODO Auto-generated method stub
@@ -1453,6 +1495,36 @@ public class IFlightNeo_Gantt {
 	 *******************************************************/
 	public static void closeGanttTab(WebDriver driver, int tabIndex) {
 		link_RemoveGanttTab(driver).get(tabIndex).click();
+	}
+
+	// Right click in gantt blank space
+	public static void rightClickBlankSpaceInGantt(WebDriver driver) {
+		try {
+			Pattern blankSpace = new Pattern(blankSpaceInGantt);
+			// new Screen().rightClick();
+			new Screen().rightClick(blankSpace);
+			report.logReport("Right click on blank space in gantt", "Able to right click on blank space", "INFO",
+					driver, false);
+		} catch (Exception e) {
+			report.logReport("Right click on blank space in gantt", "Unable to right click on blank space", "FAIL",
+					driver, true);
+		}
+
+	}
+
+	public static void addMiscellaneous(WebDriver driver, String activityID ,String station) {
+		// Right click on blank space in gantt
+		rightClickBlankSpaceInGantt(driver);
+		// select "Add Miscellaneous"
+		com.performAction(driver, link_AddMisc(driver), "click", "", "Add Miscellaneous");
+		//Add activity id
+		com.performAction(driver, activityIDMisc(driver), "SET", activityID, "Activity ID");
+		//Add station
+		com.performAction(driver, stationArrowMisc(driver), "click", "", "station dropdown");
+		com.performAction(driver, searchStationMisc(driver), "SET", station, "station");
+		com.performAction(driver, stationDropdownValueMisc(driver), "click", "", "");
+		//Click Save
+		com.performAction(driver, saveMisc(driver), "click", "", "Save");
 	}
 }
 

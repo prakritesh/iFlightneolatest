@@ -1,6 +1,5 @@
 package pageObjects;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -532,8 +531,9 @@ public class IFlightNeo_HomePage {
 	/*******************************************************
 	 * Navigates to Gantt Screen
 	 * @author Rohit Prajapati
+	 * @throws InterruptedException 
 	 *******************************************************/
-	public static void selectGantt(WebDriver driver) {
+	public static void selectGantt(WebDriver driver) throws InterruptedException {
 		mainMenu_Airport(driver);
         com.performAction(driver, mainMenu_Aircraft(driver), "CLICK", "", "Aircraft Option from Main Menu");
         List<WebElement> nav_dropdown=driver.findElements(By.xpath("//ul[@id='nav']//li//ul//li//a"));
@@ -549,6 +549,7 @@ public class IFlightNeo_HomePage {
 		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//a[contains(text(),'OPS GANTT')]")));
+		Thread.sleep(5000);
       //a[contains(text(),'OPS GANTT')]
        //com.performAction(driver, IFlightNeo_Gantt.link_DayZoom(driver), "CLICK", "", "DayZoom button");
         
