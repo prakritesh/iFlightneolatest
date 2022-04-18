@@ -9,12 +9,14 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -331,40 +333,103 @@ public class IFlightNeo_Gantt {
 				By.xpath("//ul[@class='context-menu-list context-menu-root']//li/span[contains(text(),'Add Misc')]"))));
 		return element;
 	}
-	
-	//Activity ID in misc pop up
+
+	// Activity ID in misc pop up
 	public static WebElement activityIDMisc(WebDriver driver) {
 
 		wait = new WebDriverWait(driver, 120);
-		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(
-				By.xpath("//li/label[contains(text(),'Activity ID')]/following-sibling::input"))));
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//li/label[contains(text(),'Activity ID')]/following-sibling::input"))));
 		return element;
-	
+
 	}
-	//arrow to expand station in misc
+
+	// arrow to expand station in misc
 	public static WebElement stationArrowMisc(WebDriver driver) {
-		element = driver.findElement(By.xpath("//li/label[contains(text(),'Station')]/following-sibling::div/a/span[@class='select2-arrow']"));
-		return element;
-	}
-	
-	//search station in misc
-	public static WebElement searchStationMisc(WebDriver driver) {
-		wait = new WebDriverWait(driver, 120) ;
-		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']")));
-		return element;
-	}
-	//select station from list
-	public static WebElement stationDropdownValueMisc(WebDriver driver) {
-		wait = new WebDriverWait(driver, 120);
-		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']/parent::div/following-sibling::ul/li/div[@class='select2-result-label']")));
-		return element;
-	}
-	//save buttom in add misc popup
-	public static WebElement saveMisc(WebDriver driver) {
-		element = driver.findElement(By.xpath("//div[@class='list-right']//li[@class='btn_padding btn_primary']/button[contains(text(),'Save')]"));
+		element = driver.findElement(By
+				.xpath("//li/label[contains(text(),'Station')]/following-sibling::div/a/span[@class='select2-arrow']"));
 		return element;
 	}
 
+	// search station in misc
+	public static WebElement searchStationMisc(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']")));
+		return element;
+	}
+
+	// select station from list
+	public static WebElement stationDropdownValueMisc(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']/parent::div/following-sibling::ul/li/div[@class='select2-result-label']")));
+		return element;
+	}
+
+	// save buttom in add misc popup
+	public static WebElement saveMisc(WebDriver driver) {
+		element = driver.findElement(By.xpath(
+				"//div[@class='list-right']//li[@class='btn_padding btn_primary']/button[contains(text(),'Save')]"));
+		return element;
+	}
+
+	// Add Unserviceable on right click in blank space in gantt
+	public static WebElement link_Unserviceable(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//ul[@class='context-menu-list context-menu-root']//li/span[contains(text(),'Add Unserviceable')]"))));
+		return element;
+	}
+
+	// Add Unserviceable popup - Start Date
+	public static WebElement unserviceable_StartDate(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//li/input[@name='unserviceableAircraftWidget_fromDateTime']"))));
+		return element;
+
+	}
+
+	// start date in unserviceable popup
+	public static WebElement unserviceable_StartDate_Date(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(driver.findElement(By.xpath("//div[@id='ui-datepicker-div']/table[@class='ui-datepicker-calendar']/tbody//a[@class='ui-state-default ui-state-active']"))));
+		return element;
+	}
+
+	// start month in unserviceable popup
+	public static WebElement unserviceable_StartDate_Hour(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//div[@class='ui_tpicker_hour_slider']/select[@class='ui-timepicker-select ui-state-default ui-corner-all']"))));
+		return element;
+	}
+
+	// End Date in Unserviceable popup
+	public static WebElement unserviceable_EndDate(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//li/input[@name='unserviceableAircraftWidget_toDateTime']"))));
+		return element;
+	}
+
+	// end date in unserviceable popup
+	public static WebElement unserviceable_EndDate_Date(WebDriver driver , String date) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//a[text()='"+date+"']"))));
+		return element;
+	}
+
+	//Defect position in Unserviceable popup
+	public static WebElement unserviceable_DefectPosition(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(driver.findElement(By.xpath("//input[@name='unserviceableAircraftWidget_defectPosition']"))));
+		return element;	
+	}
 	/**
 	 * Crew Connection Detail button in
 	 * 
@@ -1512,19 +1577,32 @@ public class IFlightNeo_Gantt {
 
 	}
 
-	public static void addMiscellaneous(WebDriver driver, String activityID ,String station) {
+	public static void addMiscellaneous(WebDriver driver, String activityID, String station) {
 		// Right click on blank space in gantt
 		rightClickBlankSpaceInGantt(driver);
 		// select "Add Miscellaneous"
 		com.performAction(driver, link_AddMisc(driver), "click", "", "Add Miscellaneous");
-		//Add activity id
+		// Add activity id
 		com.performAction(driver, activityIDMisc(driver), "SET", activityID, "Activity ID");
-		//Add station
+		// Add station
 		com.performAction(driver, stationArrowMisc(driver), "click", "", "station dropdown");
 		com.performAction(driver, searchStationMisc(driver), "SET", station, "station");
 		com.performAction(driver, stationDropdownValueMisc(driver), "click", "", "");
-		//Click Save
+		// Click Save
 		com.performAction(driver, saveMisc(driver), "click", "", "Save");
+	}
+
+	public static void addUnservicable(WebDriver driver) {
+		// Right click on blank space in gantt
+		rightClickBlankSpaceInGantt(driver);
+		// select "Add Miscellaneous"
+		com.performAction(driver, link_Unserviceable(driver), "click", "", "Add UnServiceable");
+		// get Start Date and
+		String startDateTime = unserviceable_StartDate(driver).getAttribute("value");
+		String endDateTime = bizCom.updateDate(startDateTime, 1, 0);
+		com.performAction(driver, unserviceable_EndDate(driver), "SET", endDateTime, "End Date");
+		com.performAction(driver, element, endDateTime, startDateTime, endDateTime);
+		com.performAction(driver, unserviceable_DefectPosition(driver), "SET", "1", "Defect position");
 	}
 }
 

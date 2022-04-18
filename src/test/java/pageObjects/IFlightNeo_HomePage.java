@@ -559,9 +559,9 @@ public class IFlightNeo_HomePage {
 	public static void scrollandsave(WebDriver driver)
 	{
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		WebElement Element = driver.findElement(By.xpath("//button[@ng-click='save()']"));
-		js.executeScript("arguments[0].scrollIntoView();", Element);
-		Element.click();
+		WebElement element = driver.findElement(By.xpath("//button[@ng-click='save()']"));
+		js.executeScript("arguments[0].scrollIntoView();", element);
+		element.click();
 
 	}
 

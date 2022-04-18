@@ -24,8 +24,8 @@
     <!-- <class name="testScripts.FlightPuckActivities.NeoOps_AAFNew_TC001"/> -->
 <!--     <class name ="testScripts.SAW.NeoOps_SAW_NewTC001"/>-->    
 	<!-- <class name ="testScripts.UserRole.NeoOps_userrole_TC001"/> -->
-    <class name ="testScripts.FlightPuckActivities.NeoOps_MTCE_TC035"/>
-    
+   <!--  <class name ="testScripts.FlightPuckActivities.NeoOps_MTCE_TC035"/> -->
+    <class name ="testScripts.FlightPuckActivities.NeoOps_MTCE_TC029"/>
      
     
     
