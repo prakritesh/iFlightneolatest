@@ -1565,9 +1565,17 @@ public class IFlightNeo_Gantt {
 	// Right click in gantt blank space
 	public static void rightClickBlankSpaceInGantt(WebDriver driver) {
 		try {
+			System.out.println(blankSpaceInGantt);
+			Screen sc = new Screen();
 			Pattern blankSpace = new Pattern(blankSpaceInGantt);
+			sc.wait(blankSpace, 120);
+			//new Screen().wait(blankSpace,120);
 			// new Screen().rightClick();
-			new Screen().rightClick(blankSpace);
+			int i = sc.hover(blankSpace);
+			System.out.println(i);
+			int s = sc.rightClick(blankSpace);
+			System.out.println(s);
+			
 			report.logReport("Right click on blank space in gantt", "Able to right click on blank space", "INFO",
 					driver, false);
 		} catch (Exception e) {
@@ -1580,6 +1588,7 @@ public class IFlightNeo_Gantt {
 	public static void addMiscellaneous(WebDriver driver, String activityID, String station) {
 		// Right click on blank space in gantt
 		rightClickBlankSpaceInGantt(driver);
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		// select "Add Miscellaneous"
 		com.performAction(driver, link_AddMisc(driver), "click", "", "Add Miscellaneous");
 		// Add activity id
@@ -1587,12 +1596,13 @@ public class IFlightNeo_Gantt {
 		// Add station
 		com.performAction(driver, stationArrowMisc(driver), "click", "", "station dropdown");
 		com.performAction(driver, searchStationMisc(driver), "SET", station, "station");
-		com.performAction(driver, stationDropdownValueMisc(driver), "click", "", "");
+		com.performAction(driver, stationDropdownValueMisc(driver), "click", "", station);
 		// Click Save
 		com.performAction(driver, saveMisc(driver), "click", "", "Save");
 	}
 
 	public static void addUnservicable(WebDriver driver) {
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		// Right click on blank space in gantt
 		rightClickBlankSpaceInGantt(driver);
 		// select "Add Miscellaneous"
@@ -1602,7 +1612,24 @@ public class IFlightNeo_Gantt {
 		String endDateTime = bizCom.updateDate(startDateTime, 1, 0);
 		com.performAction(driver, unserviceable_EndDate(driver), "SET", endDateTime, "End Date");
 		com.performAction(driver, element, endDateTime, startDateTime, endDateTime);
+		com.performAction(driver, unserviceable_DefectPosition(driver), "click", "", "Defect position");
 		com.performAction(driver, unserviceable_DefectPosition(driver), "SET", "1", "Defect position");
+	}
+
+	public static void verifyItemCreatedInGantt(WebDriver driver,String imageOfItemCreated) throws InterruptedException {
+		Thread.sleep(5000);
+		try {
+			System.out.println(imageOfItemCreated);
+			Pattern itemCreated = new Pattern(imageOfItemCreated);
+			new Screen().wait(itemCreated, 300);
+			// new Screen().rightClick();
+			new Screen().rightClick(itemCreated);
+			report.logReport("Verify Item created", "Item Created", "PASS",
+					driver, true);
+		} catch (Exception e) {
+			report.logReport("Verify Item created", "Item not created", "FAIL",
+					driver, true);
+		}	
 	}
 }
 
