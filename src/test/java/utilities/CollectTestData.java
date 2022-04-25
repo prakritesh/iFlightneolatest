@@ -59,6 +59,7 @@ public class CollectTestData {
 	public static String Depstand;
 	public static String keyword;
 	public static String delaycode;
+	public static String reroutestation;
 	
 	public static void main(String scriptName) {
 		HashMap<String, String> data = new HashMap<String, String>();
@@ -101,6 +102,7 @@ public class CollectTestData {
 		Depstand=data.get("Depstand");
 		keyword=data.get("Keyword");
 		delaycode=data.get("Delaycode");
+		reroutestation=data.get("Divertedstation");
 	}
 	
 	@SuppressWarnings("rawtypes")

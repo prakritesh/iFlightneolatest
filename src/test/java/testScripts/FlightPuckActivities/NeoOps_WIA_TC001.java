@@ -16,6 +16,8 @@ import org.testng.annotations.Test;
 import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
+import pageObjects.IFlightNeo_ManageFilter;
+import pageObjects.IFlightNeo_MessageList;
 import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
@@ -30,6 +32,8 @@ public class NeoOps_WIA_TC001 {
 	static Screen scn;
 	int flightfound=0;
 	Match m,n;
+	private String newdate_zoom;
+	private String date_zoom;
 	
 	@BeforeMethod
 	void setUp() {
@@ -53,21 +57,56 @@ public class NeoOps_WIA_TC001 {
 		String sit_Username = CollectTestData.userName;
 		String sit_Password = CollectTestData.password;
 		String Date = CollectTestData.flightDate;
-		String flighNo = CollectTestData.flightNumber;
+		String AflighNo = CollectTestData.flightNumber;
+		//String flightNo = CollectTestData.flightNumber;
+		String[] flightNo=AflighNo.split(",",4);
+		String flighNo = flightNo[0];
 		String departureAirport = CollectTestData.origin;
 		String arrivalAirport = CollectTestData.destination;
 		String tcname=CollectTestData.tcname;
 		//String Image_Path = System.getProperty("user.dir") + "\\TestData\\FlightEY956.png";
-		String img_Flight1 = System.getProperty("user.dir")+"\\TestData\\FlightEY555.png";
-		String img_Flight2 = System.getProperty("user.dir")+"\\TestData\\FlightEY556.png";
-		String img_Flight3 = System.getProperty("user.dir")+"\\TestData\\FlightEY111.png";
-		String img_Flight4 = System.getProperty("user.dir")+"\\TestData\\FlightEY122.png";
+		String img_Flight1 = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo[0]+"_1stflighttrip.PNG";
+		String img_Flight2 = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo[1]+"_1stflighttrip.PNG";
+		String img_Flight3 = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo[2]+"_2ndflighttrip.PNG";
+		String img_Flight4 = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo[3]+"_2ndflighttrip.PNG";
+		String date_zoom = CollectTestData.flightDate;
+		String messageDate= comm.dateCalendarEntry(0,0,0);
             
 //			driver = EY_iFlightNeo_LoginPage.launchApplication(driver, sit_URL);
 		// Login
 		IFlightNeo_LoginPage.login(driver, sit_Username, sit_Password);
 		driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 		htmlLib.logReport("Login Functionality is success", "Login sucess", "Pass", driver, true);
+		
+		// open the "Manage Filter" screen through the main menu
+				//Moved the menuItem_ManageFilter(driver) method in IFlightNeo_ManageFilter Page object on 23rd Aug,21
+				 IFlightNeo_HomePage.menuItem_ManageFilter(driver);
+					htmlLib.logReport("Main Filter Screen Opened", "Main Filter Screen Open success", "Pass", driver, true);	
+
+					// add filter for aircraft subtype in the "Manage Filter" screen
+					IFlightNeo_ManageFilter.addFilterForFlightnumberInManageFilter(driver,flightNo,Date);
+					htmlLib.logReport("Filter Saved and Applied", "Filter Saved and Applied", "Pass", driver, true);	
+					driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+					
+					// close the "Manage Filter" Screen
+					IFlightNeo_ManageFilter.closeFilter(driver);
+					driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+					try	
+					{
+			        IFlightNeo_ManageFilter.btn_YesToOverrideChanges(driver);
+						
+						//Thread.sleep(2000);
+			        }
+					
+					catch (Exception e)
+					{
+						
+					}
+				
+					Thread.sleep(2000);
+					
+		
+		
 		IFlightNeo_HomePage.selectGantt(driver);
 		htmlLib.logReport("Gantt Screen Opened", "Gantt Screen Open success", "Pass", driver, true);
 		IFlightNeo_HomePage.select_Newscenariomode(driver);
@@ -75,14 +114,22 @@ public class NeoOps_WIA_TC001 {
 		// Close Default LW
 		BusinessFunctions.closeTab(driver, 0, false);
 		Thread.sleep(3000);
+		Screen scn = new Screen();
+        scn.mouseMove(500, 500);
+		//calculate date range for customize zoom
+		 newdate_zoom=IFlightNeo_Gantt.calculatecustomized_Zoomdate(driver,date_zoom);
+		 //Go to specified date range
+		 IFlightNeo_Gantt.customized_Zoom(driver,newdate_zoom);
+		 //Apply customize date zoom
+		 IFlightNeo_Gantt.btn_customized_Zoom(driver);
 		//Instance.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
 		//comm.performAction(EY_iFlightNeo_HomePage.close_realtimescenariotab(Instance), "click", "", "close realtime scenario tab");
-		IFlightNeo_Gantt.findFlightInGantt(driver, flighNo, Date, departureAirport, arrivalAirport);
-		htmlLib.logReport("Find flight Success", "flight Listed on Top", "Pass", driver, true);
+		//IFlightNeo_Gantt.findFlightInGantt(driver, flighNo, Date, departureAirport, arrivalAirport);
+		//htmlLib.logReport("Find flight Success", "flight Listed on Top", "Pass", driver, true);
 		// Implements the WebDriverWait and Action interface for further purpose
 		
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		Actions action = new Actions(driver);
+		//WebDriverWait wait = new WebDriverWait(driver, 30);
+		//Actions action = new Actions(driver);
 		// Implementing the Screen and Pattern using SikuliScript
 		scn = new Screen();
 		Pattern Flight1 = new Pattern(img_Flight1);
@@ -92,13 +139,14 @@ public class NeoOps_WIA_TC001 {
 		scn.doubleClick(Flight1);
 		// Gets Aircraft registration number before flight swap
 		String AircraftRegistration_before = IFlightNeo_HomePage.readAircraftReg(driver);
+		htmlLib.logReport("Flight details open", "Aircraft registration screen shot taken", "Pass", driver, true);
 		comm.performAction(driver, IFlightNeo_HomePage.btn_CloseFlightDetailsWindow(driver), "click", "", "Closed the flight details");
 		// Selecting the second segment of first flight trip
 		scn.keyDown(Key.CTRL);
-		scn.click(Flight2.similar(0.95));
+		scn.click(Flight2.similar(0.85));
 		scn.keyUp(Key.CTRL);
 		// Scrolling down or up for next flight trip
-		int scroll_cnt = 40;
+		/*int scroll_cnt = 40;
 		for (int i = 0; i < scroll_cnt; i++) {
 			scn.wheel(Button.WHEEL_UP, 3);
 			Pattern Flight3 = new Pattern(img_Flight3);
@@ -151,22 +199,48 @@ public class NeoOps_WIA_TC001 {
 			//flightfound=1;
 			htmlLib.logReport("Selected multiple flights and right clicked",
 					"Selected multiple flights and right clicked success", "Pass", driver, true);
-		}
+		}*/
+		Pattern Flight3 = new Pattern(img_Flight3);
+		Pattern Flight4 = new Pattern(img_Flight4);
+		scn.keyDown(Key.CTRL);
+		scn.click(Flight3.similar(0.85));
+		scn.keyDown(Key.CTRL);
+		scn.rightClick(Flight4.similar(0.85));
+		htmlLib.logReport("Selected multiple flights and right clicked", "Selected multiple flights and right clicked success", "Pass", driver, true);
 		// confirm swap operation
-		IFlightNeo_HomePage.auto_Off_RightClickoptions(driver,tcname);
+		//IFlightNeo_HomePage.auto_Off_RightClickoptions(driver,tcname);
+		 scn.keyUp(Key.CTRL);
+		 IFlightNeo_HomePage.swapFlight(driver);
+		 Thread.sleep(3000);
+		 
+		 //Check Change List
+		 comm.performAction(driver, IFlightNeo_Gantt.changeList(driver), "click", "", "Clicked on change list");
+		 //Expand Change List Record
+		 comm.performAction(driver, IFlightNeo_Gantt.changeListExpand(driver), "click", "", "Clicked on change list details");
+		 //Wait for the visibility of change list
+		 IFlightNeo_Gantt.changelistdetails(driver);
+		 //Close the Change list 
+		 
+		
+
         //publish local world
+		
 		IFlightNeo_Gantt.publish_Localworld(driver);
-		//confirm change from change list
+		//confirm change 
 		IFlightNeo_HomePage.confirmChange(driver);
 		Thread.sleep(500);
 		// Again finding the first trip flight to verify the aircraft registration
 		// change
-		IFlightNeo_Gantt.findFlightInGantt(driver, flighNo, Date, departureAirport, arrivalAirport);
+		//IFlightNeo_Gantt.findFlightInGantt(driver, flighNo, Date, departureAirport, arrivalAirport);
+		Screen s = new Screen();
+		 s.hover();
 		scn.wait(Flight1, 9000);
 		scn.doubleClick(Flight1);
+		htmlLib.logReport("Flight details open", "Aircraft registration screen shot taken", "Pass", driver, true);
 		// Gets Aircraft registration number after flight swap
 		String AircraftRegistration_after = IFlightNeo_HomePage.AfterreadAircraftReg(driver);
 		// condition to check the flight swap and end the test case
+		comm.performAction(driver, IFlightNeo_HomePage.btn_CloseFlightDetailsWindow2ndsearch(driver), "click", "", "Closed the flight details");
 		boolean Swap_Sucess = AircraftRegistration_before.contentEquals(AircraftRegistration_after);
 		if (!Swap_Sucess == true) {
 			htmlLib.logReport("Swap Flights Operation", "Swap flights success", "Pass", driver, true);
@@ -175,6 +249,51 @@ public class NeoOps_WIA_TC001 {
 			htmlLib.logReport("Swap Flights Operation", "Swap flights NOT success", "FAIL", driver, true);
 		}   
 		
+		IFlightNeo_HomePage.realworldmode(driver);
+		// Close Default LW
+				BusinessFunctions.closeTab(driver, 0, false);
+		//Go to specified date range
+		 IFlightNeo_Gantt.customized_Zoom(driver,newdate_zoom);
+		 //Apply customize date zoom
+		 IFlightNeo_Gantt.btn_customized_Zoom(driver);
+		 Screen s1 = new Screen();
+		 s1.hover();
+		scn.wait(Flight1, 9000);
+		scn.doubleClick(Flight1);
+		htmlLib.logReport("Flight details open", "Aircraft registration screen shot taken", "Pass", driver, true);
+		// Gets Aircraft registration number after flight swap
+		String AircraftRegistration_afterinreal = IFlightNeo_HomePage.readAircraftReg(driver);
+		// condition to check the flight swap and end the test case
+		//comm.performAction(driver, IFlightNeo_HomePage.btn_CloseFlightDetailsWindow2ndsearch(driver), "click", "", "Closed the flight details");
+		boolean Swap_Sucessinreal = AircraftRegistration_before.contentEquals(AircraftRegistration_afterinreal);
+		if (!Swap_Sucess == true) {
+			htmlLib.logReport("Swap Flights Operation", "Swap flights success shows in real world", "Pass", driver, true);
+		}
+		else {
+			htmlLib.logReport("Swap Flights Operation", "Swap flights NOT success hence not shown in real world", "FAIL", driver, true);
+		}   
+		
+		
+		// Close Default LW
+		BusinessFunctions.closeTab(driver, 0, false);
+		
+		IFlightNeo_MessageList.click_Messagelist(driver);
+		 for(int flight_counter=0;flight_counter<flightNo.length;flight_counter++)
+		 {
+		 IFlightNeo_MessageList.set_Messagelistfilters_alloutbound(driver,flightNo[flight_counter],Date,messageDate);
+		 }
+		 
+		 IFlightNeo_HomePage.menuItem_ManageFilter(driver);
+			htmlLib.logReport("Manage Filter Screen Opened", "Manage Filter Screen Open success", "Pass", driver, true);	
+
+			// deleting the previously created filter.
+
+		 if(IFlightNeo_ManageFilter.deleteFilterFromInManageFilter(driver))
+		 {
+			 System.out.println("Filter created for this TC is deleted");
+		 }
+	          
+		 
 		}
 		catch(Exception e)
 		{
@@ -189,6 +308,6 @@ public class NeoOps_WIA_TC001 {
 
 
 		Driver.tearDownTestExecution(driver);
-	}	
+	}
 
 }

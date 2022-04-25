@@ -29,6 +29,7 @@ public class IFlightNeo_Gantt {
 	public static utilities.CommonLibrary com = new utilities.CommonLibrary();
 	public static utilities.ReportLibrary report = new utilities.ReportLibrary();
 	public static utilities.BusinessFunctions bizCom = new utilities.BusinessFunctions();
+	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	
 	
 	
@@ -1380,6 +1381,99 @@ public class IFlightNeo_Gantt {
 	 *******************************************************/
 	public static void closeGanttTab(WebDriver driver, int tabIndex) {
 		link_RemoveGanttTab(driver).get(tabIndex).click();
+	}
+	
+
+	public static WebElement changeListExpand(WebDriver driver) {
+		// TODO Auto-generated method stub
+        String xpath = "//td//span[contains(@class,'icon-plus')]";
+		
+		wait = new WebDriverWait(driver,100);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+		
+		
+	}
+
+	public static void changelistdetails(WebDriver driver) {
+		// TODO Auto-generated method stub
+		String xpath="//td[contains(text(),'Swapped:')]";
+		wait = new WebDriverWait(driver,100);
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
+		
+		htmlLib.logReport("Change details open", "Change list details screenshot taken", "Pass", driver, true);
+	}
+
+	public static void Validatediversionoption(WebDriver driver) {
+		
+		// TODO Auto-generated method stub
+		
+		try
+		{
+		 WebElement Divertcontinue=driver.findElement(By.xpath("//label[contains(text(),'Divert and Continue')]"));
+		 WebElement Divertoverfly=driver.findElement(By.xpath("//label[contains(text(),'Divert and Overfly')]"));
+		 WebElement Overfly=driver.findElement(By.xpath("//label[text()='Overfly']"));
+		 if(Divertcontinue.isDisplayed() && Divertoverfly.isDisplayed() && Overfly.isDisplayed())
+			 
+		 {
+			 htmlLib.logReport("Divert & Overfly screen opened & validate all diversion options present", "All diversion options are present", "Pass", driver, true);
+		 }
+		
+		}
+		
+		catch(Exception e)
+		
+		{
+			 htmlLib.logReport("Divert & Overfly screen opened & validate all diversion options present", "All diversion options are not present", "Fail", driver, true);
+		
+		}
+		
+		
+		
+	}
+
+	public  static String checkHistorycontent(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,100);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='table_wrap']"))));
+		String HistoryContent =driver.findElement(By.xpath("//div[@class='table_wrap']")).getAttribute("innerText");
+		return HistoryContent;
+		
+		
+	}
+
+	public static WebElement ClickonOverfly(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,100);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[text()='Overfly']"))));
+		WebElement OverflyOption =driver.findElement(By.xpath("//span[text()='Overfly']"));
+		return OverflyOption;
+		
+		
+		
+	}
+
+	public static WebElement publish_From_Changelist(WebDriver driver) {
+		wait = new WebDriverWait(driver,100);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[contains(text(),'Publish')]"))));
+		WebElement PublishChangelist =driver.findElement(By.xpath("//button[contains(text(),'Publish')]"));
+		return PublishChangelist;
+		
+		
+	}
+	public static WebElement changeList(WebDriver driver) {
+		// TODO Auto-generated method stub
+        String xpath = "//li[contains(@title,'Change List')]";
+		
+		wait = new WebDriverWait(driver,100);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+		
+		
 	}
 }
 

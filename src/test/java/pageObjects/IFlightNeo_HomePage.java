@@ -21,6 +21,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Screen;
+
+import utilities.CollectTestData;
 import utilities.CommonLibrary;
 
 public class IFlightNeo_HomePage {
@@ -34,6 +36,7 @@ public class IFlightNeo_HomePage {
 	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	String[] lists = this.getClass().getName().split("\\.");
 	static WebDriver Instance;
+	static String reroutestation=CollectTestData.reroutestation;
 
 	
 	/** Please wait spinner image on Home Page */
@@ -1840,7 +1843,247 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		wait.until(ExpectedConditions.visibilityOf(close_button));
 		return close_button;
 	}
+	public static WebElement menuOption_FlightReturnContinue(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[contains(text(),'Flight Return and Continue')]"))));
+		WebElement FlightReturn = driver.findElement(By.xpath("//span[contains(text(),'Flight Return and Continue')]"));
+		return FlightReturn;
+	}
+	
+	public static WebElement menuOption_Diversionandcontinue(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[text()='Divert and Continue']"))));
+		WebElement Divertcontinue = driver.findElement(By.xpath("//span[text()='Divert and Continue']"));
+		return Divertcontinue;
+	}
 
+
+	 
+	public static WebElement menuOption_GroundReturnContinue(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[contains(text(),'Ground Return and Continue')]"))));
+		WebElement GroundReturn = driver.findElement(By.xpath("//span[contains(text(),'Ground Return and Continue')]"));
+		return GroundReturn;
+	}
+	public static WebElement groundReturn_time(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'schArrTime1')]"))));
+		WebElement GroundReturn = driver.findElement(By.xpath("//input[contains(@id,'schArrTime1')]"));
+		return GroundReturn;
+		
+	}
+	
+	public static WebElement divertedFlightLegScharr_time(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'_disruptedArrival_DivertFlightWidget')]"))));
+		WebElement divertedarrivalschedulearrivaltime = driver.findElement(By.xpath("//input[contains(@id,'_disruptedArrival_DivertFlightWidget')]"));
+		divertedarrivalschedulearrivaltime.sendKeys(Keys.CONTROL);
+		divertedarrivalschedulearrivaltime.sendKeys("A");
+		divertedarrivalschedulearrivaltime.sendKeys(Keys.DELETE);
+		return divertedarrivalschedulearrivaltime;
+		
+	}
+	
+	public static WebElement disruptedArrival_DivertFlightWidget_time(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'_disruptedArrival_DivertFlightWidget')]"))));
+		WebElement divertedarrivalschedulearrivaltimeforOverfly = driver.findElement(By.xpath("//input[contains(@id,'_disruptedArrival_DivertFlightWidget')]"));
+	   return divertedarrivalschedulearrivaltimeforOverfly;
+		
+	}
+	
+	
+	public static WebElement groundReturn_timeforRamp(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'sector1_groundReturnWidget')]"))));
+		WebElement GroundReturn = driver.findElement(By.xpath("//input[contains(@id,'sector1_groundReturnWidget')]"));
+		return GroundReturn;
+		
+	}
+
+
+	public static WebElement Revisedout_time(WebDriver driver) {
+		// TODO Auto-generated method stub
+	
+		WebElement Revisedouttime = driver.findElement(By.xpath("//input[contains(@id,'schArrTime2')]"));
+		Revisedouttime.sendKeys(Keys.CONTROL);
+		Revisedouttime.sendKeys("A");
+		Revisedouttime.sendKeys(Keys.DELETE);
+		return Revisedouttime;
+
+	}
+	
+	public static WebElement Revisedout_timeforRamp(WebDriver driver) {
+		// TODO Auto-generated method stub
+	
+		WebElement Revisedouttime = driver.findElement(By.xpath("//input[contains(@id,'sector2_groundReturnWidget')]"));
+		Revisedouttime.sendKeys(Keys.CONTROL);
+		Revisedouttime.sendKeys("A");
+		Revisedouttime.sendKeys(Keys.DELETE);
+		return Revisedouttime;
+
+	}
+	
+
+	public static WebElement Revisedin_time(WebDriver driver) {
+		// TODO Auto-generated method stub
+		
+		WebElement Revisedintime = driver.findElement(By.xpath("//input[contains(@id,'schArrTime3')]"));
+		Revisedintime.sendKeys(Keys.CONTROL);
+		Revisedintime.sendKeys("A");
+		Revisedintime.sendKeys(Keys.DELETE);
+		return Revisedintime;
+	
+	}
+	
+	public static WebElement Revisedin_timeforRamp(WebDriver driver) {
+		// TODO Auto-generated method stub
+		
+		WebElement Revisedintime = driver.findElement(By.xpath("//input[contains(@id,'sector3_groundReturnWidget')]"));
+		Revisedintime.sendKeys(Keys.CONTROL);
+		Revisedintime.sendKeys("A");
+		Revisedintime.sendKeys(Keys.DELETE);
+		return Revisedintime;
+	
+	}
+
+	public static WebElement Flight_Suffix(WebDriver driver) {
+		// TODO Auto-generated method stub
+		WebElement flightsuffix = driver.findElements(By.xpath("//input[contains(@id,'opsSfx')]")).get(1);
+		return flightsuffix;
+		
+	
+	}
+
+	public static WebElement saveoption_FlightReturnContinue(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[contains(@ng-click,'Return')]"))));
+		WebElement SaveflightReturn = driver.findElement(By.xpath("//button[contains(@ng-click,'Return')]"));
+		return SaveflightReturn;
+		
+	
+	}
+
+	public static WebElement menuOption_Divert(WebDriver driver) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+				wait = new WebDriverWait(driver,300);
+				wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[text()='Divert']"))));
+				WebElement Divert = driver.findElement(By.xpath("//span[text()='Divert']"));
+				return Divert;
+	}
+
+	public static WebElement menuOption_Reroute(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@name='divertedFlightLegDTO_arrivalAirport']//ancestor::td"))));
+		WebElement Divertedstationdropdown = driver.findElement(By.xpath("//input[@name='divertedFlightLegDTO_arrivalAirport']//ancestor::td"));
+		return Divertedstationdropdown;
+	
+	}
+
+	public static WebElement menuOption_Reroutestationset(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//div[contains(@id,'select2-drop')]//div[@class='select2-search']/input"))));
+		WebElement Divertedstation = driver.findElement(By.xpath("//div[contains(@id,'select2-drop')]//div[@class='select2-search']/input"));
+		return Divertedstation;
+		
+	}
+
+	public static WebElement menuOption_Rerouteselect(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[text()='" + reroutestation + "']"))));
+		WebElement Selected_Divertedstation = driver.findElement(By.xpath("//div[text()='" + reroutestation + "']"));
+		return Selected_Divertedstation;
+		
+	}
+
+	public static WebElement createdFlightLegSchdep_time(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'_createdArrival_DivertFlightWidget')]"))));
+		WebElement createdflighlegschdeptime = driver.findElement(By.xpath("//input[contains(@id,'_createdArrival_DivertFlightWidget')]"));
+		createdflighlegschdeptime.sendKeys(Keys.CONTROL);
+		createdflighlegschdeptime.sendKeys("A");
+		createdflighlegschdeptime.sendKeys(Keys.DELETE);
+		return createdflighlegschdeptime;
+		
+	}
+
+	public static WebElement createdFlightLegScharr_time(WebDriver driver) {
+		
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'_createdschArrTime_DivertFlightWidget')]"))));
+		WebElement createdflighlegscharrtime = driver.findElement(By.xpath("//input[contains(@id,'_createdschArrTime_DivertFlightWidget')]"));
+		return createdflighlegscharrtime ;
+		
+	}
+
+	public static WebElement divertedFlight_Suffix(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver,300);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[contains(@id,'_createdFlightId_DivertFlightWidget_W2_opsSfx']"))));
+		WebElement divertedfltsuffix = driver.findElement(By.xpath("//input[@id='W2_createdFlightId_DivertFlightWidget_W2_opsSfx']"));
+		return divertedfltsuffix ;
+	}
+
+	public static WebElement saveoption_DivertedandContinue(WebDriver driver) {
+		// TODO Auto-generated method stub
+				wait = new WebDriverWait(driver,300);
+				wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[contains(@ng-click,'saveDivert')]"))));
+				WebElement divertedfltsave = driver.findElement(By.xpath("//button[contains(@ng-click,'saveDivert')]"));
+				return divertedfltsave ;
+		
+	}
+
+	public static void realworldmode(WebDriver driver) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		wait = new WebDriverWait(driver, 120);
+		locator = By.xpath("//button[contains(@id,'GanttWorldMenu_ActListBtn')]");
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+
+		driver.findElement(locator).click();
+		driver.findElement(By.xpath("//a[text()='Real World']")).click();
+		List<WebElement> Auto_Off = driver.findElements(By.xpath("//span[text()='AUTO OFF']"));
+		wait = new WebDriverWait(driver, 100);
+		wait.until(ExpectedConditions.invisibilityOf(Auto_Off.get(0)));
+		Thread.sleep(1000);
+		
+		
+		
+	}
+
+	public static WebElement SaveOverfly(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver, 120);
+		locator = By.xpath("//button[contains(@ng-click,'saveDivert()')]");
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+		
+		return driver.findElement(locator);
+	}
+
+	public static WebElement closeChangeList(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver, 120);
+		locator = By.xpath("(//span[text()='Change List'])[1]/following-sibling::div/butt");
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+		
+		return driver.findElement(locator);
+		
+		
+	}
 	
 }
 
