@@ -59,6 +59,8 @@ public class CollectTestData {
 	public static String Depstand;
 	public static String keyword;
 	public static String delaycode;
+	public static String userToEdit;
+	public static String userToEditPassword;
 	public static String reroutestation;
 	
 	public static void main(String scriptName) {
@@ -102,6 +104,8 @@ public class CollectTestData {
 		Depstand=data.get("Depstand");
 		keyword=data.get("Keyword");
 		delaycode=data.get("Delaycode");
+		userToEdit=data.get("UserToEdit");
+		userToEditPassword=data.get("UserToEditPassword");
 		reroutestation=data.get("Divertedstation");
 	}
 	

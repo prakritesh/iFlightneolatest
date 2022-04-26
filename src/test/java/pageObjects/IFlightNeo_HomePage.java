@@ -1,6 +1,5 @@
 package pageObjects;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -92,6 +91,13 @@ public class IFlightNeo_HomePage {
 		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(text(),'"+role+"')]")));
 		return element;
 	}
+	//List of Roles displayed in switch role dropdown
+	public static List<WebElement> roleList(WebDriver driver) {
+		List<WebElement> elements = driver.findElements(By.xpath("//div[@id='select2-drop']/ul/li"));
+		return elements;
+	}
+	
+		
 	
 	//Select role from Switch user role popup dropdown
 	public static WebElement button_ApplyInSwithRole(WebDriver driver) {
@@ -471,9 +477,12 @@ public class IFlightNeo_HomePage {
 	 * @author Rohit
 	 *******************************************************/
 	public static void signOut(WebDriver driver) {
+		wait = new WebDriverWait(driver, 1000);
+		wait.until(ExpectedConditions.elementToBeClickable(div_UserBox(driver)));
 		// User box section
 		div_UserBox(driver).click();
 		// Sign out
+		wait.until(ExpectedConditions.elementToBeClickable(link_SignOut(driver)));
 		link_SignOut(driver).click();
 		// Wait
 		IFlightNeo_LoginPage.txtbx_UserName(driver);
@@ -525,8 +534,9 @@ public class IFlightNeo_HomePage {
 	/*******************************************************
 	 * Navigates to Gantt Screen
 	 * @author Rohit Prajapati
+	 * @throws InterruptedException 
 	 *******************************************************/
-	public static void selectGantt(WebDriver driver) {
+	public static void selectGantt(WebDriver driver) throws InterruptedException {
 		mainMenu_Airport(driver);
         com.performAction(driver, mainMenu_Aircraft(driver), "CLICK", "", "Aircraft Option from Main Menu");
         List<WebElement> nav_dropdown=driver.findElements(By.xpath("//ul[@id='nav']//li//ul//li//a"));
@@ -542,6 +552,7 @@ public class IFlightNeo_HomePage {
 		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//a[contains(text(),'OPS GANTT')]")));
+		Thread.sleep(5000);
       //a[contains(text(),'OPS GANTT')]
        //com.performAction(driver, IFlightNeo_Gantt.link_DayZoom(driver), "CLICK", "", "DayZoom button");
         
@@ -551,9 +562,9 @@ public class IFlightNeo_HomePage {
 	public static void scrollandsave(WebDriver driver)
 	{
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		WebElement Element = driver.findElement(By.xpath("//button[@ng-click='save()']"));
-		js.executeScript("arguments[0].scrollIntoView();", Element);
-		Element.click();
+		WebElement element = driver.findElement(By.xpath("//button[@ng-click='save()']"));
+		js.executeScript("arguments[0].scrollIntoView();", element);
+		element.click();
 
 	}
 
@@ -1906,6 +1917,28 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		element = driver.findElement(locator);
 		return element;
 	}
+	
+	/** Menu Option Filter in Global Menu bar */
+	public static WebElement mainMenu_Admin(WebDriver driver) {
+		try {
+			Thread.sleep(1000);
+		}
+		catch(Exception e) {}
+		wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("menu_admin")));
+		element = driver.findElement(By.id("menu_admin"));
+		return element;
+	}
+
+	/** Sub-menu Option Manage Filter inside Filter Menu */
+	public static WebElement subMenu_ManageUsers(WebDriver driver) {		
+		wait = new WebDriverWait(driver,30);
+		locator = By.id("menu_manageUsers");
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+		element = driver.findElement(locator);
+		return element;
+	}
+	
 	// The webelement position in the list changed in 2nd Feb release , hence changed that on 4th Feb,22 & created this new method
 	public static WebElement btn_CloseFlightmessagelist(WebDriver driver) {
 		// TODO Auto-generated method stub
@@ -2160,7 +2193,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 	 * @author Prakritesh Saha
 	 * @param driver, roleToSwitch
 	 */
-	public static void switchUserRole(WebDriver driver, String roleToSwitch) {
+	public static void switchUserRole(WebDriver driver, String roleToSwitch) throws InterruptedException {
 		if(!getUserRole(driver).contains(roleToSwitch)) {
 			// User box section
 			div_UserBox(driver).click();
@@ -2169,6 +2202,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 			//select role from switch role popup
 			com.performAction(driver, dropdownExpandSelectRole(driver), "click", "", "Expand dropdown arrow");
 			com.performAction(driver, selectRole(driver, roleToSwitch), "click", "", "User Role "+roleToSwitch);
+			Thread.sleep(1000);
 			//click apply button
 			com.performAction(driver, button_ApplyInSwithRole(driver), "click", "", "Apply Button");
 			//click ok
@@ -2184,6 +2218,39 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		}
 		else {
 			htmlLib.logReport("User Role is OPS_Controller", null, "INFO", driver, true);
+		}
+	}
+
+	public static void openAdminManageUsers(WebDriver driver) {
+
+		WebElement additionalMenuOption = menu_AdditionalMenuOption(driver);
+		if(additionalMenuOption != null)
+			additionalMenuOption.click();
+		
+		Actions mousemovement = new Actions(driver);
+		mousemovement.moveToElement(mainMenu_Admin(driver)).perform();;
+		mousemovement.moveToElement(subMenu_ManageUsers(driver)).click().perform();;
+	
+		
+	}
+
+	public static void verifyRolesNotPresent(WebDriver driver, List<String> userRole) {
+
+		// User box section
+		wait= new WebDriverWait(driver, 300);
+		wait.until(ExpectedConditions.elementToBeClickable(div_UserBox(driver)));
+		div_UserBox(driver).click();
+		//click switch role link
+		com.performAction(driver, link_SwitchRole(driver), "CLICK", "", "Switch Role Link");
+		//select role from switch role popup
+		com.performAction(driver, dropdownExpandSelectRole(driver), "click", "", "Expand dropdown arrow");
+		//Validate if roles are available in the list or not
+		Boolean roleExists = roleList(driver).stream().map(role->role.findElement(By.xpath("//div")).getText()).anyMatch(role->userRole.contains(role));
+		if(roleExists) {
+			htmlLib.logReport("Verify that as the roles are removed now those are not available in the Assign Role dropdown", userRole+" Roles are available", "FAIL", driver, true);
+		}	
+		else {
+			htmlLib.logReport("Verify that as the roles are removed now those are not available in the Assign Role dropdown", userRole+" Roles are not available", "PASS", driver, true);
 		}
 	}
 

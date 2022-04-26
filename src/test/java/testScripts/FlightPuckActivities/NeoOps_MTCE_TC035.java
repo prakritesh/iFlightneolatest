@@ -1,4 +1,4 @@
-package testScripts.SAW;
+package testScripts.FlightPuckActivities;
 
 import java.util.concurrent.TimeUnit;
 
@@ -8,13 +8,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
-import pageObjects.IFlightNeo_SAW;
+import pageObjects.IFlightNeo_ManageUsers;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_SAW_NewTC001 {
+public class NeoOps_MTCE_TC035 {
 
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary com = new utilities.CommonLibrary();
@@ -27,7 +28,7 @@ public class NeoOps_SAW_NewTC001 {
 	@BeforeMethod
 	void setUp() {
 		// Set Up Initial Script Requirement
-		Driver.setUpTestExecution(tcName, "Able to open SAW and load widgets.");
+		Driver.setUpTestExecution(tcName, "Add miscellaneous pucks");
 		// launch application
 		String browser = CollectTestData.browser;
 		String url = CollectTestData.url;
@@ -36,24 +37,29 @@ public class NeoOps_SAW_NewTC001 {
 
 	@Test
 	public void login() throws Exception {
-
 		try {
 			// Collect Test Data
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
+			String activityIDMISC = "102";
+			String station = "AUH";
+			String imageOfItemCreated = System.getProperty("user.dir") + "\\TestData\\NeoOps_MTCE_TC035\\MiscActivity.PNG";
 
-			// Login
+			// Login as Admin role
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-			htmlLib.logReport("Login Functionality is success", "Login sucess", "Pass", driver, true);
-			// Switch Role to OPS_Controller
-			IFlightNeo_HomePage.switchUserRole(driver, "OPS_CONTROLLER");
-			// Navigate to SAW window
-			IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
-			// Click on defaultdashboard dropdown & Select Network Control 3
-			IFlightNeo_SAW.changeDashBoard(driver, "Network Control 3");
+			// Navigate to Gantt
+			// Opening the Gantt Screen and Finding the Flight
+			IFlightNeo_HomePage.selectGantt(driver);
+			// Right click on the empty area on the line of flying of an aircraft, select
+			// "Add Miscellaneous"
+			IFlightNeo_Gantt.addMiscellaneous(driver, activityIDMISC, station);
 			
-		} catch (Exception e) {
+			//Verify Image Created
+			IFlightNeo_Gantt.verifyItemCreatedInGantt(driver,imageOfItemCreated);
+		}
+
+		catch (Exception e) {
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
 

@@ -1,20 +1,22 @@
-package testScripts.SAW;
+package testScripts.FlightPuckActivities;
 
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
-import pageObjects.IFlightNeo_SAW;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_SAW_NewTC001 {
+public class NeoOps_MTCE_TC029 {
+
+	
+
 
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary com = new utilities.CommonLibrary();
@@ -27,7 +29,7 @@ public class NeoOps_SAW_NewTC001 {
 	@BeforeMethod
 	void setUp() {
 		// Set Up Initial Script Requirement
-		Driver.setUpTestExecution(tcName, "Able to open SAW and load widgets.");
+		Driver.setUpTestExecution(tcName, "Able to add an Unserviceable");
 		// launch application
 		String browser = CollectTestData.browser;
 		String url = CollectTestData.url;
@@ -36,24 +38,23 @@ public class NeoOps_SAW_NewTC001 {
 
 	@Test
 	public void login() throws Exception {
-
 		try {
 			// Collect Test Data
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
 
-			// Login
+			// Login as Admin role
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-			htmlLib.logReport("Login Functionality is success", "Login sucess", "Pass", driver, true);
-			// Switch Role to OPS_Controller
-			IFlightNeo_HomePage.switchUserRole(driver, "OPS_CONTROLLER");
-			// Navigate to SAW window
-			IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
-			// Click on defaultdashboard dropdown & Select Network Control 3
-			IFlightNeo_SAW.changeDashBoard(driver, "Network Control 3");
+			//Navigate to Gantt
+			// Opening the Gantt Screen and Finding the Flight
+			IFlightNeo_HomePage.selectGantt(driver);
+			//Right click on the empty area on the line of flying of an aircraft, select "Add Miscellaneous"
+			IFlightNeo_Gantt.addUnservicable(driver );
 			
-		} catch (Exception e) {
+		}
+
+		catch (Exception e) {
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
 
@@ -61,9 +62,12 @@ public class NeoOps_SAW_NewTC001 {
 
 	}
 
-	@AfterMethod
-	public void closeTest() {
-		Driver.tearDownTestExecution(driver);
-	}
+	/*
+	 * @AfterMethod public void closeTest() { Driver.tearDownTestExecution(driver);
+	 * }
+	 */
+
+
+
 
 }
