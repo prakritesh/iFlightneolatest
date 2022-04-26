@@ -66,6 +66,64 @@ public class IFlightNeo_HomePage {
 		return element;
 	}
 	
+	public static WebElement link_SwitchRole(WebDriver driver) {
+		wait = new WebDriverWait(driver,60);
+	 	element = wait.until(ExpectedConditions.elementToBeClickable(div_UserBox(driver).findElement(By.xpath("//a[contains(text(),'Switch Role')]"))));
+		return element;
+	}
+	
+	//Switch Role Link in top right corner
+	public static WebElement dropdownExpandSelectRole(WebDriver driver) {
+		wait = new WebDriverWait(driver,60);
+	 	element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.className("select2-arrow"))));
+		return element;
+	}
+	
+	//Expand Arrow icon to get list of role in switch role popup
+	public static WebElement expandArrowRole(WebDriver driver) {
+		wait = new WebDriverWait(driver,60);
+	 	element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.className("select2-arrow"))));
+		return element;
+	}
+	
+	//Select role from Switch user role popup dropdown
+	public static WebElement selectRole(WebDriver driver, String role ) {
+		wait = new WebDriverWait(driver,60);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(text(),'"+role+"')]")));
+		return element;
+	}
+	
+	//Select role from Switch user role popup dropdown
+	public static WebElement button_ApplyInSwithRole(WebDriver driver) {
+		wait = new WebDriverWait(driver,60);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'APPLY')]")));
+		return element;
+	}
+	//OK button in the next popup comes after switch role
+	public static WebElement button_OK(WebDriver driver) {
+		wait = new WebDriverWait(driver,60);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button/span[contains(text(),'OK')]")));
+		return element; 
+	}
+	
+	public static WebElement userRole(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//a[contains(text(),'Welcome')]"))));
+		return element;
+	}
+	/*
+	 * This method is to get the User role of the logged in User
+	 * @author Prakritesh Saha
+	 * @since 23-mar-2022
+	 * @param driver
+	 * @return userRole
+	 */
+	public static String getUserRole(WebDriver driver){
+		String userRole= userRole(driver).getText();
+		return userRole;
+		
+	}
+	
 	/** Sign Out Option in Home Page */
 	public static WebElement link_SignOut(WebDriver driver) {
 		locator = By.xpath("//div[@class='user_box']//a[contains(text(),'Sign')]");
@@ -918,13 +976,27 @@ public class IFlightNeo_HomePage {
 		driver.findElement(By.xpath("//li[@id='TabularPaneGrid_W1close']")).click();
 
 	}
+	
+	/*
+	 * wait till page refresh
+	 */
+	
+	public static void waitTillPageRefreshCompletes(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		wait.until(ExpectedConditions.attributeContains(By.className("body_custom_div"), "style", "zoom: 1;"));
+	}
 
 	/*******************************************
 	 * Select Seasonal Awareness Window from main menu ( modified on 14th june)
+	 * @throws InterruptedException 
 	 *******************************************/
-	public static void selectSeasonalAwarenessWindow(WebDriver driver) {
+	public static void selectSeasonalAwarenessWindow(WebDriver driver) throws InterruptedException {
+		//Wait till page refresh
+		waitTillPageRefreshCompletes(driver);
+		//Thread.sleep(2000);
 		// SAW
-		com.performAction(driver, mainMenu_SAW(driver), "click", "", "SAW option");
+		com.performAction(driver, mainMenu_SAW(driver), "HOVER", "", "SAW option");
+		//Thread.sleep(2000);
 		com.performAction(driver, subMenu_SeasonalAwareness(driver), "click", "", "SAW Menu option");	
 	}
 
@@ -1971,7 +2043,6 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		
 	
 	}
-
 	public static WebElement menuOption_Divert(WebDriver driver) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
@@ -2084,6 +2155,38 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		
 		
 	}
+	/*
+	 * This method is to switch user role
+	 * @author Prakritesh Saha
+	 * @param driver, roleToSwitch
+	 */
+	public static void switchUserRole(WebDriver driver, String roleToSwitch) {
+		if(!getUserRole(driver).contains(roleToSwitch)) {
+			// User box section
+			div_UserBox(driver).click();
+			//click switch role link
+			com.performAction(driver, link_SwitchRole(driver), "CLICK", "", "Switch Role Link");
+			//select role from switch role popup
+			com.performAction(driver, dropdownExpandSelectRole(driver), "click", "", "Expand dropdown arrow");
+			com.performAction(driver, selectRole(driver, roleToSwitch), "click", "", "User Role "+roleToSwitch);
+			//click apply button
+			com.performAction(driver, button_ApplyInSwithRole(driver), "click", "", "Apply Button");
+			//click ok
+			com.performAction(driver, button_OK(driver), "click", "", "OK button");
+			//Verify if the user role is changed
+			if(getUserRole(driver).contains(roleToSwitch)) {
+				htmlLib.logReport("Switch Role to OPS_Controller", "User role is switched to "+roleToSwitch, "PASS", driver, true);
+			}
+			else {
+				htmlLib.logReport("Switch Role to OPS_Controller", "User role is not switched to "+roleToSwitch, "FAIL", driver, true);
+
+			}
+		}
+		else {
+			htmlLib.logReport("User Role is OPS_Controller", null, "INFO", driver, true);
+		}
+	}
+
 	
 }
 
