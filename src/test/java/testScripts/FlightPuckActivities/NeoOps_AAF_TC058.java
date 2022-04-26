@@ -197,6 +197,10 @@ public class NeoOps_AAF_TC058 {
 		 if(!Swap_Sucess==true) {
 			 htmlLib.logReport("Swap Flights Operation", "Swap flights success", "Pass", driver, true);
 		 }
+		 
+		 else {
+				htmlLib.logReport("Swap Flights Operation", "Swap flights NOT success", "FAIL", driver, true);
+			}   
 		 // added below method (line number 199 to 203)to check outbound messages after swap ( Moumita , 23/03/22)
 		 IFlightNeo_MessageList.click_Messagelist(driver);
 		 for(int flight_counter=0;flight_counter<flightNo.length;flight_counter++)
