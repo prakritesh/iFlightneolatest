@@ -31,7 +31,7 @@ public class IFlightNeo_MessageList {
 	public static String xmlvalue;
 	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	String flightNumber = CollectTestData.flightNumber;
-	static boolean isDelaycodeavailable,messagecontailsdelaycode;
+	static boolean isvaluetocompreavailable,messagecontailsdelaycode;
 
 	/*********************************************************************************************
 	 * Method Name : click_messagelist Parameter Used : Webdriver Author : Moumita
@@ -130,7 +130,7 @@ public class IFlightNeo_MessageList {
 	 * @param  delaycode
 	 ********************************************************************************************/
 	
-	private static boolean aidx_Details(WebDriver driver, String delaycode) {
+	public static boolean aidx_Details(WebDriver driver, String valuetocompre) {
 		// TODO Auto-generated method stub
 		
 		Actions a2 = new Actions(driver) ;
@@ -161,17 +161,17 @@ public class IFlightNeo_MessageList {
 		System.out.println(message);
 		
 		// verify the message contains the correct delay reason code
-		if(message.contains(delaycode)==true) {
+		if(message.contains(valuetocompre)==true) {
 			//htmlLib.logReport("message contains the correct delay reason code", "message contains the correct delay reason code", "Pass", driver, true);
-			isDelaycodeavailable=true;
+			isvaluetocompreavailable=true;
 		}
 		else {
 			/*htmlLib.logReport("message DOES NOT contain the correct delay reason code", "message DOES NOT contain the correct delay reason code", "Fail", driver, true);
 			System.out.println("message: " + message);
 			System.out.println("expected delay codes would have been:"+delaycode);*/
-			isDelaycodeavailable=false;
+			isvaluetocompreavailable=false;
 		}
-		return isDelaycodeavailable;
+		return isvaluetocompreavailable;
 		
 	}
 

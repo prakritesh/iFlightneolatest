@@ -18,7 +18,7 @@ import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_RND_TC051 {
+public class NeoOps_New_TC001_DryRun {
 	
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary comm = new utilities.CommonLibrary();
@@ -35,7 +35,7 @@ public class NeoOps_RND_TC051 {
 		 * CollectTestData.main(tcName);
 		 */
 		// Set Up Initial Script Requirement
-		Driver.setUpTestExecution(tcName, "Check up cancellation notification & Outbound messages after cancellation");
+		Driver.setUpTestExecution(tcName, "Verify Cancelling Flight in LW AUTO OFF mode");
 		// launch application
 		String browser = CollectTestData.browser;
 		String url = CollectTestData.url;	
@@ -89,22 +89,37 @@ public class NeoOps_RND_TC051 {
 		Thread.sleep(2000);
 		// select Gantt Option
 		IFlightNeo_HomePage.selectGantt(driver);
+		IFlightNeo_HomePage.select_Newscenariomode(driver);
+		Thread.sleep(5000);
 		// Change To Real World Gantt Mode 
-		IFlightNeo_Gantt.changeGanttMode(driver, "Real World");
+		//IFlightNeo_Gantt.changeGanttMode(driver, "Real World");
 		// Close Default Mode
 		BusinessFunctions.closeTab(driver, 0, false);
 		Thread.sleep(4000);
 		//Re-apply filter
 		//IFlightNeo_ManageFilter.filter_Apply(driver);
 		//htmlLib.logReport("Verify Filter Applied", "Filter Applied", "Pass", driver, true);	
-		Thread.sleep(4000);
 //		IFlightNeo_HomePage.RealWorld_Find_flight(driver, arrivalAirport, date, departureAirport, arrivalAirport);
 		IFlightNeo_Gantt.findFlightInGantt(driver, flightNo, date, departureAirport, arrivalAirport);
 		Thread.sleep(4000);
 		// Cancel Flight
 		IFlightNeo_Gantt.cancelFlight(driver, imagePath);
 		
-		
+		//Check Change List
+		 comm.performAction(driver, IFlightNeo_Gantt.changeList(driver), "click", "", "Clicked on change list");
+		 //Expand Change List Record
+		 comm.performAction(driver, IFlightNeo_Gantt.changeListExpand(driver), "click", "", "Clicked on change list details");
+		 //Wait for the visibility of change list
+		 IFlightNeo_Gantt.changelistdetails(driver);
+		 //publish from change list
+		 comm.performAction(driver, IFlightNeo_Gantt.publish_From_Changelist(driver), "click", "", "Clicked on publish button from change list details");
+		//confirm change 
+			IFlightNeo_HomePage.confirmChange(driver);
+			
+		//close change list
+			comm.performAction(driver, IFlightNeo_HomePage.closeChangeList(driver), "click", "", "Clicked on Close button of change list details");
+			
+		 
 		
 		if (IFlightNeo_Notification.browse_notification(driver, flightNo))
 		{		
