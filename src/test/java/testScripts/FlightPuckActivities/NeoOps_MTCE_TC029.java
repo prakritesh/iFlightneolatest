@@ -29,7 +29,7 @@ public class NeoOps_MTCE_TC029 {
 	@BeforeMethod
 	void setUp() {
 		// Set Up Initial Script Requirement
-		Driver.setUpTestExecution(tcName, "Able to add an Unserviceable");
+		Driver.setUpTestExecution(tcName, "Data’s added in reference data is reflecting on multiple screens");
 		// launch application
 		String browser = CollectTestData.browser;
 		String url = CollectTestData.url;

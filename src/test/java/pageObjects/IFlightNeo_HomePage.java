@@ -449,6 +449,7 @@ public class IFlightNeo_HomePage {
 		com.performAction(driver, txtbx_ACR(driver), "SET", ACR, "Set ACR");
 		com.performAction(driver, dropdown_Acsubtype(driver), "click", "", "click on acsubtype");
 		Thread.sleep(500);
+		com.performAction(driver, search_Acsubtype(driver), "SET", acsubtype, acsubtype);
 		driver.findElement(By.xpath("//div[text()='" + acsubtype + "']")).click();
 		dropdown_Rotcode(driver, Rotcode);
 		htmlLib.logReport("Capture screenshot of Rotcode", "Set '" + Rotcode + "' is Successful", "PASS", driver, true);
@@ -526,6 +527,10 @@ public class IFlightNeo_HomePage {
 
 	private static WebElement dropdown_Acsubtype(WebDriver driver) {
 		element = driver.findElement(By.xpath("//li[@oh-compid='FAC001_004']//span[contains(text(),'Select IATA')]"));
+		return element;
+	}
+	private static WebElement search_Acsubtype(WebDriver driver) {
+		element = driver.findElement(By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@type='text']"));
 		return element;
 	}
 	

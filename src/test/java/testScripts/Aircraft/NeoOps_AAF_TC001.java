@@ -91,7 +91,7 @@ public class NeoOps_AAF_TC001 {
 		IFlightNeo_HomePage.selectAircraftDetails(driver);
 
 		IFlightNeo_HomePage.viewAircraft(driver, RegNo);
-
+		
 		htmlLib.logReport("View Saved Aircraft Details", "Aircraft details viewed successfully", "Pass", driver, true);
 		}
 		
