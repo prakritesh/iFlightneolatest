@@ -61,6 +61,7 @@ public class CollectTestData {
 	public static String delaycode;
 	public static String userToEdit;
 	public static String userToEditPassword;
+	public static String reroutestation;
 	
 	public static void main(String scriptName) {
 		HashMap<String, String> data = new HashMap<String, String>();
@@ -105,6 +106,7 @@ public class CollectTestData {
 		delaycode=data.get("Delaycode");
 		userToEdit=data.get("UserToEdit");
 		userToEditPassword=data.get("UserToEditPassword");
+		reroutestation=data.get("Divertedstation");
 	}
 	
 	@SuppressWarnings("rawtypes")

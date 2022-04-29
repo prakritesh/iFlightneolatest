@@ -93,7 +93,7 @@ public class NeoOps_AAF_TCNew_003 {
 			IFlightNeo_Gantt.selectFlightInGantt(driver, flightImagelocation, "RIGHTCLICK");
 			//-> Edit Flight -> Check the Aircraft added in the previous test case showin in the Edit Flight Window
 			IFlightNeo_Gantt.verifyAircraftInEditFlightpopup(driver,RegNo,acsubtype);
-			
+			IFlightNeo_Gantt.verifyAircraftInFindAircraftpopup(driver,RegNo);
 			//Added Comments
 			
 			/*
