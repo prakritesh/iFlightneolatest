@@ -107,6 +107,15 @@ public class IFlightNeo_Gantt {
 		return element;
 	}
 
+	/** Find Aircraft Image link at the bottom in Gantt Screen */
+	public static WebElement imgLink_FindAircraft(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		locator = By.xpath("//li[@title='Find Aircraft']");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		element = driver.findElement(locator);
+		return element;
+	}
+
 	/** Find flight Image link at the bottom in Gantt Screen */
 	public static WebElement imgLink_FindFlight(WebDriver driver) {
 		wait = new WebDriverWait(driver, 120);
@@ -394,8 +403,8 @@ public class IFlightNeo_Gantt {
 	// start date in unserviceable popup
 	public static WebElement unserviceable_StartDate_Date(WebDriver driver) {
 		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions
-				.elementToBeClickable(driver.findElement(By.xpath("//div[@id='ui-datepicker-div']/table[@class='ui-datepicker-calendar']/tbody//a[@class='ui-state-default ui-state-active']"))));
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//div[@id='ui-datepicker-div']/table[@class='ui-datepicker-calendar']/tbody//a[@class='ui-state-default ui-state-active']"))));
 		return element;
 	}
 
@@ -416,20 +425,21 @@ public class IFlightNeo_Gantt {
 	}
 
 	// end date in unserviceable popup
-	public static WebElement unserviceable_EndDate_Date(WebDriver driver , String date) {
+	public static WebElement unserviceable_EndDate_Date(WebDriver driver, String date) {
 		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions
-				.elementToBeClickable(driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//a[text()='"+date+"']"))));
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//a[text()='" + date + "']"))));
 		return element;
 	}
 
-	//Defect position in Unserviceable popup
+	// Defect position in Unserviceable popup
 	public static WebElement unserviceable_DefectPosition(WebDriver driver) {
 		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions
-				.elementToBeClickable(driver.findElement(By.xpath("//input[@name='unserviceableAircraftWidget_defectPosition']"))));
-		return element;	
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//input[@name='unserviceableAircraftWidget_defectPosition']"))));
+		return element;
 	}
+
 	/**
 	 * Crew Connection Detail button in
 	 * 
@@ -715,6 +725,67 @@ public class IFlightNeo_Gantt {
 		return element;
 	}
 
+	/* Edit Flight link */
+	public static WebElement link_editFlight(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//ul[@class='context-menu-list context-menu-root']//li/span[contains(text(),'Edit Flight')]"))));
+		return element;
+	}
+
+	// Aircraft registration number
+	public static WebElement dropdown_AircraftRegistration(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(
+				By.xpath("//div[contains(@id,'aircraftRegistration')]/a/span[@class='select2-arrow']")));
+		return element;
+	}
+
+	// search in aircraft registration edit flight popup
+	public static WebElement textField_SearchRegistration(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("div#select2-drop div.select2-search input.select2-input")));
+		return element;
+	}
+
+	// Dropdown Value in Aircraft Registration - Edit flight popup
+	public static WebElement list_AircraftRegistrationEditFlight(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(
+				ExpectedConditions.elementToBeClickable(By.cssSelector("div#select2-drop ul.select2-results li div")));
+		return element;
+	}
+
+	//
+	// Dropdown Value in Aircraft subtype - Edit flight popup
+	public static WebElement dropDown_AircraftSubType(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				By.xpath("//div[contains(@id,'aircraftSubtype')]/a/span[@class='select2-arrow']")));
+		return element;
+	}
+
+	// Close Edit flight popup
+	public static WebElement button_EditFlightClose(WebDriver driver) {
+		element = driver.findElement(By.xpath(
+				"//span[text()='LW1-Flight Management - Edit Flight   [FOPR011]']/parent::div//span[@class='ui-button-icon-primary ui-icon ui-icon-close']"));
+		return element;
+	}
+
+	// Flight leg section header in edit flight window
+	public static WebElement input_ArriveTimeFlightLeg(WebDriver driver) {
+		element = driver.findElement(By.xpath("//input[@id='arriveEndTimeInMins_W2']"));
+		return element;
+	}
+
+	// yes in confirmation box
+	public static WebElement buton_Yes(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='YES']")));
+		return element;
+	}
+
 //*******************************************************************************************************************/ 
 //						SPACE FOR METHOD DEFINITION
 //*******************************************************************************************************************/
@@ -925,6 +996,7 @@ public class IFlightNeo_Gantt {
 			report.logReport("Verify Image is Present", "The Required Image is Not Present", "FAIL", null, true);
 		} catch (Exception e) {
 			imageFound = false;
+			System.out.println(e);
 			report.logReport("Verify Image is Present", "There is a Fatal Error - " + e.getMessage(), "FATAL", null,
 					true);
 		}
@@ -1569,13 +1641,13 @@ public class IFlightNeo_Gantt {
 			Screen sc = new Screen();
 			Pattern blankSpace = new Pattern(blankSpaceInGantt);
 			sc.wait(blankSpace, 120);
-			//new Screen().wait(blankSpace,120);
+			// new Screen().wait(blankSpace,120);
 			// new Screen().rightClick();
 			int i = sc.hover(blankSpace);
 			System.out.println(i);
 			int s = sc.rightClick(blankSpace);
 			System.out.println(s);
-			
+
 			report.logReport("Right click on blank space in gantt", "Able to right click on blank space", "INFO",
 					driver, false);
 		} catch (Exception e) {
@@ -1616,7 +1688,8 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, unserviceable_DefectPosition(driver), "SET", "1", "Defect position");
 	}
 
-	public static void verifyItemCreatedInGantt(WebDriver driver,String imageOfItemCreated) throws InterruptedException {
+	public static void verifyItemCreatedInGantt(WebDriver driver, String imageOfItemCreated)
+			throws InterruptedException {
 		Thread.sleep(5000);
 		try {
 			System.out.println(imageOfItemCreated);
@@ -1624,12 +1697,42 @@ public class IFlightNeo_Gantt {
 			new Screen().wait(itemCreated, 300);
 			// new Screen().rightClick();
 			new Screen().rightClick(itemCreated);
-			report.logReport("Verify Item created", "Item Created", "PASS",
-					driver, true);
+			report.logReport("Verify Item created", "Item Created", "PASS", driver, true);
 		} catch (Exception e) {
-			report.logReport("Verify Item created", "Item not created", "FAIL",
-					driver, true);
-		}	
+			report.logReport("Verify Item created", "Item not created", "FAIL", driver, true);
+		}
+	}
+
+	public static void verifyAircraftInEditFlightpopup(WebDriver driver, String aircraftRegistration,
+			String aircraftSubType) throws InterruptedException {
+		// Click Edit Flight link
+		com.performAction(driver, link_editFlight(driver), "click", "", "Edit Flight");
+		// Set Aircraft Subtype
+		com.performAction(driver, dropDown_AircraftSubType(driver), "click", "", "Aircraft Sub Type");
+		com.performAction(driver, textField_SearchRegistration(driver), "SET", aircraftSubType, aircraftSubType);
+		com.performAction(driver, list_AircraftRegistrationEditFlight(driver), "click", "", aircraftSubType);
+		// Verify aircraft registration
+		com.performAction(driver, dropdown_AircraftRegistration(driver), "click", "", "Aircraft Registration dropdown");
+		com.performAction(driver, textField_SearchRegistration(driver), "SET", aircraftRegistration,
+				aircraftRegistration);
+		if (list_AircraftRegistrationEditFlight(driver).getText().contains(aircraftRegistration)) {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Correct Aircraft registration number is showing in the Edit flight popup", "PASS", driver, true);
+		} else {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Wrong Aircraft registration number is showing in the Edit flight popup", "FAIL", driver, true);
+		}
+		Actions action = new Actions(driver);
+		action.sendKeys(Keys.ESCAPE).build().perform();
+		com.performAction(driver, input_ArriveTimeFlightLeg(driver), "click", "", "");
+		action.sendKeys(Keys.ESCAPE).build().perform();
+		Thread.sleep(1000);
+		com.performAction(driver, buton_Yes(driver), "click", "", "Close");
+	}
+
+	public static void verifyAircraftInFindAircraftpopup(WebDriver driver, String aircraftRegistration) {
+		ads
+		
 	}
 }
 
