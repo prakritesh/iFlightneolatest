@@ -109,15 +109,6 @@ public class IFlightNeo_Gantt {
 		return element;
 	}
 
-	/** Find Aircraft Image link at the bottom in Gantt Screen */
-	public static WebElement imgLink_FindAircraft(WebDriver driver) {
-		wait = new WebDriverWait(driver, 120);
-		locator = By.xpath("//li[@title='Find Aircraft']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-		element = driver.findElement(locator);
-		return element;
-	}
-
 	/** Find flight Image link at the bottom in Gantt Screen */
 	public static WebElement imgLink_FindFlight(WebDriver driver) {
 		wait = new WebDriverWait(driver, 120);
@@ -591,7 +582,10 @@ public class IFlightNeo_Gantt {
 	 * @return
 	 */
 	public static WebElement btn_FindAircraft(WebDriver driver) {
-		element = driver.findElement(By.xpath("//li[@title='Find Aircraft']"));
+		wait = new WebDriverWait(driver, 120);
+		locator = By.xpath("//li[@title='Find Aircraft']");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		element = driver.findElement(locator);
 		return element;
 	}
 
@@ -742,6 +736,14 @@ public class IFlightNeo_Gantt {
 				By.xpath("//div[contains(@id,'aircraftRegistration')]/a/span[@class='select2-arrow']")));
 		return element;
 	}
+	
+	// Aircraft registration number in Find Aircraft popup
+		public static WebElement dropdown_AircraftRegistrationFindAircraft(WebDriver driver) {
+			wait = new WebDriverWait(driver, 300);
+			element = wait.until(ExpectedConditions.visibilityOfElementLocated(
+					By.xpath("//div[contains(@id,'aircraftRegistration')]/a/span[@class='select2-arrow']")));
+			return element;
+		}
 
 	// search in aircraft registration edit flight popup
 	public static WebElement textField_SearchRegistration(WebDriver driver) {
@@ -947,6 +949,42 @@ public class IFlightNeo_Gantt {
 		dialog_FindFlight(driver).sendKeys(Keys.ESCAPE);
 	}
 
+	/*
+	 * Method to verify Aircraft available in GANTT with image
+	 * 
+	 */
+	public static boolean verifyAicraftInGantt(WebDriver driver, String flightImageLocation, String aircraftRegsitration) {
+		boolean imageFound = true;
+		try {
+			Screen scn = new Screen();
+			Pattern defaultAircraft = new Pattern(flightImageLocation);
+			scn.wait(defaultAircraft, 90);
+			Match match = scn.exists(defaultAircraft.similar(0.70));
+			if (match != null) {
+				scn.hover(defaultAircraft);
+				// Adding below code to capture hover screenshot ( 1st sep,21 by Moumita)
+				Thread.sleep(2000);
+				report.logReport("Verify aircraft is present in Gantt", "Aircraft "+aircraftRegsitration+" is present in Gantt", "PASS", driver,
+						true);
+			} else {
+				System.out.println("***IMAGE NOT FOUND TO SELECT***");
+				report.logReport("Verify aircraft is present in Gantt", "Aircraft "+aircraftRegsitration+" is not present in Gantt", "FAIL", driver,
+						true);
+				imageFound = false;
+			}
+		} catch (NoSuchElementException nsee) {
+			imageFound = false;
+			System.out.println("NO SUCH ELEMENT FOUND");
+			report.logReport("Verify Image is Present", "The Required Image is Not Present", "FAIL", null, true);
+		} catch (Exception e) {
+			imageFound = false;
+			System.out.println(e);
+			report.logReport("Verify Image is Present", "There is a Fatal Error - " + e.getMessage(), "FATAL", null,
+					true);
+		}
+		return imageFound;
+	
+	}
 	/*******************************************************
 	 * Method to navigate to flight leg details in Gantt screen
 	 *******************************************************/
@@ -1732,10 +1770,25 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, buton_Yes(driver), "click", "", "Close");
 	}
 
-	public static void verifyAircraftInFindAircraftpopup(WebDriver driver, String aircraftRegistration) {
-			report.logReport("Verify Item created", "Item not created", "FAIL",
-					driver, true);
-		}	
+	public static void verifyAircraftInFindAircraftpopup(WebDriver driver, String aircraftRegistration, String flightImagelocation) {
+		com.performAction(driver, btn_FindAircraft(driver), "click", "", "Find Aircraft");
+		com.performAction(driver, list_AircraftRegistration(driver), "click", "", "Aircraft Registration dropdown");
+		com.performAction(driver, textField_SearchRegistration(driver), "SET", aircraftRegistration,
+				aircraftRegistration);
+		if (list_AircraftRegistrationEditFlight(driver).getText().contains(aircraftRegistration)) {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Correct Aircraft registration number is showing in the Edit flight popup", "PASS", driver, true);
+			com.performAction(driver, list_AircraftRegistrationEditFlight(driver), "click", "",
+					aircraftRegistration);
+		} else {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Wrong Aircraft registration number is showing in the Edit flight popup", "FAIL", driver, true);
+		}
+		//Actions action = new Actions(driver);
+		//action.sendKeys(Keys.ESCAPE).build().perform();
+		com.performAction(driver, btn_SearchButton(driver), "click", "", "Search");
+		IFlightNeo_Gantt.verifyAicraftInGantt(driver, flightImagelocation, aircraftRegistration);
+	}	
 	
 
 	public static WebElement changeListExpand(WebDriver driver) {
