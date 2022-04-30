@@ -356,7 +356,7 @@ public class IFlightNeo_Gantt {
 	// search station in misc
 	public static WebElement searchStationMisc(WebDriver driver) {
 		wait = new WebDriverWait(driver, 120);
-		element = wait.until(ExpectedConditions.elementToBeClickable(
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(
 				By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']")));
 		return element;
 	}
@@ -432,6 +432,14 @@ public class IFlightNeo_Gantt {
 				driver.findElement(By.xpath("//input[@name='unserviceableAircraftWidget_defectPosition']"))));
 		return element;
 	}
+	
+	// Defect position in Unserviceable popup
+		public static WebElement unserviceable_Save(WebDriver driver) {
+			wait = new WebDriverWait(driver, 300);
+			element = wait.until(ExpectedConditions.elementToBeClickable(
+					driver.findElement(By.xpath("//div[@oh-pageid='FAC005']//div[@class='list-right']//button[contains(text(),'Save')]"))));
+			return element;
+		}
 
 	/**
 	 * Crew Connection Detail button in
@@ -1726,6 +1734,7 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, element, endDateTime, startDateTime, endDateTime);
 		com.performAction(driver, unserviceable_DefectPosition(driver), "click", "", "Defect position");
 		com.performAction(driver, unserviceable_DefectPosition(driver), "SET", "1", "Defect position");
+		com.performAction(driver, unserviceable_Save(driver), "click", "", "Save");
 	}
 
 	public static void verifyItemCreatedInGantt(WebDriver driver, String imageOfItemCreated)

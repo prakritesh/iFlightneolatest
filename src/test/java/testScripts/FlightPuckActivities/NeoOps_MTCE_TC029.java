@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,9 +15,6 @@ import utilities.CollectTestData;
 import utilities.Driver;
 
 public class NeoOps_MTCE_TC029 {
-
-	
-
 
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary com = new utilities.CommonLibrary();
@@ -42,16 +40,22 @@ public class NeoOps_MTCE_TC029 {
 			// Collect Test Data
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
+			String imageOfItemCreated = System.getProperty("user.dir")
+					+ "\\TestData\\NeoOps_MTCE_TC029\\Unservicable.PNG";
 
 			// Login as Admin role
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-			//Navigate to Gantt
+			// Navigate to Gantt
 			// Opening the Gantt Screen and Finding the Flight
 			IFlightNeo_HomePage.selectGantt(driver);
-			//Right click on the empty area on the line of flying of an aircraft, select "Add Miscellaneous"
-			IFlightNeo_Gantt.addUnservicable(driver );
-			
+			// Right click on the empty area on the line of flying of an aircraft, select
+			// "Add Miscellaneous"
+			IFlightNeo_Gantt.addUnservicable(driver);
+
+			// Verify Image Created
+			IFlightNeo_Gantt.verifyItemCreatedInGantt(driver, imageOfItemCreated);
+
 		}
 
 		catch (Exception e) {
@@ -62,12 +66,9 @@ public class NeoOps_MTCE_TC029 {
 
 	}
 
-	/*
-	 * @AfterMethod public void closeTest() { Driver.tearDownTestExecution(driver);
-	 * }
-	 */
-
-
-
+	@AfterMethod
+	public void closeTest() {
+		Driver.tearDownTestExecution(driver);
+	}
 
 }

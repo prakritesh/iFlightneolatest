@@ -81,8 +81,6 @@ public class NeoOps_AAF_TCNew_003 {
 			// If unsaved data exists pop-up comes handle that 23rd Feb,22
 			try {
 				IFlightNeo_ManageFilter.btn_YesToOverrideChanges(driver);
-
-				// Thread.sleep(2000);
 			}
 
 			catch (Exception e) {
