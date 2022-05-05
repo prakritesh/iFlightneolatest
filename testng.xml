@@ -28,7 +28,8 @@
     <!-- <class name ="testScripts.FlightPuckActivities.NeoOps_MTCE_TC029"/> -->
     <!-- <class name ="testScripts.Aircraft.NeoOps_AAF_TC001"/> -->
     <!-- <class name ="testScripts.Aircraft.NeoOps_AAF_TCNew_003"/> -->
-    <class name ="testScripts.Aircraft.NeoOps_AAFNew_TC003"/>
+    <!-- <class name ="testScripts.Aircraft.NeoOps_AAFNew_TC003"/> -->
+     <class name ="testScripts.SAW.NeoOps_RND_TC065_1"/>
      
     
     

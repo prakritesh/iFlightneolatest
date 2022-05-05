@@ -1,5 +1,6 @@
 package pageObjects;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,33 +26,41 @@ public class IFlightNeo_SAW {
 	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	String[] lists = this.getClass().getName().split("\\.");
 	static WebDriver Instance;
-	
-	
-	// button for changing dashboard in SSW
-		public static WebElement buttonUpdateDashBoard(WebDriver driver) {
-			wait = new WebDriverWait(driver, 120);
-			element = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='btn btn-default dropdown-toggle ng-binding']")));
-			//button[@class='btn btn-default dropdown-toggle ng-bind
-			return element;
-			
-		}
-		
-		//list of widgets
-		public static List<WebElement> listOfWidgets(WebDriver driver){
-			wait = new WebDriverWait(driver, 300);
-			List<WebElement> elements = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("span.widget_text.ng-binding"),5));
-			//List<WebElement> elements = driver.findElements(By.className("widget_text ng-binding"));
-			return elements;
-		}
 
-		// link for Network Control 3 switch
-		public static WebElement link_dashBoardName(WebDriver driver, String dashBoardToChangeName) {
-			wait = new WebDriverWait(driver, 30);
-			element = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'"+dashBoardToChangeName+"')]")));
-			return element;
-		}
+	// Alert Monitor title
+	public static WebElement heading_AlertMonitor(WebDriver driver) {
+		element = driver.findElement(By.xpath("//span[contains(text(),'Alert Monitor')]"));
+		return element;
+
+	}
+
+	// button for changing dashboard in SSW
+	public static WebElement buttonUpdateDashBoard(WebDriver driver) {
+		wait = new WebDriverWait(driver, 120);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[@class='btn btn-default dropdown-toggle ng-binding']")));
+		// button[@class='btn btn-default dropdown-toggle ng-bind
+		return element;
+
+	}
+
+	// list of widgets
+	public static List<WebElement> listOfWidgets(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		List<WebElement> elements = wait.until(
+				ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("span.widget_text.ng-binding"), 5));
+		// List<WebElement> elements = driver.findElements(By.className("widget_text
+		// ng-binding"));
+		return elements;
+	}
+
+	// link for Network Control 3 switch
+	public static WebElement link_dashBoardName(WebDriver driver, String dashBoardToChangeName) {
+		wait = new WebDriverWait(driver, 30);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(text(),'" + dashBoardToChangeName + "')]")));
+		return element;
+	}
 
 	/**
 	 * this function adds an Alert Monitor
@@ -77,7 +86,10 @@ public class IFlightNeo_SAW {
 	 * 
 	 * @param driver
 	 */
-	public static void configureAlertMonitor(WebDriver driver) {
+	public static void configureAlertMonitor(WebDriver driver, String[] alertType, String[] alertGroup,
+			String periodstart, String periodEnd) {
+		
+		Actions action = new Actions(driver);
 		// click on the Add Widget Button
 		comm.performAction(driver, btn_EditAlertMonitor(driver), "CLICK", "click on Edit for the Alert Monitor",
 				"click on Edit for the Alert Monitor");
@@ -86,31 +98,21 @@ public class IFlightNeo_SAW {
 		comm.performAction(driver, list_AlertType(driver), "CLICK", "click on dropdown for the Alert Type",
 				"click on dropdown for the Alert Type");
 
-		// click on the element for Critical
-		// comm.performAction(driver,list_CriticalElement(driver), "CLICK", "click on
-		// Critical Element", "click on Critical Element");
-
-		comm.performAction(driver, txtbx_AlertTypeDIV(driver), "CLICK", "Low",
-				"leave focus from textbox for Alert Type");
-
-		try {
-			Thread.sleep(2000);
-		} catch (Exception e) {
-
+		for (int i = 0; i < alertType.length; i++) {
+			comm.performAction(driver, list_AlertType(driver, alertType[i]), "CLICK", "", alertType[i]);
 		}
+		action.sendKeys(Keys.ESCAPE).perform();;
 
-		// leave focus from textbox for Alert Type
-		// comm.performAction(driver,txtbx_AlertType(driver), "SET" , "Low", "leave
-		// focus from textbox for Alert Type");
-		txtbx_AlertTypeDIV(driver).sendKeys("Low");
-//Keys.ESCAPE
-
-		try {
-			Thread.sleep(20000);
-		} catch (Exception e) {
-
+		// click on the dropdown for the Alert Group
+		comm.performAction(driver, list_AlertGroup(driver), "CLICK", "", "Alert Group");
+		
+		for (int i = 0; i < alertGroup.length; i++) {
+			comm.performAction(driver, list_AlertGroup(driver, alertGroup[i]), "CLICK", "", alertGroup[i]);
 		}
-
+		action.sendKeys(Keys.ESCAPE).perform();;
+		
+		comm.performAction(driver, text_PeriodStartDay(driver), "SET", periodstart,"Period Start Day" );
+		comm.performAction(driver, text_PeriodEndDay(driver), "SET", periodEnd,"Period End Day" );
 		// click on the Save button
 		comm.performAction(driver, btn_SaveAlertMonitor(driver), "CLICK", "click on the Save button",
 				"click on the Save button");
@@ -198,6 +200,24 @@ public class IFlightNeo_SAW {
 		return element;
 	}
 
+	public static WebElement list_AlertType(WebDriver driver, String alertType) {
+		String xpath = "//div[contains(text(), '" + alertType + "')]";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+	
+	public static WebElement list_AlertGroup(WebDriver driver, String alertGroup) {
+		String xpath = "//div[contains(text(), '" + alertGroup + "')]";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+
 	/**
 	 * return the textbox for the Alert Type
 	 * 
@@ -206,6 +226,36 @@ public class IFlightNeo_SAW {
 	 */
 	public static WebElement list_AlertType(WebDriver driver) {
 		String xpath = "//input[@name='config_severities']/../div";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+
+	// dropdown of AlertGroup
+	public static WebElement list_AlertGroup(WebDriver driver) {
+		String xpath = "//label[text()='Alert Group']/ancestor::div[@class='row']//ul[@class='select2-choices']";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+
+	// Period start day of AlertGroup
+	public static WebElement text_PeriodStartDay(WebDriver driver) {
+		String xpath = "//label[text()='Period']/ancestor::div[@class='row']//div[@class='h_size_40 pull-left'][1]/input";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+
+	// Period end day of AlertGroup
+	public static WebElement text_PeriodEndDay(WebDriver driver) {
+		String xpath = "//label[text()='Period']/ancestor::div[@class='row']//div[@class='h_size_40 pull-left'][2]/input";
 
 		wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
@@ -312,6 +362,23 @@ public class IFlightNeo_SAW {
 					driver, true);
 		}
 
+	}
+	
+	
+
+	public static void verifyFlight(WebDriver driver ,String flightNo) {
+		try {
+			
+			WebElement flight= wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(text(),'"+flightNo+"')]")));
+			comm.performAction(driver, flight, "HOVER", "", flightNo);
+			htmlLib.logReport("Verify flight present in SAW", "Flight is present in SAW : EY"+flightNo, "PASS",
+					driver, true);
+		}
+		catch(Exception e) {
+			htmlLib.logReport("Verify flight present in SAW", "Flight is not present in SAW : EY"+flightNo, "FAIL",
+					driver, true);
+		}
+		
 	}
 
 }

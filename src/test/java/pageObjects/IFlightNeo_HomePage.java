@@ -1009,6 +1009,9 @@ public class IFlightNeo_HomePage {
 	public static void selectSeasonalAwarenessWindow(WebDriver driver) throws InterruptedException {
 		//Wait till page refresh
 		waitTillPageRefreshCompletes(driver);
+		
+		
+		//com.performAction(driver, menu_AdditionalMenuOption(driver), "click", "", "Additional Option");
 		//Thread.sleep(2000);
 		// SAW
 		com.performAction(driver, mainMenu_SAW(driver), "HOVER", "", "SAW option");
