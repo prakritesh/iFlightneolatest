@@ -19,7 +19,6 @@ import utilities.Driver;
 
 public class NeoOps_AAFNew_TC003 {
 
-
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary com = new utilities.CommonLibrary();
 	public utilities.BusinessFunctions bizComm = new utilities.BusinessFunctions();
@@ -47,19 +46,22 @@ public class NeoOps_AAFNew_TC003 {
 			String RegNo = CollectTestData.Regno;
 			String equipment = "CONNECTIVITY";
 
-			String aircraftImageLocation = System.getProperty("user.dir") + "\\TestData\\NeoOps_AAFNew_TC003\\AircraftRegistration.PNG";
-			String afterAddingAircraftEquipment = System.getProperty("user.dir") + "\\TestData\\NeoOps_AAFNew_TC003\\AfterAddingAircraftEquipment.PNG";
+			String aircraftImageLocation = System.getProperty("user.dir")
+					+ "\\TestData\\NeoOps_AAFNew_TC003\\AircraftRegistration.PNG";
+			String afterAddingAircraftEquipment = System.getProperty("user.dir")
+					+ "\\TestData\\NeoOps_AAFNew_TC003\\AfterAddingAircraftEquipment.PNG";
 			// Login as Admin role
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 
 			// Navigate to the Gantt Chart
 			IFlightNeo_HomePage.selectGantt(driver);
-			
-			//Right click on a/c reg and select "Add Manage Aircraft Equipment"
-			IFlightNeo_Gantt.addManageAircraftEquipment(driver ,RegNo,aircraftImageLocation,equipment, afterAddingAircraftEquipment);
-			IFlightNeo_Gantt.deleteAllAircraftEquipment(driver,afterAddingAircraftEquipment); 
-			
+
+			// Right click on a/c reg and select "Add Manage Aircraft Equipment"
+			IFlightNeo_Gantt.addManageAircraftEquipment(driver, RegNo, aircraftImageLocation, equipment,
+					afterAddingAircraftEquipment);
+			IFlightNeo_Gantt.deleteAllAircraftEquipment(driver, afterAddingAircraftEquipment);
+
 		}
 
 		catch (Exception e) {
@@ -70,13 +72,9 @@ public class NeoOps_AAFNew_TC003 {
 
 	}
 
-	
-	/*
-	 * @AfterMethod public void closeTest() { Driver.tearDownTestExecution(driver);
-	 * }
-	 */
-	 
-
-
+	@AfterMethod
+	public void closeTest() {
+		Driver.tearDownTestExecution(driver);
+	}
 
 }

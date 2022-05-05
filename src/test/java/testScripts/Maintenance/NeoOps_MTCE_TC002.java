@@ -1,5 +1,7 @@
 package testScripts.Maintenance;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -46,6 +48,12 @@ public class NeoOps_MTCE_TC002 {
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
 			String flightNumber = CollectTestData.flightNumber;
+			String[] alertType= {"Critical","Low"};
+			String[] alertGroup = {"RULE_VIOLATION","INFORMATION_UPDATES","REMINDERS"};
+			String periodstart = "0";
+			String periodEnd="3";
+			String defaultRows ="15";
+			
 //		String registrationNumber = "A6-EIT";  //CollectTestData.Regno;  - the CollectTestData.Regno always returns NULL
 
 			IFlightNeo_LoginPage.login(driver, username, password);
@@ -61,7 +69,7 @@ public class NeoOps_MTCE_TC002 {
 			IFlightNeo_SAW.addAlertMonitor(driver);
 			
 			// configure the "Alert Monitor"
-			IFlightNeo_SAW.configureAlertMonitor(driver);
+			IFlightNeo_SAW.configureAlertMonitor(driver,alertType,alertGroup,periodstart,periodEnd);
 			
 			// link the Alert Monitor to the Gantt
 			IFlightNeo_SAW.linkToGantt(driver);

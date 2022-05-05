@@ -33,6 +33,10 @@ dependencies {
 	
 	// Apache Poi to read/write MS office components
 	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+	
+	
+	// https://mvnrepository.com/artifact/com.epam.healenium/healenium-web
+	implementation group: 'com.epam.healenium', name: 'healenium-web', version: '3.2.4'
   
 	// Webdriver Manager
    	compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '4.2.2'
@@ -47,6 +51,9 @@ dependencies {
 	compile files("src/test/resources/jcabi-xml-0.22.2.jar")
 	
     //implementation group: 'com.cedarsoftware', name: 'java-util', version: '1.8.0'
+    
+    
+    
 }
 
 test {
