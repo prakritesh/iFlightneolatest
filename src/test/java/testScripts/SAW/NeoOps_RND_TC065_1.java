@@ -8,6 +8,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.epam.healenium.SelfHealingDriver;
+
 import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
@@ -22,7 +24,7 @@ public class NeoOps_RND_TC065_1 {
 	public utilities.BusinessFunctions bizComm = new utilities.BusinessFunctions();
 	String[] lists = this.getClass().getName().split("\\.");
 	String tcName = lists[lists.length - 1];
-	static WebDriver driver;
+	WebDriver driver;
 	static WebDriverWait wait;
 
 	@BeforeMethod
