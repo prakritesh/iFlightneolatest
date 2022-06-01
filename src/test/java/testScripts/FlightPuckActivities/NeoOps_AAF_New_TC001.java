@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -13,10 +14,7 @@ import pageObjects.IFlightNeo_LoginPage;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_MTCE_TC029 {
-
-	
-
+public class NeoOps_AAF_New_TC001 {
 
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary com = new utilities.CommonLibrary();
@@ -29,29 +27,32 @@ public class NeoOps_MTCE_TC029 {
 	@BeforeMethod
 	void setUp() {
 		// Set Up Initial Script Requirement
-		Driver.setUpTestExecution(tcName, "Able to add an Unserviceable");
+		Driver.setUpTestExecution(tcName, "User Able to open 4 LWs (1 AUTO ON and 3 AUTO OFF)");
 		// launch application
 		String browser = CollectTestData.browser;
 		String url = CollectTestData.url;
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=44)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
+			String mode = "New Scenario";
+			int tabOpenCount = 4;
 
-			// Login as Admin role
+			//Login
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-			//Navigate to Gantt
 			// Opening the Gantt Screen and Finding the Flight
 			IFlightNeo_HomePage.selectGantt(driver);
-			//Right click on the empty area on the line of flying of an aircraft, select "Add Miscellaneous"
-			IFlightNeo_Gantt.addUnservicable(driver );
-			
+			// Open LWS Gantt 4 times
+			for (int index = 0; index < tabOpenCount; index++) {
+				IFlightNeo_Gantt.changeGanttMode(driver, mode);
+			}
+
 		}
 
 		catch (Exception e) {
@@ -62,12 +63,9 @@ public class NeoOps_MTCE_TC029 {
 
 	}
 
-	/*
-	 * @AfterMethod public void closeTest() { Driver.tearDownTestExecution(driver);
-	 * }
-	 */
-
-
-
+	@AfterMethod
+	public void closeTest() {
+		Driver.tearDownTestExecution(driver);
+	}
 
 }

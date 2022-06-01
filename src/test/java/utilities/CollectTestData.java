@@ -62,6 +62,8 @@ public class CollectTestData {
 	public static String userToEdit;
 	public static String userToEditPassword;
 	public static String reroutestation;
+	public static String TestPlanname;
+	public static String Expirydate;
 	
 	public static void main(String scriptName) {
 		HashMap<String, String> data = new HashMap<String, String>();
@@ -107,6 +109,8 @@ public class CollectTestData {
 		userToEdit=data.get("UserToEdit");
 		userToEditPassword=data.get("UserToEditPassword");
 		reroutestation=data.get("Divertedstation");
+		TestPlanname=data.get("TestPlanname");
+		Expirydate=data.get("Expirydate");
 	}
 	
 	@SuppressWarnings("rawtypes")

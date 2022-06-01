@@ -35,12 +35,12 @@ public class NeoOps_AAF_TC059 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=36)
 	public void mainMethod() throws Exception {
 		// Collecting data from Excel and FlightImages Path
 		String username = CollectTestData.userName;
 		String password = CollectTestData.password;
-		String date = comm.dateCalendarEntry(2,0,0);//CollectTestData.flightDate;
+		String Date = CollectTestData.flightDate;
 		//String flightNo = CollectTestData.flightNumber;
 		String[] flightNo = CollectTestData.flightNumber.split(",", 2);
 		String departureAirport = CollectTestData.origin;
@@ -61,7 +61,7 @@ public class NeoOps_AAF_TC059 {
 				BusinessFunctions.closeTab(driver, 0, false);
 				Thread.sleep(3000);
 				// Find Flight
-				IFlightNeo_Gantt.findFlightInGantt(driver, flightNo[0], date, departureAirport, arrivalAirport);
+				IFlightNeo_Gantt.findFlightInGantt(driver, flightNo[0], Date, departureAirport, arrivalAirport);
 				// Implementing the Screen and Pattern using SikuliScript
 				scn = new Screen();
 				Pattern Flight1 = new Pattern(img_Flight1);
@@ -91,7 +91,7 @@ public class NeoOps_AAF_TC059 {
 				// confirm swap operation
 				IFlightNeo_HomePage.swapFlight(driver);
 				// Again finding the first trip flight to verify the aircraft registration
-				IFlightNeo_Gantt.findFlightInGantt(driver, "" + flightNo[0], date, departureAirport, arrivalAirport);
+				IFlightNeo_Gantt.findFlightInGantt(driver, "" + flightNo[0], Date, departureAirport, arrivalAirport);
 				scn.wait(Flight1, 9000);
 				scn.doubleClick(Flight1);
 				// Gets Aircraft registration number after flight swap

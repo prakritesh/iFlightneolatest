@@ -125,6 +125,14 @@ public class IFlightNeo_Messages {
         return element;
 	}
 	
+	
+	public static WebElement window_AuditTrail(WebDriver driver){
+		wait=new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Audit Trail For Flight')]")));
+        element = driver.findElement(By.xpath("//span[contains(text(),'Audit Trail For Flight')]"));
+        return element;
+	}
+	
 	public static WebElement btn_clear(WebDriver driver){
 		wait=new WebDriverWait(driver,30);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Clear')]")));

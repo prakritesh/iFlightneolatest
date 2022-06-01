@@ -68,7 +68,7 @@ public class NeoOps_AAF_TC124 {
 				htmlLib.logReport("Filter could not be found", "Filter could not be found", "FAIL", driver, true);
 			}
 		} catch (Exception e) {
-			htmlLib.logReport("The script failed - check the Exceptions", "The script failed - check the Exceptions", "Fail", driver, true);
+			htmlLib.logReport("The script failed - check the Exceptions", "The script failed - check the Exceptions"+e.getMessage(), "Fail", driver, true);
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
 		}

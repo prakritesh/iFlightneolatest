@@ -43,9 +43,11 @@ public class NeoOps_AAF_TC048 {
 		String url = CollectTestData.url;	
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
+    @Test(priority=30)
     
-    @Test
 	public void mainMethod() throws Exception {
+    	
+    	try {
 		// Collect Test Data
 		String username = CollectTestData.userName;
 		String password = CollectTestData.password;
@@ -57,11 +59,11 @@ public class NeoOps_AAF_TC048 {
 		String depCode = CollectTestData.origin;
 		String arrCode = CollectTestData.destination;
 		String delaycode=CollectTestData.delaycode;
-		String selectedFlightImg = System.getProperty("user.dir")+"\\TestData\\"+tcName+"\\EY"+flighNo+"_NoOOOITime.png";
-		String actualOutTimeImg = System.getProperty("user.dir")+"\\TestData\\"+tcName+"\\EY"+flighNo+"_ActualOutTime.png";
-		String actualOffTimeImg = System.getProperty("user.dir")+"\\TestData\\"+tcName+"\\EY"+flighNo+"_ActualOffTime.png";
-		String actualOnTimeImg = System.getProperty("user.dir")+"\\TestData\\"+tcName+"\\EY"+flighNo+"_ActualOnTime.png";
-		String actualInTimeImg = System.getProperty("user.dir")+"\\TestData\\"+tcName+"\\EY"+flighNo+"_ActualInTime.png";
+		String selectedFlightImg = System.getProperty("user.dir")+"\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flighNo+"_NoOOOITime.png";
+		String actualOutTimeImg = System.getProperty("user.dir")+"\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flighNo+"_ActualOutTime.png";
+		String actualOffTimeImg = System.getProperty("user.dir")+"\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flighNo+"_ActualOffTime.png";
+		String actualOnTimeImg = System.getProperty("user.dir")+"\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flighNo+"_ActualOnTime.png";
+		String actualInTimeImg = System.getProperty("user.dir")+"\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flighNo+"_ActualInTime.png";
 		String Tabname = "//a[contains(text(),'OPS')]";
 		
 		// Login
@@ -232,7 +234,15 @@ public class NeoOps_AAF_TC048 {
 					 System.out.println("Filter created for this TC is deleted");
 				 }
 				
-				
+    	}
+    	
+    	catch(Exception e)
+    	
+    	{
+    		System.out.println("The exception occured for this TC is"+e);
+			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
+    	}
 				
 	}
     
@@ -286,7 +296,7 @@ public class NeoOps_AAF_TC048 {
 	    	return true;
     	}
     	catch (Exception e) {
-    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e.getMessage(), "FATAL", driver, true);
+    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e, "FATAL", driver, true);
 			e.printStackTrace();
 			return false;
 		}

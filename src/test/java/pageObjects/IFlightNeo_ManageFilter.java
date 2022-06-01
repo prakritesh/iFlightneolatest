@@ -1505,6 +1505,9 @@ public class IFlightNeo_ManageFilter {
 			comm.performAction(driver,btn_Yes(driver),"CLICK","","confirm delete");
 		}
 		catch (Exception e) {
+			
+			
+			htmlLib.logReport("Filter Deletion", "Filter deletion unsuccessful", "INFO", driver, true);	
 			return false;
 		}
 		

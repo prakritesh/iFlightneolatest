@@ -25,7 +25,7 @@ import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_FMO_TC043_1_DryRun {
+public class NeoOps_FMO_TC043_1 {
 	
 	WebDriver driver;
 	public static utilities.CommonLibrary com = new utilities.CommonLibrary();
@@ -46,14 +46,14 @@ public class NeoOps_FMO_TC043_1_DryRun {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-    @Test
+    @Test(priority=45)
    	public void mainMethod() throws Exception {
    		// Collect Test Data
    		String username = CollectTestData.userName;
    		String password = CollectTestData.password;
    		String flightNo = CollectTestData.flightNumber;
    		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
-   		String flightDate = com.dateCalendarEntry(-11,0,0);
+   		String flightDate = com.dateCalendarEntry(-4,0,0);
    		String messageDate= com.dateCalendarEntry(0,0,0);
    		String depCode = CollectTestData.origin;
    		String arrCode = CollectTestData.destination;
@@ -173,26 +173,37 @@ public class NeoOps_FMO_TC043_1_DryRun {
    				
   
    				String actgroundreturnTime = bizCom.updateDate(actOutTime, 0, 50);
-   				String revisedouttime = bizCom.updateDate(actOutTime, 1, 00);
+   				String revisedouttime = bizCom.updateDate(actOutTime, 2, 00);
    				String revisedintime = bizCom.updateDate(actOutTime, 6, 00);
    				com.performAction(driver, IFlightNeo_HomePage.groundReturn_timeforRamp(driver),"SET", actgroundreturnTime, "Setting groundreturn time");
    				com.performAction(driver, IFlightNeo_HomePage.Revisedout_timeforRamp(driver),"SET", revisedouttime, "Setting Revised Out time");
    				com.performAction(driver, IFlightNeo_HomePage.Revisedin_timeforRamp(driver),"SET", revisedintime, "Setting Revised In time");
    				com.performAction(driver, IFlightNeo_HomePage.Flight_Suffix(driver),"SET", "A", "Setting Flight Suffix for the returned flight");
    				com.performAction(driver, IFlightNeo_HomePage.saveoption_FlightReturnContinue(driver), "Click", "",
-						"Clicking on Save button of flight return & continue");
+						"Clicking on Save button of ground return & continue");
+   			//Wait for the previous operation to complete ( updating ground return)
+   				Thread.sleep(9000);
    			//Check Change List
    			 com.performAction(driver, IFlightNeo_Gantt.changeList(driver), "click", "", "Clicked on change list");
    			 //Expand Change List Record
    			 com.performAction(driver, IFlightNeo_Gantt.changeListExpand(driver), "click", "", "Clicked on change list details");
    			 //Wait for the visibility of change list details
-   			 IFlightNeo_Gantt.changelistdetails(driver);
+   			 Thread.sleep(8000);
+   			 //IFlightNeo_Gantt.changelistdetails(driver);
    			 //publish from change list
    			 com.performAction(driver, IFlightNeo_Gantt.publish_From_Changelist(driver), "click", "", "Clicked on publish button from change list details");
    			//confirm change 
-   				IFlightNeo_HomePage.confirmChange(driver);
+   				IFlightNeo_HomePage.confirmChangeforAutoof(driver);
+   				
+   			
+   				
+   			// Confirm change reason
+   			//	IFlightNeo_HomePage.confirmATC(driver);
+   				
    			//Close change list 
    				com.performAction(driver, IFlightNeo_HomePage.closeChangeList(driver), "click", "", "Clicked on Close button of change list details");
+   				Screen scnnew=new Screen();
+   				scnnew.hover();
    				  
    				if(IFlightNeo_Gantt.selectFlightInGantt(driver, returnlegImg, "DoubleClick"))
 						
@@ -200,10 +211,11 @@ public class NeoOps_FMO_TC043_1_DryRun {
 						System.out.println("image found");	
 						String Fltstatus = bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_flightStatus");
 						String Opsstatus= bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_deptStatus");
+						String Returnlegarrapt= bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_arrIata");
 						
-						if (Fltstatus.equalsIgnoreCase("OFBL")&& Opsstatus.equalsIgnoreCase("RR"))
+						if (Fltstatus.equalsIgnoreCase("OFBL")&& Opsstatus.equalsIgnoreCase("RR")&&Returnlegarrapt.equalsIgnoreCase(depCode))
 						{
-						htmlLib.logReport("Open flight leg details Screen", "Flight leg details Open success & the Ground Return Flight Status is:"+Fltstatus+"ops status is:" +Opsstatus, "Pass", driver, true);	
+						htmlLib.logReport("Open flight leg details Screen", "Flight leg details Open success & the Ground Return Flight Status is: "+Fltstatus+"ops status is: " +Opsstatus+" & both origin & destination is same", "Pass", driver, true);	
 						}
 						
 						else
@@ -221,10 +233,13 @@ public class NeoOps_FMO_TC043_1_DryRun {
 			    		System.out.println("image found");
 			    		String Fltstatus = bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_flightStatus");
 						String Opsstatus= bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_deptStatus");
+						String Newdepapt= driver.findElement(By.xpath("//div[contains(@id,'_deptIataInput')]//span[text()='" + depCode + "']")).getAttribute("innerText");
+						String NewArrapt= bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_arrIata");
 						
-						if (Fltstatus.equalsIgnoreCase("PDEP")&& Opsstatus.equalsIgnoreCase("EARLY"))
+						
+						if (Fltstatus.equalsIgnoreCase("PDEP")&& Opsstatus.equalsIgnoreCase("EARLY")&&Newdepapt.equalsIgnoreCase(depCode)&&NewArrapt.equalsIgnoreCase(arrCode))
 						{
-						htmlLib.logReport("Open flight leg details Screen", "Flight leg details Open success & the Ground Return Continuation Leg Flight Status is: "+Fltstatus+" ops status is: " +Opsstatus, "Pass", driver, true);	
+						htmlLib.logReport("Open flight leg details Screen", "Flight leg details Open success & the Ground Return Continuation Leg Flight Status is: "+Fltstatus+" ops status is: " +Opsstatus+ "& Origin & Destination same as Original flight", "Pass", driver, true);	
 						}
 						
 						else
@@ -267,10 +282,10 @@ public class NeoOps_FMO_TC043_1_DryRun {
    				
    	}
        
-   	/*@AfterMethod
+   	@AfterMethod
    	public void closeTest() {
    		Driver.tearDownTestExecution(driver);
-   	}*/
+   	}
    	
    	/**
 	 * Method to update Out, Off, On, In time in flight leg details dialog
@@ -311,14 +326,31 @@ public class NeoOps_FMO_TC043_1_DryRun {
 	    	// Wait
 	    	// Wait
 	    	WebDriverWait wait = new WebDriverWait(driver, 30);
+	    	
+	    	try {
+	    	if (driver.findElement(By.xpath("//span[contains(text(),'LW Warning')]")).isDisplayed())
+	    	{
+	    		driver.findElement(By.xpath("//span[contains(text(),'YES')]")).click();
+	    		
+	    	} 
+	    	}
+	    	
+	    	catch(Exception e3)
+	    	
+	    	{
+	    		System.out.println("There is no such webelemet");
+	    	}
+	    	
+	    	
 	    	wait.until(ExpectedConditions.visibilityOf(IFlightNeo_Gantt.msg_DataSavedSuccess(driver)));
 	    	// Close Window
 	    	IFlightNeo_Gantt.btn_CloseFlightLegDetail(driver).click();
 	    	return true;
     	}
     	catch (Exception e) {
-    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e.getMessage(), "FATAL", driver, true);
+    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e, "FailL", driver, true);
 			e.printStackTrace();
+			
 			return false;
 		}
     }

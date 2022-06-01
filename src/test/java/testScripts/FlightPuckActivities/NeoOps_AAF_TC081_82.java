@@ -37,7 +37,7 @@ public class NeoOps_AAF_TC081_82 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
     
-    @Test (priority=1)
+    @Test
    	public void mainMethod() throws InterruptedException {
     	// Local Test Data
 		String username1 = CollectTestData.userName.split(",")[0];

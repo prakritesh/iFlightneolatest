@@ -32,7 +32,7 @@ public class NeoOps_AAF_TC142 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=9)
+	@Test(priority=10)
 	public void login() throws Exception {
 		try {
 			String username = CollectTestData.userName;
@@ -69,7 +69,7 @@ public class NeoOps_AAF_TC142 {
 
 
 		} catch (Exception e) {
-			htmlLib.logReport("The script failed - check the Exceptions", "The script failed - check the Exceptions", "Fail", driver, true);
+			htmlLib.logReport("The script failed - check the Exceptions", "The script failed - check the Exceptions"+e.getMessage(), "Fail", driver, true);
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
 		}

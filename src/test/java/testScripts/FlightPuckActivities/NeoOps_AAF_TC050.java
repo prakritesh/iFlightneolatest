@@ -36,7 +36,7 @@ public class NeoOps_AAF_TC050 {
 		CollectTestData.main(tcName);
 	}
 
-	@Test(priority=29)
+	@Test(priority=31)
 	public void NeoOps_AAF_TC050_Test() throws Exception {
 		try {
 		// Collecting data from Excel and FlightImages Path
@@ -158,6 +158,7 @@ public class NeoOps_AAF_TC050 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 			
 		}
 		//IFlightNeo_HomePage.btn_CloseFlightDetailsWindow(driver);

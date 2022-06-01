@@ -34,7 +34,7 @@ public class NeoOps_SAW_NewTC001 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=51)
 	public void login() throws Exception {
 
 		try {
@@ -56,6 +56,7 @@ public class NeoOps_SAW_NewTC001 {
 		} catch (Exception e) {
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e.getMessage(), "Fail", driver, true);
 
 		}
 

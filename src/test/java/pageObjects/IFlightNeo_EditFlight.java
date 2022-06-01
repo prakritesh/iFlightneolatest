@@ -124,6 +124,49 @@ public class IFlightNeo_EditFlight {
 	}
 	
 	/**
+	 * change the STD in the result grid
+	 * 
+	 * @param driver
+	 * @throws InterruptedException 
+	 */
+	public static void changeSTA(WebDriver driver,String STA) throws InterruptedException {
+		
+		
+		//String date = new SimpleDateFormat("dd-MMMM-yyyy HH:mm").format(new Date());
+		
+		grid_STA(driver).clear();
+		comm.performAction(driver, grid_STA(driver), "SET", STA+Keys.ENTER, "Set STA");
+		//introducing waitime so that force publish pop-up appears
+		Thread.sleep(8000);
+		grid_STA(driver).sendKeys(Keys.TAB);
+		//grid_ETA(driver).clear();
+		//comm.performAction(driver, grid_ETA(driver), "SET", STA+Keys.ENTER, "Set ETA");
+		grid_ETA(driver).sendKeys(Keys.TAB);
+		
+		//grid_STA(driver).sendKeys(STA + Keys.ENTER);
+		
+        // we have to move the mouse, if not the menu doesn't disappear!
+		
+		driver.findElement(By.xpath("//span[contains(text(),'Flight Management - Edit Flight ')]")).click();
+		//wait for sometime so that unexpected error not thrown
+		Thread.sleep(3000);
+        /*Screen scn = new Screen();
+       
+        scn.click();*/
+		try {
+			Thread.sleep(1000);
+		}
+		catch (Exception e) {
+			
+		}
+	}
+	
+	private static WebElement grid_ETA(WebDriver driver) {
+		// TODO Auto-generated method stub
+		return driver.findElement(By.xpath("//input[@name='estimatedOnBlocksDateTime']"));
+	}
+
+	/**
 	 * change the ETD in the result grid
 	 * 
 	 * @param driver
@@ -243,10 +286,43 @@ public class IFlightNeo_EditFlight {
 		
 		// click on PUBLISH button
 		comm.performAction(driver, btn_publish(driver), "CLICK", "click on publish button", "click on publish button");
+		
 
 		// click on OK button to confirm
 		comm.performAction(driver,btn_confirmSave(driver), "CLICK", "click on OK button", "click on OK button");
 	}
+	
+	/**
+	 * click on save changes to save the changes made in the search result grid, if a publish & forcepublish is required
+	 * 
+	 * @param driver
+	 */
+	public static void saveChangesSTAforgrndtmviolation(WebDriver driver) {
+		// click the SAVE button
+		comm.performAction(driver,btn_save(driver), "CLICK", "click on SAVE button", "click on SAVE button");
+		
+		// Click on Force Publish
+		try {
+		comm.performAction(driver,IFlightNeo_Gantt.btn_ForcePublish(driver) ,"Click", "", "Clicked on force publish");
+		}
+		
+		catch(Exception e)
+		{}
+	
+		// click on dropdown to select a reason
+		comm.performAction(driver, dropdown_reasonSTD(driver), "CLICK", "click on reason dropdown", "click on reason dropdown");
+		
+		// select ATC from dropdown
+		comm.performAction(driver, dropdown_ATC(driver), "CLICK", "select ATC", "select ATC");
+		
+		// click on PUBLISH button
+		comm.performAction(driver, btn_publish(driver), "CLICK", "click on publish button", "click on publish button");
+		
+
+		// click on OK button to confirm
+		comm.performAction(driver,btn_confirmSave(driver), "CLICK", "click on OK button", "click on OK button");
+	}
+
 
 	/**
 	 * click on save changes to save the changes made in the search result grid, if a publish is required
@@ -299,6 +375,8 @@ public class IFlightNeo_EditFlight {
 */
 	}
 
+	
+	
 	/**
 	 * click on the dropdown for the publish reason for changing STD
 	 * 
@@ -432,6 +510,20 @@ public class IFlightNeo_EditFlight {
 		element = driver.findElement(By.xpath(xpath));
 		return element;
 	}
+	
+	/**
+	 * get STA from the grid
+	 * 
+	 * @param driver
+	 * @return
+	 */
+	public static WebElement grid_STA(WebDriver driver) {
+		String xpath = "//input[@name='scheduledArrivalDateTime']";
+		
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+
 
 	/**
 	 * get ETD from the grid

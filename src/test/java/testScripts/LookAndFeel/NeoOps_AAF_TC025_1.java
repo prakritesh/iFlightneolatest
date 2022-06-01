@@ -72,7 +72,7 @@ public class NeoOps_AAF_TC025_1 {
 						driver, true);
 			}
 		} catch (Exception e) {
-			htmlLib.logReport("The script failed - check the Exceptions", "The script failed - check the Exceptions", "Fail", driver, true);
+			htmlLib.logReport("The script failed - check the Exceptions", "The script failed - check the Exceptions"+e.getMessage(), "Fail", driver, true);
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
 		}

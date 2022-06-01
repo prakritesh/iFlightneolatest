@@ -38,7 +38,7 @@ public class NeoOps_AAF_TC151 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=32)
+	@Test(priority=43)
 	public void tooltipTest() throws Exception {
 		try
 		{
@@ -171,6 +171,7 @@ public class NeoOps_AAF_TC151 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 			
 		}
 		

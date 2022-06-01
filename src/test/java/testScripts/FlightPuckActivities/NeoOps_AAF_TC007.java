@@ -37,7 +37,7 @@ public class NeoOps_AAF_TC007 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 	
-	@Test(priority=25)
+	@Test(priority=26)
 	public void login() throws Exception {
 		try
 		{
@@ -124,6 +124,7 @@ public class NeoOps_AAF_TC007 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);	
 			
 		}
 		

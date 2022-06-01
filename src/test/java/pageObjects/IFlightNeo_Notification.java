@@ -564,10 +564,10 @@ public class IFlightNeo_Notification {
 
 	}
 
-	public static boolean browse_notification(WebDriver driver, String flighNo) throws InterruptedException
+	public static boolean browse_notification(WebDriver driver, String flighNo,String Operation) throws InterruptedException
 
 	{
-		boolean ifflightCancelled = false;
+		boolean operationcounter = false;
 		wait = new WebDriverWait(driver, 70);
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//a[@id='menu_notification']")));
 		element = driver.findElement(By.xpath("//a[@id='menu_notification']"));
@@ -581,6 +581,11 @@ public class IFlightNeo_Notification {
 		driver.findElement(By.xpath("//button[@ng-click='searchNotifications()']")).click();
 
 		Thread.sleep(500);
+		
+		switch(Operation.toUpperCase()) {
+		
+		
+		case "CANCELLATION":
 
 		List<WebElement> cancellation_notification = driver
 				.findElements(By.xpath("//table[contains(@id,'notificationBrowserGrid')]//tr//td"));
@@ -603,12 +608,53 @@ public class IFlightNeo_Notification {
 
 				tdcounter = cancellation_notification.size();
 
-				ifflightCancelled = true;
-
-			}
-
+				operationcounter = true;
+			    }
+			
 		}
-		return ifflightCancelled;
+				break;
+				
+			  case "GROUNDTIMEVIO" :
+				
+				List<WebElement> groundtime_notification = driver
+				.findElements(By.xpath("//table[contains(@id,'notificationBrowserGrid')]//tr//td"));
+ // In order to avoid the long wait for accessing the whole table of notification browser limited the tdcounter to 69 ( 1st 2 rows)
+		for (int tdcounter = 0; tdcounter < 69; tdcounter++) {
+
+			WebElement element = driver
+					.findElements(By.xpath("//table[contains(@id,'notificationBrowserGrid')]//tr//td")).get(tdcounter);
+			
+			//String flightnumber=(driver.findElement(By.xpath("//table[contains(@id,'notificationBrowserGrid')]//tr[2]//td[11]")).getAttribute("InnerText").replaceAll("\\S", "").split("/", 4))[0];
+			
+			
+			
+			
+
+			String notification = element.getAttribute("innerHTML").replaceAll("\\s", "");
+			
+			System.out.println(notification);
+
+			if (notification.contains("MinimumGroundTimenotavailable")) {
+
+				// String
+				// flightentity=driver.findElements(By.xpath("//table[contains(@id,'notificationBrowserGrid')]//tr//td")).get(tdcounter+5).getAttribute("innerHTML").replaceAll("\\s",
+				// "");
+				String flightnumber=driver.findElement(By.xpath("//table[contains(@id,'notificationBrowserGrid')]//tr[2]//td[11]")).getAttribute("innerText");
+
+				System.out.println(flightnumber);
+			
+				htmlLib.logReport("Verify Minimum groundtime violation", "Ground time violation notification triggered for flightEntity: "+flightnumber, "INFO", driver, true);
+
+				tdcounter = groundtime_notification.size();
+
+				operationcounter = true;
+				
+			}
+             
+			}
+           break;
+		}
+		return operationcounter;
 
 	}
 

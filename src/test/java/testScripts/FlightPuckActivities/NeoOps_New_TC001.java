@@ -18,7 +18,7 @@ import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_New_TC001_DryRun {
+public class NeoOps_New_TC001 {
 	
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary comm = new utilities.CommonLibrary();
@@ -26,14 +26,11 @@ public class NeoOps_New_TC001_DryRun {
 	String tcName = lists[lists.length - 1];
 	static WebDriver driver;
 	static WebDriverWait wait;
+	
 
 	@BeforeMethod
 	void setUp() {
-		/*
-		 * Driver.setUpTestExecution(tcName,
-		 * "Check up cancellation notification & Outbound messages after cancellation");
-		 * CollectTestData.main(tcName);
-		 */
+		
 		// Set Up Initial Script Requirement
 		Driver.setUpTestExecution(tcName, "Verify Cancelling Flight in LW AUTO OFF mode");
 		// launch application
@@ -42,7 +39,7 @@ public class NeoOps_New_TC001_DryRun {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=33)
+	@Test(priority=46)
 	public void login() throws Exception {
 		try
 		{
@@ -54,7 +51,7 @@ public class NeoOps_New_TC001_DryRun {
 		String departureAirport = CollectTestData.origin;
 		String arrivalAirport = CollectTestData.destination;
 		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
-		String imagePath = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_2.PNG";
+		String imagePath = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_1.PNG";
 		String messageDate= comm.dateCalendarEntry(0,0,0);
 		String filter_name;
 //		driver = EY_iFlightNeo_LoginPage.launchApplication(driver, sit_URL);
@@ -96,23 +93,25 @@ public class NeoOps_New_TC001_DryRun {
 		// Close Default Mode
 		BusinessFunctions.closeTab(driver, 0, false);
 		Thread.sleep(4000);
-		//Re-apply filter
-		//IFlightNeo_ManageFilter.filter_Apply(driver);
-		//htmlLib.logReport("Verify Filter Applied", "Filter Applied", "Pass", driver, true);	
-//		IFlightNeo_HomePage.RealWorld_Find_flight(driver, arrivalAirport, date, departureAirport, arrivalAirport);
+		
 		IFlightNeo_Gantt.findFlightInGantt(driver, flightNo, date, departureAirport, arrivalAirport);
 		Thread.sleep(4000);
 		// Cancel Flight
-		IFlightNeo_Gantt.cancelFlight(driver, imagePath);
+		IFlightNeo_Gantt.cancelFlightinAutooff(driver, imagePath);
 		
+		//Wait for the previous operation to complete ( updating cancel flight)
+			Thread.sleep(9000);
 		//Check Change List
 		 comm.performAction(driver, IFlightNeo_Gantt.changeList(driver), "click", "", "Clicked on change list");
 		 //Expand Change List Record
 		 comm.performAction(driver, IFlightNeo_Gantt.changeListExpand(driver), "click", "", "Clicked on change list details");
-		 //Wait for the visibility of change list
-		 IFlightNeo_Gantt.changelistdetails(driver);
+		 //Wait for the visibility of change list details
+		 Thread.sleep(8000);
 		 //publish from change list
 		 comm.performAction(driver, IFlightNeo_Gantt.publish_From_Changelist(driver), "click", "", "Clicked on publish button from change list details");
+		 //wait to show screenshot
+		 Thread.sleep(2000);
+		 htmlLib.logReport("view the pop-up option", "confirm publish pop-up option displayed","Pass", driver, true);
 		//confirm change 
 			IFlightNeo_HomePage.confirmChange(driver);
 			
@@ -121,7 +120,7 @@ public class NeoOps_New_TC001_DryRun {
 			
 		 
 		
-		if (IFlightNeo_Notification.browse_notification(driver, flightNo))
+		if (IFlightNeo_Notification.browse_notification(driver, flightNo,"cancellation"))
 		{		
 			
 	    		
@@ -134,9 +133,9 @@ public class NeoOps_New_TC001_DryRun {
 		else 
 			
 		{
-			htmlLib.logReport("Check if flight cancelled", "Flight is not cancelled", "Fail", driver, true);
+			htmlLib.logReport("Check if flight cancelled", "Flight is not cancelled", "INFO", driver, true);
 			
-			htmlLib.logReport("Check if Notification Generated", "Notification not generated for Flight cancellation", "Fail", driver, true);
+			htmlLib.logReport("Check if Notification Generated", "Notification not generated for Flight cancellation", "INFO", driver, true);
 		}
 			
 		
@@ -153,8 +152,13 @@ public class NeoOps_New_TC001_DryRun {
 				//Moved the menuItem_ManageFilter(driver) method in IFlightNeo_ManageFilter Page object on 23rd Aug,21
 		IFlightNeo_HomePage.menuItem_ManageFilter(driver);
 				htmlLib.logReport("Main Filter Screen Opened", "Main Filter Screen Open success", "Pass", driver, true);	
+				
+				// deleting the previously created filter.
 		
-		        IFlightNeo_ManageFilter.deleteFilterFromTC001InManageFilter(driver,filter_name);
+				if(IFlightNeo_ManageFilter.deleteFilterFromInManageFilter(driver))
+  				 {
+  					 System.out.println("Filter created for this TC is deleted");
+  				 }
 		        
 		        
 		
@@ -163,6 +167,7 @@ public class NeoOps_New_TC001_DryRun {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 			
 		}
 	}

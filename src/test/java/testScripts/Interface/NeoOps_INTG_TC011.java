@@ -52,7 +52,7 @@ public class NeoOps_INTG_TC011 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=13)
+	@Test(priority=14)
 	public void login() throws Exception {
 		try {
 			String Image_Path_ACReg = System.getProperty("user.dir") + "\\TestData\\NeoOps_INTG_TC011\\RegEIT.PNG";

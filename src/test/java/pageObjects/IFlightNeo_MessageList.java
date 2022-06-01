@@ -19,6 +19,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
 
 import utilities.CollectTestData;
 import utilities.CommonLibrary;
@@ -32,6 +35,9 @@ public class IFlightNeo_MessageList {
 	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	String flightNumber = CollectTestData.flightNumber;
 	static boolean isvaluetocompreavailable,messagecontailsdelaycode;
+	private static By locator;
+	
+	static String imagePath = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\No data found.PNG";
 
 	/*********************************************************************************************
 	 * Method Name : click_messagelist Parameter Used : Webdriver Author : Moumita
@@ -327,19 +333,34 @@ public class IFlightNeo_MessageList {
 	    driver.findElement(By.xpath("//li[@oh-compid='FMSG003_022']//button")).click();
 		Thread.sleep(200);
 //		List<WebElement> table_rows = driver.findElements(By.xpath("//table[contains(@id,'MessageGrid')]//tr[@role='row']"));
+		try {
+		
+		locator = By.xpath("//table[contains(@id,'MessageGrid')]//tr[@role='row']//td[contains(@aria-describedby,'messageType')]");
+		
+		wait=new WebDriverWait(driver, 120);
+		String messageType1;
+		 wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
 		List<WebElement> message_type = driver.findElements(By.xpath("//table[contains(@id,'MessageGrid')]//tr[@role='row']//td[contains(@aria-describedby,'messageType')]"));
 		List<WebElement> message_status = driver.findElements(By.xpath("//table[contains(@id,'MessageGrid')]//tr[@role='row']//td[contains(@aria-describedby,'messageStatus')]"));
 		List<WebElement> source_destination=driver.findElements(By.xpath("//table[contains(@id,'MessageGrid')]//tr[@role='row']//td[contains(@aria-describedby,'source')]"));
 		Thread.sleep(500);
 		for (int i = 0; i < 5; i++) {
 			//message_type.get(i);
-			String messageType = message_type.get(i).getAttribute("innerHTML");
+			try {
+			messageType1=message_type.get(i).getAttribute("innerHTML");
+			}
+			catch(Exception e1)
+			
+			{
+				break;
+			}
+			
 			//System.out.println(messageType);
 			String messagestatus = message_status.get(i).getAttribute("innerHTML");
 			String sourcedestination=source_destination.get(i).getAttribute("innerHTML");
 			//System.out.println(messagestatus);
 			//changed the below if condition on 7th feb,22 so that the sending failed outbound messages to 'Test' destination not considered as failed step instead considered as INFO
-            htmlLib.logReport("Message type & status check", "Message type is "+ messageType+ " & status is "+messagestatus+" for number "+i+ " outbound message", "INFO", driver, true);
+            htmlLib.logReport("Message type & status check", "Message type is "+ messageType1+ " & status is "+messagestatus+" for number "+i+ " outbound message", "INFO", driver, true);
 			if(messagestatus.equals("SENDING_FAILED")&! sourcedestination.equals("TEST")) {
 				htmlLib.logReport("Message status failure check", "Message status is "+ messagestatus+ " for number "+i+ " outbound message", "Fail", driver, false);
 			}
@@ -347,6 +368,21 @@ public class IFlightNeo_MessageList {
 		
 		//Hide advance Search  (added on 23rd March,22 by Moumita so that expanded advance search does not create issue in next execution
 				driver.findElement(By.xpath("//img[@ng-click='advancedSearchShowAndHide()'][@class='margin_l_sm']")).click();
+				
+		}
+		
+		catch(Exception e)
+		{
+			Screen scn = new Screen();
+			Pattern defaultFlight = new Pattern(imagePath);
+			scn.wait(defaultFlight, 20);
+			Match match = scn.exists(defaultFlight.similar(0.70));
+			if (match != null)
+				
+			{
+				htmlLib.logReport("Verify if outbound message generated", "No outbound message generated", "Fail", driver, true);
+			}
+		}
 		
 	}
 

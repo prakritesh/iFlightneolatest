@@ -29,7 +29,7 @@ public class NeoOps_AAF_TC054 {
 		CollectTestData.main(tcName);
 	}
 
-	@Test(priority=30)
+	@Test(priority=32)
 	public void NeoOps_AAF_TC054_Test() throws Exception {
 		try
 		{
@@ -115,6 +115,7 @@ public class NeoOps_AAF_TC054 {
 		{
 			System.out.println("The exception occured for this TC is: "+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 			
 		}
 	}

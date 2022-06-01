@@ -42,7 +42,7 @@ public class NeoOps_RND_TC051 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=33)
+	@Test(priority=47)
 	public void login() throws Exception {
 		try
 		{
@@ -106,7 +106,7 @@ public class NeoOps_RND_TC051 {
 		
 		
 		
-		if (IFlightNeo_Notification.browse_notification(driver, flightNo))
+		if (IFlightNeo_Notification.browse_notification(driver, flightNo,"cancellation"))
 		{		
 			
 	    		
@@ -148,6 +148,7 @@ public class NeoOps_RND_TC051 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 			
 		}
 	}

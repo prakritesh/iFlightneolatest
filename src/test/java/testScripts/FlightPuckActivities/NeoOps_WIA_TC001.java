@@ -1,4 +1,4 @@
-    package testScripts.FlightPuckActivities;
+package testScripts.FlightPuckActivities;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -49,7 +49,7 @@ public class NeoOps_WIA_TC001 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=48)
 	@SuppressWarnings("unused")
 	public void login() throws Exception {	
 		try
@@ -122,15 +122,6 @@ public class NeoOps_WIA_TC001 {
 		 IFlightNeo_Gantt.customized_Zoom(driver,newdate_zoom);
 		 //Apply customize date zoom
 		 IFlightNeo_Gantt.btn_customized_Zoom(driver);
-		//Instance.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
-		//comm.performAction(EY_iFlightNeo_HomePage.close_realtimescenariotab(Instance), "click", "", "close realtime scenario tab");
-		//IFlightNeo_Gantt.findFlightInGantt(driver, flighNo, Date, departureAirport, arrivalAirport);
-		//htmlLib.logReport("Find flight Success", "flight Listed on Top", "Pass", driver, true);
-		// Implements the WebDriverWait and Action interface for further purpose
-		
-		//WebDriverWait wait = new WebDriverWait(driver, 30);
-		//Actions action = new Actions(driver);
-		// Implementing the Screen and Pattern using SikuliScript
 		scn = new Screen();
 		Pattern Flight1 = new Pattern(img_Flight1);
 		Pattern Flight2 = new Pattern(img_Flight2);
@@ -252,6 +243,8 @@ public class NeoOps_WIA_TC001 {
 		IFlightNeo_HomePage.realworldmode(driver);
 		// Close Default LW
 				BusinessFunctions.closeTab(driver, 0, false);
+				
+				Thread.sleep(5000);
 		//Go to specified date range
 		 IFlightNeo_Gantt.customized_Zoom(driver,newdate_zoom);
 		 //Apply customize date zoom
@@ -299,15 +292,16 @@ public class NeoOps_WIA_TC001 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 			
 		}
 	}
 	
-	@AfterMethod
+	/*@AfterMethod
 	public void closeTest() {
 
 
 		Driver.tearDownTestExecution(driver);
 	}
-
+*/
 }

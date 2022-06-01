@@ -41,7 +41,7 @@ public class NeoOps_AAF_TC057 {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority=31)
+	@Test(priority=33)
 	//script is refactored on 21st jan,22 to achieve better performance
 	public void NeoOps_AAF_TC057_Test() throws Exception {
 		try {
@@ -114,6 +114,7 @@ public class NeoOps_AAF_TC057 {
 		scn.doubleClick(Flight1);
 		// gets aircraft registration of first flight before swap
 		String aircraftRegistrationBefore = IFlightNeo_HomePage.AfterreadAircraftReg(driver);
+		htmlLib.logReport("View aircraft Reg prior to change", "Aircraft Reg checked", "INFO", driver, true);
 		IFlightNeo_Gantt.btn_CloseFlightLegDetail(driver).click();
 		//scn.click(Flight1);
 		 
@@ -150,20 +151,16 @@ public class NeoOps_AAF_TC057 {
 				comm.performAction(driver, IFlightNeo_HomePage.dropDown_resultOfReason(driver), "Click", "",
 						"Selecting ATC as reason code from list");
 				comm.performAction(driver, IFlightNeo_HomePage.btn_Publish(driver), "click", "", "Swap flight confirmed");
-				/*reason_value = list_reason.get(4);
-				reason_value.click();
-				comm.performAction(driver, IFlightNeo_HomePage.dropDown_reason(driver), "SET", "ATC",
-						"setting reason as ATC");
-				comm.performAction(driver, IFlightNeo_HomePage.dropDown_resultOfReason(driver), "Click", "",
-						"Selecting ATC as reason code from list");*/
+			
 				break;
 			}
 		} catch (Exception e) {
 			Thread.sleep(1000);
-			//comm.performAction(driver, IFlightNeo_HomePage.btn_Publish(driver), "click", "", "Swap flight confirmed");
+		
 		}
 		try
 		{
+	
 		action.moveToElement(IFlightNeo_Gantt.dialog_RuleWarning(driver)).build().perform();
 		}
 		catch(Exception e)
@@ -184,17 +181,12 @@ public class NeoOps_AAF_TC057 {
 				comm.performAction(driver, IFlightNeo_HomePage.dropDown_resultOfReason(driver), "Click", "",
 						"Selecting ATC as reason code from list");
 				comm.performAction(driver, IFlightNeo_HomePage.btn_Publish(driver), "click", "", "Swap flight confirmed");
-				/*reason_value = list_reason.get(4);
-				reason_value.click();
-				comm.performAction(driver, IFlightNeo_HomePage.dropDown_reason(driver), "SET", "ATC",
-						"setting reason as ATC");
-				comm.performAction(driver, IFlightNeo_HomePage.dropDown_resultOfReason(driver), "Click", "",
-						"Selecting ATC as reason code from list");*/
+	
 				break;
 			}
 		} catch (Exception e) {
 			Thread.sleep(1000);
-			//comm.performAction(driver, IFlightNeo_HomePage.btn_Publish(driver), "click", "", "Swap flight confirmed");
+			
 		}
 		Thread.sleep(4000);
 		IFlightNeo_Gantt.findFlightInGantt(driver, "" + flighNo, Date, departureAirport, arrivalAirport);
@@ -206,6 +198,7 @@ public class NeoOps_AAF_TC057 {
 		scn.doubleClick(Flight1);
 		// gets aircraft registration of first flight after swap
 		String aircraftRegistrationafter = IFlightNeo_HomePage.AfterreadAircraftReg(driver);
+		htmlLib.logReport("View aircraft Reg after change", "Aircraft Reg checked", "INFO", driver, true);
 		// adding the code to close the flight leg details so that flight date element does not appear twice in the application ( Moumita on 25th mar,22)
 		comm.performAction(driver, IFlightNeo_HomePage.btn_CloseFlightDetailsWindow2ndsearch(driver), "click", "", "Closed the flight details");
 		// condition to check the flight swap and end the test case
@@ -242,14 +235,17 @@ public class NeoOps_AAF_TC057 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);	
+
+
 			
 		}
 	}
 
-	/*@AfterMethod
+	@AfterMethod
 	public void closeTest() {
 
 		Driver.tearDownTestExecution(driver);
-	}*/
+	}
 
 }
