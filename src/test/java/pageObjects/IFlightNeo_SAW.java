@@ -81,6 +81,49 @@ public class IFlightNeo_SAW {
 				"click on X to close the Add Widget Popup");
 	}
 
+	// Add Local World Dashlet if not opened
+	public static void addLocalWorldWidget(WebDriver driver) {
+		try {
+			//widgetOpenedTitle(driver, "LocalWorld Dashlet").isDisplayed();
+			tableHeader_LocalWorldDashlet(driver).isDisplayed();
+		} catch (Exception e) {
+			// click on the Add Widget Button
+			comm.performAction(driver, btn_AddWidget(driver), "CLICK", "click on the Add Widget",
+					"click on the Add Widget");
+			// click on Add for the Alert Monitor
+			comm.performAction(driver, btn_AddLocalWorldDashlet(driver), "CLICK", "",
+					"Add for the Local World Dashlet");
+			// close the Add Widget PopUp
+			comm.performAction(driver, btn_CloseAddWidgetPopUp(driver), "CLICK",
+					"click on X to close the Add Widget Popup", "close the Add Widget Popup");
+		}
+	}
+	
+	//Delete local worlds from LocalWorld Dashlet widgets
+	public static void deleteAllLocalWorlds(WebDriver driver) {
+		addLocalWorldWidget(driver);		
+		tableHeader_LocalWorldDashlet(driver).isDisplayed();
+		System.out.println(tableHeader_LocalWorldDashlet(driver).findElement(By.xpath("//ancestor::table")).getSize());
+		List<WebElement> listOfLW = tableHeader_LocalWorldDashlet(driver).findElement(By.xpath("//ancestor::table")).findElements(By.xpath("//tbody/tr/td[contains(text(),'LW')]"));
+		if(listOfLW.size()>0) {
+			for(int i =0;i<listOfLW.size();i++) {
+				WebElement firstLW = tableHeader_LocalWorldDashlet(driver).findElement(By.xpath("//ancestor::table")).findElement(By.xpath("//tbody/tr/td[contains(text(),'LW')]"));
+				firstLW.findElement(By.xpath("//following-sibling::td/button[contains(text(),'Delete')]")).click();
+				btn_Yes(driver).click();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			htmlLib.logReport("Verify any Local world is open in Gantt", "Deleted all open Local world in LocalWorld Dashlet", "INFO", driver, true);
+		}
+		else {
+			htmlLib.logReport("Verify any Local world is open in Gantt", "No Local world is open in LocalWorld Dashlet", "INFO", driver, true);
+		}
+	}
+
 	/**
 	 * TODO this function configures an open Alert Monitor - IT DOES NOT YET WORK!!!
 	 * 
@@ -88,7 +131,7 @@ public class IFlightNeo_SAW {
 	 */
 	public static void configureAlertMonitor(WebDriver driver, String[] alertType, String[] alertGroup,
 			String periodstart, String periodEnd) {
-		
+
 		Actions action = new Actions(driver);
 		// click on the Add Widget Button
 		comm.performAction(driver, btn_EditAlertMonitor(driver), "CLICK", "click on Edit for the Alert Monitor",
@@ -101,18 +144,20 @@ public class IFlightNeo_SAW {
 		for (int i = 0; i < alertType.length; i++) {
 			comm.performAction(driver, list_AlertType(driver, alertType[i]), "CLICK", "", alertType[i]);
 		}
-		action.sendKeys(Keys.ESCAPE).perform();;
+		action.sendKeys(Keys.ESCAPE).perform();
+		;
 
 		// click on the dropdown for the Alert Group
 		comm.performAction(driver, list_AlertGroup(driver), "CLICK", "", "Alert Group");
-		
+
 		for (int i = 0; i < alertGroup.length; i++) {
 			comm.performAction(driver, list_AlertGroup(driver, alertGroup[i]), "CLICK", "", alertGroup[i]);
 		}
-		action.sendKeys(Keys.ESCAPE).perform();;
-		
-		comm.performAction(driver, text_PeriodStartDay(driver), "SET", periodstart,"Period Start Day" );
-		comm.performAction(driver, text_PeriodEndDay(driver), "SET", periodEnd,"Period End Day" );
+		action.sendKeys(Keys.ESCAPE).perform();
+		;
+
+		comm.performAction(driver, text_PeriodStartDay(driver), "SET", periodstart, "Period Start Day");
+		comm.performAction(driver, text_PeriodEndDay(driver), "SET", periodEnd, "Period End Day");
 		// click on the Save button
 		comm.performAction(driver, btn_SaveAlertMonitor(driver), "CLICK", "click on the Save button",
 				"click on the Save button");
@@ -208,7 +253,7 @@ public class IFlightNeo_SAW {
 		element = driver.findElement(By.xpath(xpath));
 		return element;
 	}
-	
+
 	public static WebElement list_AlertGroup(WebDriver driver, String alertGroup) {
 		String xpath = "//div[contains(text(), '" + alertGroup + "')]";
 
@@ -293,6 +338,29 @@ public class IFlightNeo_SAW {
 		return element;
 	}
 
+	// Title of widget table opened
+	public static WebElement widgetOpenedTitle(WebDriver driver, String widgetTitle) {
+		String xpath = "//div[@class='portlet-header ui-widget-header ui-corner-all']/span[contains(text(),'"
+				+ widgetTitle + "')]";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+
+	}
+	
+	// Title of widget table opened
+		public static WebElement tableHeader_LocalWorldDashlet(WebDriver driver) {
+			String xpath = "//table[@class='dashboard_grid arrival']/thead/tr/th[contains(text(),'LOCALWORLD')]";
+
+			wait = new WebDriverWait(driver, 30);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+			element = driver.findElement(By.xpath(xpath));
+			return element;
+
+		}
+
 	/**
 	 * return the Add Widget button
 	 * 
@@ -316,6 +384,24 @@ public class IFlightNeo_SAW {
 	 */
 	public static WebElement btn_AddAlertMonitor(WebDriver driver) {
 		String xpath = "//h1[contains(text(), 'Alert Monitor')]/../button";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+	
+	// Yes button
+	public static WebElement btn_Yes(WebDriver driver) {	
+		String xpath = "//button/span[text()='YES']";
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		element = driver.findElement(By.xpath(xpath));
+		return element;
+	}
+
+	public static WebElement btn_AddLocalWorldDashlet(WebDriver driver) {
+		String xpath = "//h1[contains(text(), 'LocalWorld Dashlet')]/../button";
 
 		wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
@@ -363,22 +449,20 @@ public class IFlightNeo_SAW {
 		}
 
 	}
-	
-	
 
-	public static void verifyFlight(WebDriver driver ,String flightNo) {
+	public static void verifyFlight(WebDriver driver, String flightNo) {
 		try {
-			
-			WebElement flight= wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(text(),'"+flightNo+"')]")));
+
+			WebElement flight = wait.until(ExpectedConditions
+					.visibilityOfElementLocated(By.xpath("//td[contains(text(),'" + flightNo + "')]")));
 			comm.performAction(driver, flight, "HOVER", "", flightNo);
-			htmlLib.logReport("Verify flight present in SAW", "Flight is present in SAW : EY"+flightNo, "PASS",
+			htmlLib.logReport("Verify flight present in SAW", "Flight is present in SAW : EY" + flightNo, "PASS",
+					driver, true);
+		} catch (Exception e) {
+			htmlLib.logReport("Verify flight present in SAW", "Flight is not present in SAW : EY" + flightNo, "FAIL",
 					driver, true);
 		}
-		catch(Exception e) {
-			htmlLib.logReport("Verify flight present in SAW", "Flight is not present in SAW : EY"+flightNo, "FAIL",
-					driver, true);
-		}
-		
+
 	}
 
 }

@@ -1778,7 +1778,7 @@ public class IFlightNeo_Gantt {
 
 	}
 
-	public static void addMiscellaneous(WebDriver driver, String activityID, String station) {
+	public static void addMiscellaneous(WebDriver driver, String activityID, String station) throws InterruptedException {
 		// Right click on blank space in gantt
 		rightClickBlankSpaceInGantt(driver);
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -1786,10 +1786,11 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, link_AddMisc(driver), "click", "", "Add Miscellaneous");
 		// Add activity id
 		com.performAction(driver, activityIDMisc(driver), "SET", activityID, "Activity ID");
+		Thread.sleep(2000);
 		// Add station
 		com.performAction(driver, stationArrowMisc(driver), "click", "", "station dropdown");
-		com.performAction(driver, searchStationMisc(driver), "SET", station, "station");
-		com.performAction(driver, stationDropdownValueMisc(driver), "click", "", station);
+		Actions action = new Actions(driver);
+		action.sendKeys(station).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).build().perform();
 		// Click Save
 		com.performAction(driver, saveMisc(driver), "click", "", "Save");
 	}
