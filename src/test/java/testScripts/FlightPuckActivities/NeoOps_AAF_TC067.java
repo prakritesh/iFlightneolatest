@@ -28,7 +28,7 @@ import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_AAF_TC067_Test_data {
+public class NeoOps_AAF_TC067 {
 	
 	WebDriver driver;
 	public static utilities.CommonLibrary com = new utilities.CommonLibrary();

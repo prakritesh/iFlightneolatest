@@ -29,8 +29,9 @@
     <!-- <class name ="testScripts.Aircraft.NeoOps_AAF_TC001"/> -->
     <!-- <class name ="testScripts.Aircraft.NeoOps_AAF_TCNew_003"/> -->
     <!-- <class name ="testScripts.Aircraft.NeoOps_AAFNew_TC003"/> -->
-     <class name ="testScripts.SAW.NeoOps_RND_TC065_1"/>
-     
+    
+    
+    <class name ="testScripts.Interface.NeoOps_INTG_TC005"/>
     
     
     	<!-- <class name="testScripts.LookAndFeel.NeoOps_AAF_TC024_124_025"/> -->

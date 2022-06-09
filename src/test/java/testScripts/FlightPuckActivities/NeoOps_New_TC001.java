@@ -18,7 +18,7 @@ import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_New_TC001_DryRun {
+public class NeoOps_New_TC001 {
 	
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary comm = new utilities.CommonLibrary();
