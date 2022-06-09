@@ -25,7 +25,7 @@ import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_FMO_TC043_1_DryRun {
+public class NeoOps_FMO_TC043_1 {
 	
 	WebDriver driver;
 	public static utilities.CommonLibrary com = new utilities.CommonLibrary();

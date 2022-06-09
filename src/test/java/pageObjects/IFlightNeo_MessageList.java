@@ -434,6 +434,14 @@ public class IFlightNeo_MessageList {
 		// fill the flight date
 		IFlightNeo_MessageList.txtBx_FlightDate(driver).sendKeys(flightDate);
 		
+		// click on the text box for the amount of results per page
+//		Thread.sleep(2000);
+//		IFlightNeo_MessageList.txtBx_ResultsPerPage(driver).click();
+		
+		// select "Show All" for the amount of results per page
+//		Thread.sleep(2000);
+//		IFlightNeo_MessageList.dropdown_ShowAll(driver).click();
+		
 		// click the search button
 	    IFlightNeo_MessageList.btn_Search(driver).click();
 	    
@@ -463,6 +471,31 @@ public class IFlightNeo_MessageList {
 		return element;
 	}		
 
+	/*
+	 * returns textbox to enter the amount of results per page 
+	 * 
+	 * @author Hannu-Daniel Goiss
+	 */
+	private static WebElement txtBx_ResultsPerPage(WebDriver driver) {
+		wait = new WebDriverWait(driver, 100);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Results per page']/../div")));
+		element = driver.findElement(By.xpath("//span[text()='Results per page']/../div"));
+		return element;
+	}		
+
+	/*
+	 * select Show All option from results per page 
+	 * 
+	 * @author Hannu-Daniel Goiss
+	 */
+	private static WebElement dropdown_ShowAll(WebDriver driver) {
+		wait = new WebDriverWait(driver, 100);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Show All']")));
+		element = driver.findElement(By.xpath("//option[text()='Show All']"));
+		return element;
+	}		
+	
+	
 	/*
 	 * returns textbox to enter the Flight Date in the Search Criteria 
 	 * 
@@ -896,6 +929,20 @@ public class IFlightNeo_MessageList {
 	}	
 
 	/**
+	 * return ALL "Message Type" from ALL rows of the grid
+	 * 
+	 * @param driver
+	 * @return
+	 */  
+	public static List<WebElement> grid_AllMessageTypes(WebDriver driver) {
+		String xpath = "//table[contains(@id,'MessageGrid')]//tr[@role='row']//td[contains(@aria-describedby,'messageType')]";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		return driver.findElements(By.xpath(xpath));
+	}	
+	
+	/**
 	 * return the "Message Sub Type" from the first row of the grid
 	 * 
 	 * @param driver
@@ -908,6 +955,20 @@ public class IFlightNeo_MessageList {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		element = driver.findElement(By.xpath(xpath));
 		return element;
+	}	
+
+	/**
+	 * return ALL "Message Sub Type" from the ALL rows of the grid
+	 * 
+	 * @param driver
+	 * @return
+	 */  
+	public static List<WebElement> grid_AllMessageSubTypes(WebDriver driver) {
+		String xpath = "//table[contains(@id,'MessageGrid')]//tr[@role='row']//td[contains(@aria-describedby,'messageSubType')]";
+
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		return driver.findElements(By.xpath(xpath));
 	}	
 
 	/**

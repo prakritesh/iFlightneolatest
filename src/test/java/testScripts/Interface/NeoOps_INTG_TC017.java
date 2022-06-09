@@ -24,11 +24,9 @@ import utilities.Driver;
 
 /**
  * this test case checks for FLCM messages if actual times have been updated.
- * the test case TC004 should have been run immediately before this test case,
- * as scheduled times from the created flight should be in line with the actual times
- * used by this script.
  * 
- * there are no requirements to run other test cases before this one.
+ * there are no requirements to run other test cases before this one. the flight number in the test data should be changed,
+ * if re-executing this test case on the same day.
  * 
  * @author EYHGoiss
  */
