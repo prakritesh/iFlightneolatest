@@ -288,6 +288,8 @@ public class ReportLibrary {
 			/*Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
 			BufferedImage capture = new Robot().createScreenCapture(screenRect);
 			ImageIO.write(capture, "jpg", new File(screenLocation));*/
+
+			//File src = ((TakesScreenshot) driver.getDelegate()).getScreenshotAs(OutputType.FILE);
 			File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			FileUtils.copyFile(src, new File(screenLocation));
 		} catch (IOException ioe) {

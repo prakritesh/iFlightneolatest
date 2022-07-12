@@ -130,7 +130,7 @@ public class NeoOps_AAF_TC024_124_025 {
 				htmlLib.logReport("apply filter in Manage Filter failed", "apply filter in Manage Filter failed",
 						"Fail", driver, true);
 			}
-			Thread.sleep(2000); 
+			Thread.sleep(8000); 
 
 			IFlightNeo_ManageFilter.closeManageFilterPopup(driver);
 			Thread.sleep(2000); 

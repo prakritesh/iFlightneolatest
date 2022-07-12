@@ -53,7 +53,7 @@ public class NeoOps_AAF_TC066 {
    		String password = CollectTestData.password;
    		String flightNo = CollectTestData.flightNumber;
    		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
-   		String flightDate = com.dateCalendarEntry(-3,0,0);
+   		String flightDate = com.dateCalendarEntry(-4,0,0);
    		String messageDate= com.dateCalendarEntry(0,0,0);
    		String depCode = CollectTestData.origin;
    		String arrCode = CollectTestData.destination;

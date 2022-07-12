@@ -1,3 +1,4 @@
+
 package pageObjects;
 
 import java.text.SimpleDateFormat;
@@ -30,14 +31,13 @@ public class IFlightNeo_HomePage {
 	private static WebElement element = null;
 	private static By locator;
 	private static By locator1,locator2;
-	
 	private static WebDriverWait wait;
 	static int rows,popupappear;
 
 	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	String[] lists = this.getClass().getName().split("\\.");
 	static WebDriver Instance;
-	
+	static String reroutestation=CollectTestData.reroutestation;
 
 	
 	/** Please wait spinner image on Home Page */
@@ -451,6 +451,7 @@ public class IFlightNeo_HomePage {
 		com.performAction(driver, txtbx_ACR(driver), "SET", ACR, "Set ACR");
 		com.performAction(driver, dropdown_Acsubtype(driver), "click", "", "click on acsubtype");
 		Thread.sleep(500);
+		com.performAction(driver, search_Acsubtype(driver), "SET", acsubtype, acsubtype);
 		driver.findElement(By.xpath("//div[text()='" + acsubtype + "']")).click();
 		dropdown_Rotcode(driver, Rotcode);
 		htmlLib.logReport("Capture screenshot of Rotcode", "Set '" + Rotcode + "' is Successful", "PASS", driver, true);
@@ -530,6 +531,10 @@ public class IFlightNeo_HomePage {
 		element = driver.findElement(By.xpath("//li[@oh-compid='FAC001_004']//span[contains(text(),'Select IATA')]"));
 		return element;
 	}
+	private static WebElement search_Acsubtype(WebDriver driver) {
+		element = driver.findElement(By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@type='text']"));
+		return element;
+	}
 	
 	
 	
@@ -572,9 +577,7 @@ public class IFlightNeo_HomePage {
 
 	public static WebElement btn_CloseFlightDetailsWindow(WebDriver driver) {
 		wait = new WebDriverWait(driver, 60);
-		List<WebElement> Allclose_button = driver.findElements(By.xpath("//div[contains(@class,'ui-dialog-titlebar')]//button[@title='Close']"));
-		// The webelement list size changed in any of the recent release to 83 from 82 , hence changed that on 1st feb,22
-		WebElement close_button=Allclose_button.get(Allclose_button.size()-82);
+		WebElement close_button = driver.findElement(By.xpath("//span[contains(text(),'-Flight Leg Details   [FFL001]')]/following-sibling::div/button"));
 		wait.until(ExpectedConditions.visibilityOf(close_button));
 		return close_button;
 	}
@@ -772,27 +775,20 @@ public class IFlightNeo_HomePage {
 			}
 
 		}
+
 		Delete_Flight(driver).click();
 		geographicaldiscontinuity(driver);
-
 		confirm_DeleteFlightPopup(driver);
-	
 		Yes_DeleteFlight(driver).click();
-		Thread.sleep(500);
-		try {
+		Thread.sleep(3000);
 		//modified below piece of code on 24th Jan,22 in order to avoid extra wait after deleting flight
-		boolean rulewarning=driver.findElement(By.xpath("//span[text()='Rule Warning']")).isDisplayed();
-		
-		if(rulewarning)
+		if(driver.findElement(By.xpath("//span[text()='Rule Warning']")).isDisplayed())
 		{
 		Thread.sleep(3000);
 		forcepublish(driver);
 		}
-		}
 		
-		
-		catch(Exception e)
-	    
+	    else
 		{  
 			System.out.println("Deleted flight");
 			return;
@@ -807,15 +803,16 @@ public class IFlightNeo_HomePage {
 				try
 		        {
 		        	//Click Force-publish if Rule warning appears
-		         //boolean ifrulewarning=driver.findElement(By.xpath("//span[text()='Rule Warning']")).isDisplayed();
-					//htmlLib.logReport("View pop-up", "Force Publish pop-up displayed", "INFO", driver, true);
-					
-					driver.findElement(By.xpath("//button[@ng-click='forcePublish()']")).click();
-		        
-		        	// Actions a= new Actions(driver);
-		        	 //a.moveToElement(driver.findElement(By.xpath("//button[@ng-click='forcePublish()']"))).build().perform();
-		         
-		      
+		         boolean ifrulewarning=driver.findElement(By.xpath("//span[text()='Rule Warning']")).isDisplayed();
+		         if (ifrulewarning==true)
+		         {
+		         driver.findElement(By.xpath("//button[@ng-click='forcePublish()']")).click();
+		         }
+		         else
+		         {
+		         Thread.sleep(2000);
+		         System.out.println("There is no force pulish option");
+		         }
 		         
 		        }
 		         catch(Exception e)
@@ -836,7 +833,6 @@ public class IFlightNeo_HomePage {
 		         boolean ifgeographicalDiscontinuity=driver.findElement(By.xpath("//div[contains(text(),'Do you want to continue?')]")).isDisplayed();
 		         if (ifgeographicalDiscontinuity==true)
 		         {
-		         htmlLib.logReport("View pop-up", "Geographical Disontinuity pop-up displayed", "INFO", driver, true);
 		         driver.findElement(By.xpath("//span[text()='YES']")).click();
 		         }
 		         else
@@ -1013,6 +1009,9 @@ public class IFlightNeo_HomePage {
 	public static void selectSeasonalAwarenessWindow(WebDriver driver) throws InterruptedException {
 		//Wait till page refresh
 		waitTillPageRefreshCompletes(driver);
+		
+		
+		//com.performAction(driver, menu_AdditionalMenuOption(driver), "click", "", "Additional Option");
 		//Thread.sleep(2000);
 		// SAW
 		com.performAction(driver, mainMenu_SAW(driver), "HOVER", "", "SAW option");
@@ -1116,9 +1115,7 @@ public class IFlightNeo_HomePage {
 		List<WebElement> Auto_Off = driver.findElements(By.xpath("//span[text()='AUTO OFF']"));
 		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions.elementToBeClickable(Auto_Off.get(0)));
-		htmlLib.logReport("Capture LW Auto Off Screenshot","LW Autooff Screenshot Captured","Pass", driver, true);
 		Thread.sleep(1000);
-		
 		/*element=driver.findElement(By.xpath("//li[@aria-controls='W1']//span[text()='Remove Tab']"));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		Actions a = new Actions(driver);
@@ -1543,7 +1540,6 @@ public class IFlightNeo_HomePage {
         element = driver.findElement(By.xpath("//button[contains(text(),'Publish')]"));
         return element;
 	}
-
 	
 	/******************************************************************************************************************
 	 * Description	: When publish option is selected 
@@ -1556,6 +1552,9 @@ public class IFlightNeo_HomePage {
         element = driver.findElement(By.xpath("//div[@ng-if='toShowChangePublishReason']//button[contains(text(),'Publish')]"));
         return element;
 	}
+
+	
+
 
 	 public static WebElement container_swapList(WebDriver driver){
 			wait=new WebDriverWait(driver,30);
@@ -1612,28 +1611,11 @@ public class IFlightNeo_HomePage {
 		Thread.sleep(1000);
 		//WebElement popup_publishsim=);
 		//WebElement popup_forcepublish=);
-		
-		try
-		{   
-			//wait to take screenshot
-			Thread.sleep(4000);
-			com.performAction(driver, confirm_forcepublish(driver), "Click", "", "Confirm force publish of Flight Cancellation");
-			
-		}
-		catch (Exception e)
-		
-		{
-			
-		}
-		try {
 		if(driver.findElement(By.xpath("//span[text()='Publish SIM ']")).isDisplayed())
 		{
-			//wait to take screenshot
-			Thread.sleep(4000);
-
+		
 			com.performAction(driver, IFlightNeo_HomePage.btn_Yespublishsim(driver), "click", "",
 					"Confirm publish changes");
-			Thread.sleep(2000);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Change Reason']")));
 			WebElement reasoncode=driver.findElement(By.xpath("//tbody//td[@ng-repeat='i in mainScheduleReasonCodes track by $index']"));
 			reasoncode.click();
@@ -1642,24 +1624,7 @@ public class IFlightNeo_HomePage {
 			com.performAction(driver, IFlightNeo_HomePage.dropDown_resultOfReason(driver), "Click", "",
 					"Selecting ATC as reason code from list");
 			Thread.sleep(4000);
-			com.performAction(driver, IFlightNeo_HomePage.button_Publish(driver), "Click", "",
-					"Click on Publish button from ATC reason dropdown");
-		    
-		}
-		}
-		
-		catch (Exception e)
-		{
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Change Reason']")));
-			WebElement reasoncode=driver.findElement(By.xpath("//tbody//td[@ng-repeat='i in mainScheduleReasonCodes track by $index']"));
-			reasoncode.click();
-			com.performAction(driver, IFlightNeo_HomePage.dropDown_reason(driver), "SET", "ATC",
-					"setting reason as ATC");
-			com.performAction(driver, IFlightNeo_HomePage.dropDown_resultOfReason(driver), "Click", "",
-					"Selecting ATC as reason code from list");
-			Thread.sleep(4000);
-			com.performAction(driver, IFlightNeo_HomePage.button_Publish(driver), "Click", "",
-					"Click on Publish button from ATC reason dropdown");
+		    driver.findElement(By.xpath("//button[text()='Publish']")).click();
 		}
 		//else if(driver.findElement(By.xpath("//button[@ng-click='forcePublish()']")).getSize()!=null)
 		//{
@@ -1700,7 +1665,6 @@ public class IFlightNeo_HomePage {
 		
 		
 	}
-
 	private static WebElement button_Publish(WebDriver driver) {
 		// TODO Auto-generated method stub
 		return driver.findElement(By.xpath("//button[text()='Publish']"));
@@ -1923,9 +1887,9 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 
 	public static WebElement btn_CloseFlightDetailsWindow2ndsearch(WebDriver driver) {
 		wait = new WebDriverWait(driver, 60);
-		WebElement close_button = driver.findElement(By.xpath("//span[contains(text(),'LW1-Flight Leg Details')]/following-sibling::div/button"));
+		List<WebElement> Allclose_button = driver.findElements(By.xpath("//div[contains(@class,'ui-dialog-titlebar')]//button[@title='Close']"));
 		//The position of the close button changed to 4th index hence the below count changed to 80 on 1st feb,22
-		//WebElement close_button=Allclose_button.get(Allclose_button.size()-80);
+		WebElement close_button=Allclose_button.get(Allclose_button.size()-80);
 		wait.until(ExpectedConditions.visibilityOf(close_button));
 		return close_button;
 	}
@@ -2005,6 +1969,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		element = driver.findElement(locator);
 		return element;
 	}
+	
 	
 	// The webelement position in the list changed in 2nd Feb release , hence changed that on 4th Feb,22 & created this new method
 	public static WebElement btn_CloseFlightmessagelist(WebDriver driver) {
@@ -2320,6 +2285,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 			htmlLib.logReport("Verify that as the roles are removed now those are not available in the Assign Role dropdown", userRole+" Roles are not available", "PASS", driver, true);
 		}
 	}
+	
 
 	public static void confirmChangeforAutoof(WebDriver driver) {
 		// TODO Auto-generated method stub
@@ -2374,9 +2340,8 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 	}
 
 	
-
-	
 }
+
 
 
 

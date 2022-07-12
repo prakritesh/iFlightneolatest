@@ -13,6 +13,7 @@ import pageObjects.IFlightNeo_LoginPage;
 import pageObjects.IFlightNeo_ManageFilter;
 import pageObjects.IFlightNeo_MessageList;
 import pageObjects.IFlightNeo_Notification;
+import pageObjects.IFlightNeo_SAW;
 import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
@@ -89,6 +90,10 @@ public class NeoOps_WIA_TC008 {
 			
 		}
 		Thread.sleep(2000);
+		// Verify and delete Local world Dashlet
+					IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
+					IFlightNeo_SAW.deleteAllLocalWorlds(driver);
+
 		// select Gantt Option
 		IFlightNeo_HomePage.selectGantt(driver);
 		IFlightNeo_HomePage.select_Newscenariomode(driver);

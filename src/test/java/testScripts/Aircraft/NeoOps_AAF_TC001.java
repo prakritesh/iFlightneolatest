@@ -37,7 +37,7 @@ public class NeoOps_AAF_TC001 {
 		 */
 	}
 
-	@Test(priority=24)
+	@Test(priority=54)
 	public void login() throws Exception {
 		try
 		{
@@ -91,7 +91,7 @@ public class NeoOps_AAF_TC001 {
 		IFlightNeo_HomePage.selectAircraftDetails(driver);
 
 		IFlightNeo_HomePage.viewAircraft(driver, RegNo);
-
+		
 		htmlLib.logReport("View Saved Aircraft Details", "Aircraft details viewed successfully", "Pass", driver, true);
 		}
 		

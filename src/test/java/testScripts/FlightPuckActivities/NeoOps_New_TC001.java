@@ -13,6 +13,7 @@ import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
 import pageObjects.IFlightNeo_ManageFilter;
 import pageObjects.IFlightNeo_Notification;
+import pageObjects.IFlightNeo_SAW;
 import pageObjects.IFlightNeo_MessageList;
 import utilities.BusinessFunctions;
 import utilities.CollectTestData;
@@ -84,14 +85,18 @@ public class NeoOps_New_TC001 {
 			
 		}
 		Thread.sleep(2000);
+		// Verify and delete Local world Dashlet
+					IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
+					IFlightNeo_SAW.deleteAllLocalWorlds(driver);
+
 		// select Gantt Option
 		IFlightNeo_HomePage.selectGantt(driver);
 		IFlightNeo_HomePage.select_Newscenariomode(driver);
-		Thread.sleep(5000);
+		Thread.sleep(8000);
 		// Change To Real World Gantt Mode 
 		//IFlightNeo_Gantt.changeGanttMode(driver, "Real World");
 		// Close Default Mode
-		BusinessFunctions.closeTab(driver, 0, false);
+		BusinessFunctions.closeTab(driver, 1, false);
 		Thread.sleep(4000);
 		
 		IFlightNeo_Gantt.findFlightInGantt(driver, flightNo, date, departureAirport, arrivalAirport);

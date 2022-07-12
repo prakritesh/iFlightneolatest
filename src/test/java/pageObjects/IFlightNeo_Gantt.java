@@ -1,3 +1,4 @@
+
 package pageObjects;
 
 import java.text.ParseException;
@@ -32,9 +33,10 @@ public class IFlightNeo_Gantt {
 	public static utilities.ReportLibrary report = new utilities.ReportLibrary();
 	public static utilities.BusinessFunctions bizCom = new utilities.BusinessFunctions();
 	static String blankSpaceInGantt = System.getProperty("user.dir") + "\\TestData\\blankSpaceInGantt.PNG";
+
 	public static utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	 public static String actualacnumber;
-	
+
 	public static WebElement tab_GANTT(WebDriver driver) {
 		List<WebElement> tab_GANTT = driver.findElements(By.xpath("//li//a[text()='OPS GANTT']"));
 		return tab_GANTT.get(0);
@@ -58,10 +60,7 @@ public class IFlightNeo_Gantt {
 		}
 		return elements.get(elements.size() - 1);
 	}
-    public static WebElement close_EditFlight(WebDriver driver)
-    {
-		return driver.findElement(By.xpath("//span[contains(text(),'Flight Management - Edit Flight')]//following-sibling::div//button"));
-    }
+
 	/** New Scenario Mode Option Link under Gantt Filter in Gantt Screen */
 	public static WebElement link_NewScenarioModeOptionInGanttFilter(WebDriver driver) {
 		wait = new WebDriverWait(driver, 60);
@@ -325,6 +324,11 @@ public class IFlightNeo_Gantt {
 	static WebElement link_cancelOption(WebDriver driver) {
 		return driver.findElement(By.xpath("//li//span[text()='Cancel']"));
 	}
+
+	/** Cancel Option under Cancel flight in Flight Puck (right click) */
+	static WebElement link_cancelFlightOption(WebDriver driver) {
+		return driver.findElement(By.xpath("//li//span[text()='Cancel Flight']"));
+	}
 	
 	/** Edit Flight Option in Flight Puck (right click) */
 	static WebElement link_EditOption(WebDriver driver) {
@@ -334,11 +338,6 @@ public class IFlightNeo_Gantt {
 	/** Smart Swap Option in Flight Puck (right click) */
 	static WebElement link_SwapOption(WebDriver driver) {
 		return driver.findElement(By.xpath("//span[contains(text(),'Smart Tools')]"));
-	}
-
-	/** Cancel Option under Cancel flight in Flight Puck (right click) */
-	static WebElement link_cancelFlightOption(WebDriver driver) {
-		return driver.findElement(By.xpath("//li//span[text()='Cancel Flight']"));
 	}
 
 	// Add Miscellaneous on right click in blank space in gantt
@@ -369,7 +368,7 @@ public class IFlightNeo_Gantt {
 	// search station in misc
 	public static WebElement searchStationMisc(WebDriver driver) {
 		wait = new WebDriverWait(driver, 120);
-		element = wait.until(ExpectedConditions.elementToBeClickable(
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(
 				By.xpath("//div[@id='select2-drop']/div[@class='select2-search']/input[@class='select2-input']")));
 		return element;
 	}
@@ -409,8 +408,8 @@ public class IFlightNeo_Gantt {
 	// start date in unserviceable popup
 	public static WebElement unserviceable_StartDate_Date(WebDriver driver) {
 		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions
-				.elementToBeClickable(driver.findElement(By.xpath("//div[@id='ui-datepicker-div']/table[@class='ui-datepicker-calendar']/tbody//a[@class='ui-state-default ui-state-active']"))));
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//div[@id='ui-datepicker-div']/table[@class='ui-datepicker-calendar']/tbody//a[@class='ui-state-default ui-state-active']"))));
 		return element;
 	}
 
@@ -431,20 +430,29 @@ public class IFlightNeo_Gantt {
 	}
 
 	// end date in unserviceable popup
-	public static WebElement unserviceable_EndDate_Date(WebDriver driver , String date) {
+	public static WebElement unserviceable_EndDate_Date(WebDriver driver, String date) {
 		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions
-				.elementToBeClickable(driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//a[text()='"+date+"']"))));
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//a[text()='" + date + "']"))));
 		return element;
 	}
 
-	//Defect position in Unserviceable popup
+	// Defect position in Unserviceable popup
 	public static WebElement unserviceable_DefectPosition(WebDriver driver) {
 		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions
-				.elementToBeClickable(driver.findElement(By.xpath("//input[@name='unserviceableAircraftWidget_defectPosition']"))));
-		return element;	
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.xpath("//input[@name='unserviceableAircraftWidget_defectPosition']"))));
+		return element;
 	}
+
+	// Defect position in Unserviceable popup
+	public static WebElement unserviceable_Save(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(
+				By.xpath("//div[@oh-pageid='FAC005']//div[@class='list-right']//button[contains(text(),'Save')]"))));
+		return element;
+	}
+
 	/**
 	 * Crew Connection Detail button in
 	 * 
@@ -490,8 +498,8 @@ public class IFlightNeo_Gantt {
 	 */
 	public static WebElement btn_ViewDropdownInFlightLegDetails(WebDriver driver) {
 		wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'LW1-Flight Leg Details')]/following-sibling::div//div[contains(@id,'dropDown_W2_FLDMenu')]")));
-		element = driver.findElement(By.xpath("//span[contains(text(),'LW1-Flight Leg Details')]/following-sibling::div//div[contains(@id,'dropDown_W2_FLDMenu')]"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@id,'_FLDMenu_ActListBtn')]")));
+		element = driver.findElements(By.xpath("//button[contains(@id,'_FLDMenu_ActListBtn')]")).get(0);
 		return element;
 	}
 
@@ -502,7 +510,7 @@ public class IFlightNeo_Gantt {
 		element = driver.findElement(By.xpath("//th[contains(text(),'Cockpit Crew')]"));
 		return element;
 	}
-	
+    
 	/** Verify whether Audit trail table has multiple rows*/
 	public static List<WebElement> auditTrailTable(WebDriver driver) {
 		wait = new WebDriverWait(driver, 30);
@@ -611,7 +619,10 @@ public class IFlightNeo_Gantt {
 	 * @return
 	 */
 	public static WebElement btn_FindAircraft(WebDriver driver) {
-		element = driver.findElement(By.xpath("//li[@title='Find Aircraft']"));
+		wait = new WebDriverWait(driver, 120);
+		locator = By.xpath("//li[@title='Find Aircraft']");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		element = driver.findElement(locator);
 		return element;
 	}
 
@@ -747,6 +758,146 @@ public class IFlightNeo_Gantt {
 		return element;
 	}
 
+	/* Edit Flight link */
+	public static WebElement link_editFlight(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//ul[@class='context-menu-list context-menu-root']//li/span[contains(text(),'Edit Flight')]"))));
+		return element;
+	}
+
+	// Aircraft registration number
+	public static WebElement dropdown_AircraftRegistration(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(
+				By.xpath("//div[contains(@id,'aircraftRegistration')]/a/span[@class='select2-arrow']")));
+		return element;
+	}
+
+	// Aircraft registration number in Find Aircraft popup
+	public static WebElement dropdown_AircraftRegistrationFindAircraft(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(
+				By.xpath("//div[contains(@id,'aircraftRegistration')]/a/span[@class='select2-arrow']")));
+		return element;
+	}
+
+	// search in aircraft registration edit flight popup
+	public static WebElement textField_SearchRegistration(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("div#select2-drop div.select2-search input.select2-input")));
+		return element;
+	}
+
+	// Dropdown Value in Aircraft Registration - Edit flight popup
+	public static WebElement list_AircraftRegistrationEditFlight(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(
+				ExpectedConditions.elementToBeClickable(By.cssSelector("div#select2-drop ul.select2-results li div")));
+		return element;
+	}
+
+	//
+	// Dropdown Value in Aircraft subtype - Edit flight popup
+	public static WebElement dropDown_AircraftSubType(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				By.xpath("//div[contains(@id,'aircraftSubtype')]/a/span[@class='select2-arrow']")));
+		return element;
+	}
+
+	// Close Edit flight popup
+	public static WebElement button_EditFlightClose(WebDriver driver) {
+		element = driver.findElement(By.xpath(
+				"//span[text()='LW1-Flight Management - Edit Flight   [FOPR011]']/parent::div//span[@class='ui-button-icon-primary ui-icon ui-icon-close']"));
+		return element;
+	}
+
+	// Flight leg section header in edit flight window
+	public static WebElement input_ArriveTimeFlightLeg(WebDriver driver) {
+		element = driver.findElement(By.xpath("//input[@id='arriveEndTimeInMins_W2']"));
+		return element;
+	}
+
+	// yes in confirmation box
+	public static WebElement buton_Yes(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='YES']")));
+		return element;
+	}
+
+	// Manage Aircraft Equipment on right click in Aircraft registration in gantt
+	public static WebElement link_ManageAircraftEquipment(WebDriver driver) {
+		wait = new WebDriverWait(driver, 300);
+		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(
+				"//ul[@class='context-menu-list context-menu-root']//li/span[contains(text(),'Manage Aircraft Equipment')]"))));
+		return element;
+	}
+
+	// Manage Aircraft Equipment on right click in Aircraft registration in gantt
+	public static WebElement button_AddAircraftEqipment(WebDriver driver) {
+		wait = new WebDriverWait(driver, 600);
+		element = wait.until(ExpectedConditions.elementToBeClickable(
+				driver.findElement(By.cssSelector("button#addrow_UnserviceableEquipmentsGrid_W1"))));
+		return element;
+	}
+
+	// Manage Aircraft Equipment on right click in Aircraft registration in gantt -
+	// CheckBox for list of equipments
+	public static WebElement checkBox_AllAircraftEqipment(WebDriver driver) {
+		wait = new WebDriverWait(driver, 600);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(driver.findElement(By.cssSelector("input#cb_UnserviceableEquipmentsGrid_W1"))));
+		return element;
+	}
+
+	// Manage Aircraft Equipment on right click in Aircraft registration in gantt -
+	// Delete equipment
+	public static WebElement buttonDeleteAllEquipment(WebDriver driver) {
+		wait = new WebDriverWait(driver, 600);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(driver.findElement(By.xpath("//span[contains(@class,'delete')]"))));
+		return element;
+	}
+	
+	//ManageAircraftPageTitle 
+	public static WebElement ManageAircraftPageTitle(WebDriver driver) {
+		wait = new WebDriverWait(driver, 600);
+		element = wait.until(ExpectedConditions
+				.elementToBeClickable(driver.findElement(By.xpath("//span[contains(text(),'Manage Aircraft Equipments')]"))));
+		return element;
+	}
+
+	/** Equipment dropdown in Manage Aircraft Equipment */
+	public static WebElement dropdown_Equipment(WebDriver driver) {
+		String elemXpath = "//div[contains(@id,'equipmentName')]/a[@class='select2-choice']";
+		element = driver.findElement(By.xpath(elemXpath));
+		return element;
+	}
+
+	/** Equipment dropdown in Manage Aircraft Equipment */
+	public static WebElement list_Equipment(WebDriver driver, String equipment) {
+		String elemXpath = "//div[@id='select2-drop']//ul[@class='select2-results']//li/div[text()='" + equipment
+				+ "']";
+		element = driver.findElement(By.xpath(elemXpath));
+		return element;
+	}
+
+	/** Equipment remarks in Manage Aircraft Equipment */
+	public static WebElement textBox_EquipmentRemarks(WebDriver driver) {
+		String elemXpath = "//input[contains(@id,'description')]";
+		element = driver.findElement(By.xpath(elemXpath));
+		return element;
+	}
+
+	// Save button in manage aircraft equipments
+	public static WebElement button_saveManageAircraftEqipment(WebDriver driver) {
+		element = driver.findElement(By.xpath(
+				"//span[text()='Manage Aircraft Equipments']/parent::div/parent::div//div[@class='list-right']//li[@class='btn_padding']//button[contains(text(),'Save')]"));
+		return element;
+	}
+
 //*******************************************************************************************************************/ 
 //						SPACE FOR METHOD DEFINITION
 //*******************************************************************************************************************/
@@ -777,7 +928,7 @@ public class IFlightNeo_Gantt {
 			List<WebElement> ganttTabs = driver.findElements(By.xpath("//li[@text='pagevo.title']"));
 			for (; waitTime <= 60; waitTime++) {
 
-				if (ganttTabs.size() > 0 && ganttTabs.size() < 4) {
+				if (ganttTabs.size() > 0 && ganttTabs.size() < 5) {
 					try {
 						Thread.sleep(1000);
 						if (errorMaxAllowLocalWorld(driver).isDisplayed()) {
@@ -906,6 +1057,44 @@ public class IFlightNeo_Gantt {
 		dialog_FindFlight(driver).sendKeys(Keys.ESCAPE);
 	}
 
+	/*
+	 * Method to verify Aircraft available in GANTT with image
+	 * 
+	 */
+	public static boolean verifyAicraftInGantt(WebDriver driver, String flightImageLocation,
+			String aircraftRegsitration) {
+		boolean imageFound = true;
+		try {
+			Screen scn = new Screen();
+			Pattern defaultAircraft = new Pattern(flightImageLocation);
+			scn.wait(defaultAircraft, 90);
+			Match match = scn.exists(defaultAircraft.similar(0.70));
+			if (match != null) {
+				scn.hover(defaultAircraft);
+				// Adding below code to capture hover screenshot ( 1st sep,21 by Moumita)
+				Thread.sleep(2000);
+				report.logReport("Verify aircraft is present in Gantt",
+						"Aircraft " + aircraftRegsitration + " is present in Gantt", "PASS", driver, true);
+			} else {
+				System.out.println("***IMAGE NOT FOUND TO SELECT***");
+				report.logReport("Verify aircraft is present in Gantt",
+						"Aircraft " + aircraftRegsitration + " is not present in Gantt", "FAIL", driver, true);
+				imageFound = false;
+			}
+		} catch (NoSuchElementException nsee) {
+			imageFound = false;
+			System.out.println("NO SUCH ELEMENT FOUND");
+			report.logReport("Verify Image is Present", "The Required Image is Not Present", "FAIL", null, true);
+		} catch (Exception e) {
+			imageFound = false;
+			System.out.println(e);
+			report.logReport("Verify Image is Present", "There is a Fatal Error - " + e.getMessage(), "FATAL", null,
+					true);
+		}
+		return imageFound;
+
+	}
+
 	/*******************************************************
 	 * Method to navigate to flight leg details in Gantt screen
 	 *******************************************************/
@@ -957,84 +1146,11 @@ public class IFlightNeo_Gantt {
 			report.logReport("Verify Image is Present", "The Required Image is Not Present", "FAIL", null, true);
 		} catch (Exception e) {
 			imageFound = false;
+			System.out.println(e);
 			report.logReport("Verify Image is Present", "There is a Fatal Error - " + e.getMessage(), "FATAL", null,
 					true);
 		}
 		return imageFound;
-	}
-	
-	
-	/*******************************************************
-	 * Method to Cancel flight in Gantt screen Auto off mode
-	 *******************************************************/
-	public static void cancelFlightinAutooff(WebDriver driver, String imagePath) throws InterruptedException {
-		Thread.sleep(2000);
-		if (bizCom.getImageWithSikuli(imagePath) != null) {
-			// Right Click on flight puck
-			IFlightNeo_Gantt.selectFlightInGantt(driver, imagePath, "rightClick");
-			htmlLib.logReport("Right Clicking  on Flight Puck", "Right Click Completed", "Pass", driver, true);
-		
-		}
-		//wait to take screenshot
-		Thread.sleep(2000);
-		// Select Cancel Option
-		Actions a5 = new Actions(driver);
-		a5.moveToElement(link_cancelOption(driver)).perform();
-		htmlLib.logReport("Moving to Cancel option of Flight Puck", "Moved to Cancel option", "Pass", driver, true);
-		// Cancel
-		com.performAction(driver, link_cancelFlightOption(driver), "Click", "", "Cancel Flight");
-		// driver.switchTo().alert().accept();
-		Thread.sleep(4000);
-		try {
-		boolean ifcancelPopupappear = driver
-				.findElement(By.xpath("//div[text()='Do you want to cancel the Flight?']")).isDisplayed();
-
-		if (ifcancelPopupappear == true)
-
-		{ 
-			//wait to take screenshot
-			htmlLib.logReport("view the pop-up", "cancel pop-up displayed", "Pass", driver, true);
-			com.performAction(driver, confirm_cancelFlightOption(driver), "Click", "", "Cancel Flight");
-			
-		}
-		
-		}
-		
-		catch(Exception e)
-		
-		{
-			boolean ifgeographicaldiscontinuityappear = driver.findElement(By.xpath("//span[contains(text(),'Confirmation Message')]")).isDisplayed();
-			
-			if (ifgeographicaldiscontinuityappear == true)
-
-			{  //wait to take screenshot
-				htmlLib.logReport("view the pop-up", "cancel pop-up displayed", "Pass", driver, true);
-				com.performAction(driver, confirm_geographicaldiscontinuity(driver), "Click", "", "Confirm geographical discontinuity");
-				
-			}
-			
-			boolean ifcancelPopupappear = driver
-					.findElement(By.xpath("//div[text()='Do you want to cancel the Flight?']")).isDisplayed();
-
-			if (ifcancelPopupappear == true)
-
-			{
-				//wait to take screenshot
-				htmlLib.logReport("view the pop-up", "cancel pop-up displayed", "Pass", driver, true);
-				com.performAction(driver, confirm_cancelFlightOption(driver), "Click", "", "Cancel Flight");
-			}
-		}
-	}
-
-
-	private static WebElement confirm_geographicaldiscontinuity(WebDriver driver) {
-		// TODO Auto-generated method stub
-		return driver.findElement(By.xpath("//span[text()='YES']"));
-	}
-
-	private static WebElement confirm_cancelFlightOption(WebDriver driver) {
-		
-		return driver.findElement(By.xpath("//span[text()='YES']"));
 	}
 
 	/*******************************************************
@@ -1130,34 +1246,78 @@ public class IFlightNeo_Gantt {
 	}
 
 	
-	
 	/*******************************************************
-	 * Method to Edit flight in Gantt screen
+	 * Method to Cancel flight in Gantt screen Auto off mode
 	 *******************************************************/
-	public static void EditFlight(WebDriver driver, String imagePath) throws InterruptedException {
+	public static void cancelFlightinAutooff(WebDriver driver, String imagePath) throws InterruptedException {
 		Thread.sleep(2000);
 		if (bizCom.getImageWithSikuli(imagePath) != null) {
 			// Right Click on flight puck
 			IFlightNeo_Gantt.selectFlightInGantt(driver, imagePath, "rightClick");
+			htmlLib.logReport("Right Clicking  on Flight Puck", "Right Click Completed", "Pass", driver, true);
+		
 		}
-		// Select edit Option
+		//wait to take screenshot
+		Thread.sleep(2000);
+		// Select Cancel Option
 		Actions a5 = new Actions(driver);
-		a5.moveToElement(link_EditOption(driver)).perform();
-		// edit
-		com.performAction(driver, link_EditOption(driver), "Click", "", "Edit Flight");
+		a5.moveToElement(link_cancelOption(driver)).perform();
+		htmlLib.logReport("Moving to Cancel option of Flight Puck", "Moved to Cancel option", "Pass", driver, true);
+		// Cancel
+		com.performAction(driver, link_cancelFlightOption(driver), "Click", "", "Cancel Flight");
 		// driver.switchTo().alert().accept();
 		Thread.sleep(4000);
-		// we have to move the mouse, if not the menu doesn't disappear!
-        Screen scn = new Screen();
-        scn.hover();
-        scn.mouseMove(-300, 0);
-        	
+		try {
+		boolean ifcancelPopupappear = driver
+				.findElement(By.xpath("//div[text()='Do you want to cancel the Flight?']")).isDisplayed();
+
+		if (ifcancelPopupappear == true)
+
+		{ 
+			//wait to take screenshot
+			htmlLib.logReport("view the pop-up", "cancel pop-up displayed", "Pass", driver, true);
+			com.performAction(driver, confirm_cancelFlightOption(driver), "Click", "", "Cancel Flight");
 			
+		}
+		
+		}
+		
+		catch(Exception e)
+		
+		{
+			boolean ifgeographicaldiscontinuityappear = driver.findElement(By.xpath("//span[contains(text(),'Confirmation Message')]")).isDisplayed();
+			
+			if (ifgeographicaldiscontinuityappear == true)
 
-	
+			{  //wait to take screenshot
+				htmlLib.logReport("view the pop-up", "cancel pop-up displayed", "Pass", driver, true);
+				com.performAction(driver, confirm_geographicaldiscontinuity(driver), "Click", "", "Confirm geographical discontinuity");
+				
+			}
+			
+			boolean ifcancelPopupappear = driver
+					.findElement(By.xpath("//div[text()='Do you want to cancel the Flight?']")).isDisplayed();
 
+			if (ifcancelPopupappear == true)
+
+			{
+				//wait to take screenshot
+				htmlLib.logReport("view the pop-up", "cancel pop-up displayed", "Pass", driver, true);
+				com.performAction(driver, confirm_cancelFlightOption(driver), "Click", "", "Cancel Flight");
+			}
+		}
 	}
-	
+
+	private static WebElement confirm_geographicaldiscontinuity(WebDriver driver) {
+		// TODO Auto-generated method stub
+		return driver.findElement(By.xpath("//span[text()='YES']"));
+	}
+
+	private static WebElement confirm_cancelFlightOption(WebDriver driver) {
+		
+		return driver.findElement(By.xpath("//span[text()='YES']"));
+	}
+
 	/*******************************************************
 	 * Method to perform smart swap flight in Gantt screen
 	 *******************************************************/
@@ -1201,7 +1361,7 @@ public class IFlightNeo_Gantt {
 		
       return actualacnumber;
 	}
-
+	
 	private static WebElement popup_apply(WebDriver driver) {
 		// TODO Auto-generated method stub
 		return driver.findElement(By.xpath("//span[contains(text(),'Apply')]"));
@@ -1220,7 +1380,6 @@ public class IFlightNeo_Gantt {
 		
 		return smartswappopup;
 	}
-
 	/**************************************************************************
 	 * Description: Method to swap flights in 2 different aircraft registration
 	 **************************************************************************/
@@ -1249,6 +1408,33 @@ public class IFlightNeo_Gantt {
 
 	}
 
+	/*******************************************************
+	 * Method to Edit flight in Gantt screen
+	 *******************************************************/
+	public static void EditFlight(WebDriver driver, String imagePath) throws InterruptedException {
+		Thread.sleep(2000);
+		if (bizCom.getImageWithSikuli(imagePath) != null) {
+			// Right Click on flight puck
+			IFlightNeo_Gantt.selectFlightInGantt(driver, imagePath, "rightClick");
+		}
+		// Select edit Option
+		Actions a5 = new Actions(driver);
+		a5.moveToElement(link_EditOption(driver)).perform();
+		// edit
+		com.performAction(driver, link_EditOption(driver), "Click", "", "Edit Flight");
+		// driver.switchTo().alert().accept();
+		Thread.sleep(4000);
+		// we have to move the mouse, if not the menu doesn't disappear!
+        Screen scn = new Screen();
+        scn.hover();
+        scn.mouseMove(-300, 0);
+        	
+			
+
+	
+
+	}
+	
 	/**
 	 * this applies a filter in the GANTT chart. the test case NeoOps_AAF_TC001 must
 	 * have been executed before that.
@@ -1358,18 +1544,6 @@ public class IFlightNeo_Gantt {
 		action.moveToElement(IFlightNeo_Gantt.window_FlightConnDetails(driver)).sendKeys(Keys.ESCAPE).build().perform();
 
 	}
-	
-	public static WebElement closeFlightAuditTrailwindow(WebDriver driver) {
-		// TODO Auto-generated method stub
-		/*Actions action = new Actions(driver);
-		action.moveToElement(IFlightNeo_Gantt.window_FlightAuditTrail(driver)).sendKeys(Keys.ESCAPE).build().perform();*/
-		wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//span[text()='Audit Trail For Flight [FREF020]']//following-sibling::div[@class=\"ui-dialog-titlebar-buttonpane\"]/button[@title='Close']")));
-		element = driver.findElement(By.xpath("//span[text()='Audit Trail For Flight [FREF020]']//following-sibling::div[@class=\"ui-dialog-titlebar-buttonpane\"]/button[@title='Close']"));
-		return element;
-
-	}
 
 	public static int Connectiontimetablerowcount(WebDriver driver) {
 		// TODO Auto-generated method stub
@@ -1426,8 +1600,6 @@ public class IFlightNeo_Gantt {
 
 	private static WebElement customized_date(WebDriver driver) {
 		// TODO Auto-generated method stub
-		
-
 		return driver.findElement(By.xpath("//input[@name='ganttFormsWidgetModel_gotoDate']"));
 	}
 
@@ -1651,18 +1823,57 @@ public class IFlightNeo_Gantt {
 				"Click on Cancel All");
 		Thread.sleep(1000);
 		driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+		
+		
+		//geographical discontinuity 
+		try {
+			// Click Yes if geographical discontinuity appears
+			boolean ifgeographicalDiscontinuity = driver
+					.findElement(By.xpath("//div[contains(text(),'Do you want to continue?')]")).isDisplayed();
+			if (ifgeographicalDiscontinuity == true) {
+				driver.findElement(By.xpath("//span[text()='YES']")).click();
+			} else {
+				Thread.sleep(4000);
+			}
+		}
+			catch (Exception e)
+			
+			{
+				
+			}
+
 
 		// click on the confirmation to cancel
+	    try {
 		com.performAction(driver, btn_confirmCancellation(driver), "CLICK", "confirm flight cancellation",
 				"confirm flight cancellation");
-		Thread.sleep(1000);
+		Thread.sleep(5000);
+	    }
+	    
+	    catch(Exception e1)
+	    
+	    {
+	    	
+	    }
 		driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
 		// Force publish
+		try
+		{
 		IFlightNeo_HomePage.forcepublish(driver);
-		Thread.sleep(1000);
+		Thread.sleep(4000);
+		}
+		
+		catch(Exception e2)
+		
+		{
+			
+		}
+		
+		Thread.sleep(6000);
 
 		// click on dropdown to select a reason
+		try {
 		com.performAction(driver, dropdown_reason(driver), "CLICK", "click on reason dropdown",
 				"click on reason dropdown");
 		Thread.sleep(1000);
@@ -1677,6 +1888,13 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, btn_publish(driver), "CLICK", "click on publish button", "click on publish button");
 		Thread.sleep(1000);
 		driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+		
+		}
+		
+		catch(Exception e3)
+		{
+			
+		}
 
 	}
 
@@ -1781,13 +1999,13 @@ public class IFlightNeo_Gantt {
 			Screen sc = new Screen();
 			Pattern blankSpace = new Pattern(blankSpaceInGantt);
 			sc.wait(blankSpace, 120);
-			//new Screen().wait(blankSpace,120);
+			// new Screen().wait(blankSpace,120);
 			// new Screen().rightClick();
 			int i = sc.hover(blankSpace);
 			System.out.println(i);
 			int s = sc.rightClick(blankSpace);
 			System.out.println(s);
-			
+
 			report.logReport("Right click on blank space in gantt", "Able to right click on blank space", "INFO",
 					driver, false);
 		} catch (Exception e) {
@@ -1797,7 +2015,7 @@ public class IFlightNeo_Gantt {
 
 	}
 
-	public static void addMiscellaneous(WebDriver driver, String activityID, String station) {
+	public static void addMiscellaneous(WebDriver driver, String activityID, String station) throws InterruptedException {
 		// Right click on blank space in gantt
 		rightClickBlankSpaceInGantt(driver);
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -1805,6 +2023,7 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, link_AddMisc(driver), "click", "", "Add Miscellaneous");
 		// Add activity id
 		com.performAction(driver, activityIDMisc(driver), "SET", activityID, "Activity ID");
+		Thread.sleep(2000);
 		// Add station
 		com.performAction(driver, stationArrowMisc(driver), "click", "", "station dropdown");
 		Actions action = new Actions(driver);
@@ -1814,8 +2033,6 @@ public class IFlightNeo_Gantt {
 	}
 
 	public static void addUnservicable(WebDriver driver) {
-		
-
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		// Right click on blank space in gantt
 		rightClickBlankSpaceInGantt(driver);
@@ -1829,20 +2046,10 @@ public class IFlightNeo_Gantt {
 		com.performAction(driver, unserviceable_DefectPosition(driver), "click", "", "Defect position");
 		com.performAction(driver, unserviceable_DefectPosition(driver), "SET", "1", "Defect position");
 		com.performAction(driver, unserviceable_Save(driver), "click", "", "Save");
-
-		
-	}
-	// Defect position in Unserviceable popup
-	public static WebElement unserviceable_Save(WebDriver driver) {
-		// TODO Auto-generated method stub
-		wait = new WebDriverWait(driver, 300);
-		element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(
-		By.xpath("//div[@oh-pageid='FAC005']//div[@class='list-right']//button[contains(text(),'Save')]"))));
-		return element;
-		
 	}
 
-	public static void verifyItemCreatedInGantt(WebDriver driver,String imageOfItemCreated) throws InterruptedException {
+	public static void verifyItemCreatedInGantt(WebDriver driver, String imageOfItemCreated)
+			throws InterruptedException {
 		Thread.sleep(5000);
 		try {
 			System.out.println(imageOfItemCreated);
@@ -1850,105 +2057,146 @@ public class IFlightNeo_Gantt {
 			new Screen().wait(itemCreated, 300);
 			// new Screen().rightClick();
 			new Screen().rightClick(itemCreated);
-			report.logReport("Verify Item created", "Item Created", "PASS",
-					driver, true);
+			report.logReport("Verify Item created", "Item Created", "PASS", driver, true);
 		} catch (Exception e) {
-			report.logReport("Verify Item created", "Item not created", "FAIL",
-					driver, true);
-		}	
-	
+			report.logReport("Verify Item created", "Item not created", "FAIL", driver, true);
+		}
 	}
+
+	public static void verifyAircraftInEditFlightpopup(WebDriver driver, String aircraftRegistration,
+			String aircraftSubType) throws InterruptedException {
+		// Click Edit Flight link
+		com.performAction(driver, link_editFlight(driver), "click", "", "Edit Flight");
+		// Set Aircraft Subtype
+		com.performAction(driver, dropDown_AircraftSubType(driver), "click", "", "Aircraft Sub Type");
+		com.performAction(driver, textField_SearchRegistration(driver), "SET", aircraftSubType, aircraftSubType);
+		com.performAction(driver, list_AircraftRegistrationEditFlight(driver), "click", "", aircraftSubType);
+		// Verify aircraft registration
+		com.performAction(driver, dropdown_AircraftRegistration(driver), "click", "", "Aircraft Registration dropdown");
+		com.performAction(driver, textField_SearchRegistration(driver), "SET", aircraftRegistration,
+				aircraftRegistration);
+		if (list_AircraftRegistrationEditFlight(driver).getText().contains(aircraftRegistration)) {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Correct Aircraft registration number is showing in the Edit flight popup", "PASS", driver, true);
+		} else {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Wrong Aircraft registration number is showing in the Edit flight popup", "FAIL", driver, true);
+		}
+		Actions action = new Actions(driver);
+		action.sendKeys(Keys.ESCAPE).build().perform();
+		com.performAction(driver, input_ArriveTimeFlightLeg(driver), "click", "", "");
+		action.sendKeys(Keys.ESCAPE).build().perform();
+		Thread.sleep(1000);
+		com.performAction(driver, buton_Yes(driver), "click", "", "Close");
+	}
+
+	public static void verifyAircraftInFindAircraftpopup(WebDriver driver, String aircraftRegistration,
+			String flightImagelocation) {
+		com.performAction(driver, btn_FindAircraft(driver), "click", "", "Find Aircraft");
+		com.performAction(driver, list_AircraftRegistration(driver), "click", "", "Aircraft Registration dropdown");
+		com.performAction(driver, textField_SearchRegistration(driver), "SET", aircraftRegistration,
+				aircraftRegistration);
+		if (list_AircraftRegistrationEditFlight(driver).getText().contains(aircraftRegistration)) {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Correct Aircraft registration number is showing in the Edit flight popup", "PASS", driver, true);
+			com.performAction(driver, list_AircraftRegistrationEditFlight(driver), "click", "", aircraftRegistration);
+		} else {
+			report.logReport("Verify the Aircraft registration added is showing in the Edit Flight",
+					"Wrong Aircraft registration number is showing in the Edit flight popup", "FAIL", driver, true);
+		}
+		// Actions action = new Actions(driver);
+		// action.sendKeys(Keys.ESCAPE).build().perform();
+		com.performAction(driver, btn_SearchButton(driver), "click", "", "Search");
+		IFlightNeo_Gantt.verifyAicraftInGantt(driver, flightImagelocation, aircraftRegistration);
+	}
+
 	public static WebElement changeListExpand(WebDriver driver) {
 		// TODO Auto-generated method stub
-        String xpath = "//td//span[contains(@class,'icon-plus')]";
-		
-		wait = new WebDriverWait(driver,100);
+		String xpath = "//td//span[contains(@class,'icon-plus')]";
+
+		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 
 		element = driver.findElement(By.xpath(xpath));
 		return element;
-		
-		
+
 	}
 
 	public static void changelistdetails(WebDriver driver) {
 		// TODO Auto-generated method stub
-		String xpath="//td[contains(text(),'Swapped:')]";
-		wait = new WebDriverWait(driver,100);
+		String xpath = "//td[contains(text(),'Swapped:')]";
+		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
-		
+
 		htmlLib.logReport("Change details open", "Change list details screenshot taken", "Pass", driver, true);
 	}
 
 	public static void Validatediversionoption(WebDriver driver) {
-		
+
 		// TODO Auto-generated method stub
-		
-		try
-		{
-		 WebElement Divertcontinue=driver.findElement(By.xpath("//label[contains(text(),'Divert and Continue')]"));
-		 WebElement Divertoverfly=driver.findElement(By.xpath("//label[contains(text(),'Divert and Overfly')]"));
-		 WebElement Overfly=driver.findElement(By.xpath("//label[text()='Overfly']"));
-		 if(Divertcontinue.isDisplayed() && Divertoverfly.isDisplayed() && Overfly.isDisplayed())
-			 
-		 {
-			 htmlLib.logReport("Divert & Overfly screen opened & validate all diversion options present", "All diversion options are present", "Pass", driver, true);
-		 }
-		
+
+		try {
+			WebElement Divertcontinue = driver.findElement(By.xpath("//label[contains(text(),'Divert and Continue')]"));
+			WebElement Divertoverfly = driver.findElement(By.xpath("//label[contains(text(),'Divert and Overfly')]"));
+			WebElement Overfly = driver.findElement(By.xpath("//label[text()='Overfly']"));
+			if (Divertcontinue.isDisplayed() && Divertoverfly.isDisplayed() && Overfly.isDisplayed())
+
+			{
+				htmlLib.logReport("Divert & Overfly screen opened & validate all diversion options present",
+						"All diversion options are present", "Pass", driver, true);
+			}
+
 		}
-		
-		catch(Exception e)
-		
+
+		catch (Exception e)
+
 		{
-			 htmlLib.logReport("Divert & Overfly screen opened & validate all diversion options present", "All diversion options are not present", "Fail", driver, true);
-		
+			htmlLib.logReport("Divert & Overfly screen opened & validate all diversion options present",
+					"All diversion options are not present", "Fail", driver, true);
+
 		}
-		
-		
-		
+
 	}
 
-	public  static String checkHistorycontent(WebDriver driver) {
+	public static String checkHistorycontent(WebDriver driver) {
 		// TODO Auto-generated method stub
-		wait = new WebDriverWait(driver,100);
+		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='table_wrap']"))));
-		String HistoryContent =driver.findElement(By.xpath("//div[@class='table_wrap']")).getAttribute("innerText");
+		String HistoryContent = driver.findElement(By.xpath("//div[@class='table_wrap']")).getAttribute("innerText");
 		return HistoryContent;
-		
-		
+
 	}
 
 	public static WebElement ClickonOverfly(WebDriver driver) {
 		// TODO Auto-generated method stub
-		wait = new WebDriverWait(driver,100);
+		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[text()='Overfly']"))));
-		WebElement OverflyOption =driver.findElement(By.xpath("//span[text()='Overfly']"));
+		WebElement OverflyOption = driver.findElement(By.xpath("//span[text()='Overfly']"));
 		return OverflyOption;
-		
-		
-		
+
 	}
 
 	public static WebElement publish_From_Changelist(WebDriver driver) {
-		wait = new WebDriverWait(driver,100);
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[contains(text(),'Publish')]"))));
-		WebElement PublishChangelist =driver.findElement(By.xpath("//button[contains(text(),'Publish')]"));
+		wait = new WebDriverWait(driver, 100);
+		wait.until(
+				ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[contains(text(),'Publish')]"))));
+		WebElement PublishChangelist = driver.findElement(By.xpath("//button[contains(text(),'Publish')]"));
 		return PublishChangelist;
-		
-		
+
 	}
+
 	public static WebElement changeList(WebDriver driver) {
 		// TODO Auto-generated method stub
-        String xpath = "//li[contains(@title,'Change List')]";
-		
-		wait = new WebDriverWait(driver,100);
+		String xpath = "//li[contains(@title,'Change List')]";
+
+		wait = new WebDriverWait(driver, 100);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 
 		element = driver.findElement(By.xpath(xpath));
 		return element;
 
 	}
-
+	
 	public static WebElement saveautooffplanClick(WebDriver driver) {
 		// TODO Auto-generated method stub
 		
@@ -1958,7 +2206,7 @@ public class IFlightNeo_Gantt {
 		return driver.findElement(locator);
 		
 	}
-
+	
 	public static WebElement setPlanname(WebDriver driver) {
 		// TODO Auto-generated method stub
 		
@@ -1967,7 +2215,7 @@ public class IFlightNeo_Gantt {
 		locator = By.xpath("//a[@class='tool_icon icon6']");
 		return driver.findElement(locator);
 	}
-
+	
 	public static WebElement setExpirydate(WebDriver driver) {
 		// TODO Auto-generated method stub
 		wait=new WebDriverWait(driver,70);
@@ -1977,7 +2225,6 @@ public class IFlightNeo_Gantt {
 		
 
 	}
-
 	public static WebElement setdescription(WebDriver driver) {
 		// TODO Auto-generated method stub
 		wait=new WebDriverWait(driver,70);
@@ -1985,7 +2232,7 @@ public class IFlightNeo_Gantt {
 		locator = By.xpath("//textarea[@name='planWidgetModel_planDetailsDTO_planDescription']");
 		return driver.findElement(locator);
 	}
-
+	
 	public static WebElement savePlan(WebDriver driver) {
 		// TODO Auto-generated method stub
 		
@@ -2015,18 +2262,68 @@ public class IFlightNeo_Gantt {
 		
 	}
 
-	
+	public static void addManageAircraftEquipment(WebDriver driver, String aircraftRegistration,
+			String aircraftImageLocation, String equipment, String afterAddingAircraftEquipment)
+			throws InterruptedException {
+		try {
+			IFlightNeo_Gantt.selectFlightInGantt(driver, aircraftImageLocation, "RIGHTCLICK");
+			com.performAction(driver, link_ManageAircraftEquipment(driver), "click", "", "Manage Aircraft Equipment");
+			Thread.sleep(2000);
+			com.performAction(driver, button_AddAircraftEqipment(driver), "click", "", "Add");
+			Thread.sleep(2000);
+			com.performAction(driver, dropdown_Equipment(driver), "click", "", "Equipment");
+			com.performAction(driver, list_Equipment(driver, equipment), "click", "", equipment);
+			com.performAction(driver, textBox_EquipmentRemarks(driver), "SET", "test", "Remarks");
+			Actions action = new Actions(driver);
+			action.sendKeys(Keys.TAB).sendKeys(Keys.ENTER).sendKeys(Keys.ESCAPE).build().perform();
+			Thread.sleep(2000);
+			try {
+				IFlightNeo_Gantt.selectFlightInGantt(driver, afterAddingAircraftEquipment, "HOVER");
+				report.logReport("Veirfy that the Aircraft Equipment added displayed on the aircraft Reg area",
+						"Aircraft Equipment added is available: " + equipment, "PASS", driver, true);
+			} catch (Exception e) {
+				report.logReport("Veirfy that the Aircraft Equipment added displayed on the aircraft Reg area",
+						"Aircraft Equipment added is not available: " + aircraftRegistration, "FAIL", driver, true);
+			}
+		} catch (Exception e) {
+			report.logReport("Right click on Aircraft in gantt", "Aircraft is not available: " + e, "FAIL", driver,
+					true);
+		}
+
+	}
+
+	public static WebElement close_EditFlight(WebDriver driver)
+    {
+		return driver.findElement(By.xpath("//span[contains(text(),'Flight Management - Edit Flight')]//following-sibling::div//button"));
+    }
+
+	public static WebElement closeFlightAuditTrailwindow(WebDriver driver) {
+		// TODO Auto-generated method stub
+		/*Actions action = new Actions(driver);
+		action.moveToElement(IFlightNeo_Gantt.window_FlightAuditTrail(driver)).sendKeys(Keys.ESCAPE).build().perform();*/
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//span[text()='Audit Trail For Flight [FREF020]']//following-sibling::div[@class=\"ui-dialog-titlebar-buttonpane\"]/button[@title='Close']")));
+		element = driver.findElement(By.xpath("//span[text()='Audit Trail For Flight [FREF020]']//following-sibling::div[@class=\"ui-dialog-titlebar-buttonpane\"]/button[@title='Close']"));
+		return element;
+
+	}
+	public static void deleteAllAircraftEquipment(WebDriver driver, String afterAddingAircraftEquipment)
+			throws InterruptedException {
+		IFlightNeo_Gantt.selectFlightInGantt(driver, blankSpaceInGantt, "HOVER");
+		Thread.sleep(2000);
+		IFlightNeo_Gantt.selectFlightInGantt(driver, afterAddingAircraftEquipment, "RIGHTCLICK");
+		com.performAction(driver, link_ManageAircraftEquipment(driver), "click", "", "Manage Aircraft Equipment");
+		Thread.sleep(2000);
+		com.performAction(driver, checkBox_AllAircraftEqipment(driver), "click", "", "Equipment");
+		com.performAction(driver, buttonDeleteAllEquipment(driver), "click", "", "Delete equipment");
+		Thread.sleep(2000);
+		Actions action = new Actions(driver);
+		action.sendKeys(Keys.ENTER).perform();
+		action.dragAndDropBy(ManageAircraftPageTitle(driver), 0, 0).perform();
+		com.performAction(driver, button_saveManageAircraftEqipment(driver), "click", "", "Save");
+		action.sendKeys(Keys.ESCAPE).perform();
+	}
 }
 
 
-/*
- * public static boolean selectFlightLegDetails(WebDriver driver, String
- * flightImageLocation) { Screen scn = new Screen(); Pattern defaultFlight = new
- * Pattern(flightImageLocation); Match match = scn.exists(defaultFlight);
- * if(match!=null) { scn.doubleClick(); // Wait label_FlightDetails(driver);
- * htmlLib.logReport("Verify Flight Leg Detail Dialog Opens",
- * "Flight Leg Detail Dialog Opened", "INFO", driver, false); return true; }
- * else { htmlLib.logReport("Verify Flight Leg Detail Dialog Opens",
- * "Flight Leg Detail Dialog Does NOT Open", "FAIL", driver, true); return
- * false; } }
- */

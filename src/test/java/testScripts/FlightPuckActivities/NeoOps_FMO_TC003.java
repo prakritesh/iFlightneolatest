@@ -44,7 +44,7 @@ public class NeoOps_FMO_TC003 {
 				driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=31)
+	@Test(priority=33)
 	public void NeoOps_FMO_TC003_Test() throws Exception {
 		try {
 		// Collecting data from Excel and FlightImages Path

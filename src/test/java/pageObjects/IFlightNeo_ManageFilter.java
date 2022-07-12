@@ -516,6 +516,8 @@ public class IFlightNeo_ManageFilter {
 			comm.performAction(driver,txtBx_ForFilter(driver), "SET", "Aircraft subtype_32", "enter the name in the textbox to search for the filter name");
 			// click on the existing filter in the dropdown
 			comm.performAction(driver,list_AircraftSubtype32Element(driver, filter_name), "CLICK", "select existing filter from previous TC", "select existing filter from previous TC");
+			//wait few seconds to load filter 
+			Thread.sleep(4000);
 			// select dropdown for entity type
 			comm.performAction(driver,list_EntityType(driver), "CLICK", "entity type", "entity type");
 			// in dropdown for entity flight, select flight

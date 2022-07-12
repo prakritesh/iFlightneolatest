@@ -150,7 +150,7 @@ public class NeoOps_AAF_TC060_1 {
 		
 		        IFlightNeo_ManageFilter.deleteFilterFromTC001InManageFilter(driver,filter_name);
 		        
-		        if (!prposedNewReg.equalsIgnoreCase(null))
+		        if (prposedNewReg!=null)
 		        	
 		        {
 		        

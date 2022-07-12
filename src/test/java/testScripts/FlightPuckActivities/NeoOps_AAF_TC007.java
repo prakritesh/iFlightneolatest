@@ -81,15 +81,19 @@ public class NeoOps_AAF_TC007 {
 		com.performAction(driver, IFlightNeo_Gantt.btn_SearchButton(driver), "CLICK", "", "Click on search button");
 		//Hover on the aircraft displayed
 		IFlightNeo_Gantt.selectFlightInGantt(driver, aircraft_imagePath, "HOVER");
-		Screen scn2 = new Screen();//1st sep,21 , Moumita Sengupta
-		scn2.click();//1st sep,21 , Moumita Sengupta
+		//Screen scn2 = new Screen();//1st sep,21 , Moumita Sengupta
+		//scn2.click();//1st sep,21 , Moumita Sengupta
 		//Step 3: identify by using find flight option
 		IFlightNeo_Gantt.findFlightInGantt(driver, "" + flighNo, Date, departureAirport, arrivalAirport);
+		Thread.sleep(2000);
+		IFlightNeo_Gantt.findFlightInGantt(driver, "" + flighNo, Date, departureAirport, arrivalAirport);
+		
 		Thread.sleep(4000);//added on 23rd Feb,22
 		//Hover on the flight displayed
 		IFlightNeo_Gantt.selectFlightInGantt(driver, imagePath, "HOVER");
-		Screen scn3 = new Screen();//1st sep,21 , Moumita Sengupta
-		scn3.click();//1st sep,21 , Moumita Sengupta
+		Thread.sleep(5000);
+		//Screen scn3 = new Screen();//1st sep,21 , Moumita Sengupta
+		//scn3.click();//1st sep,21 , Moumita Sengupta
 		//Step 4: Identify flight by using key word Q
 		driver.findElement(By.xpath("//canvas[@id='chronos_overlayW1_gantt_placeholder_aircraftPaneWidgetui-gantt_holder']")).sendKeys("q");
 		//find_Flight(driver).click();
@@ -131,7 +135,9 @@ public class NeoOps_AAF_TC007 {
 	}
 	
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+		driver.manage().deleteAllCookies();
+		  Thread.sleep(7000);
 		Driver.tearDownTestExecution(driver);
 	}
 }

@@ -54,7 +54,7 @@ public class NeoOps_AAF_TC048 {
 		String AflighNo = CollectTestData.flightNumber;
 		String[] flightNo=AflighNo.split(",");
 		String flighNo = flightNo[0];
-		String flightDate = com.dateCalendarEntry(-1,0,0);
+		String flightDate = com.dateCalendarEntry(-2,0,0);
 		String messageDate= com.dateCalendarEntry(0,0,0);
 		String depCode = CollectTestData.origin;
 		String arrCode = CollectTestData.destination;
@@ -247,7 +247,9 @@ public class NeoOps_AAF_TC048 {
 	}
     
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+		driver.manage().deleteAllCookies();
+		  Thread.sleep(7000);
 		Driver.tearDownTestExecution(driver);
 	}
 	

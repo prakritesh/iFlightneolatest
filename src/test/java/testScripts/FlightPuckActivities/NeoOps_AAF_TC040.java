@@ -131,7 +131,7 @@ public class NeoOps_AAF_TC040 {
 			e.printStackTrace();
 		}
 	}
-	@Test(priority=29)
+	/*@Test(priority=29)
 	void login2() throws InterruptedException {
 		try {
 		String username2 = CollectTestData.userName.split(",")[1];
@@ -194,10 +194,13 @@ public class NeoOps_AAF_TC040 {
 			e.printStackTrace();
 			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 		}
-	}
+	}*/
 	
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+		driver.manage().deleteAllCookies();
+		  Thread.sleep(7000);
+
 		Driver.tearDownTestExecution(driver);
 	}
 

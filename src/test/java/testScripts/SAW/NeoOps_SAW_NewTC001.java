@@ -34,7 +34,7 @@ public class NeoOps_SAW_NewTC001 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=51)
+	@Test(priority=54)
 	public void login() throws Exception {
 
 		try {

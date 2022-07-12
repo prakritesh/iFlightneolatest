@@ -15,7 +15,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class IFlightNeo_LoginPage {
@@ -81,6 +80,9 @@ public class IFlightNeo_LoginPage {
      */
 	public static WebDriver launchApplication(String browserName, String url) {
         WebDriver driver = null;
+		/*
+		 * SelfHealingDriver driver = null; WebDriver delegate;
+		 */
         try {
 	        switch (browserName.toUpperCase()) {
 	        case "CHROME":
@@ -92,24 +94,23 @@ public class IFlightNeo_LoginPage {
 	            chromeOptions.merge(capabilities);
 	            WebDriverManager.chromedriver().setup();
 	            driver = new ChromeDriver();
+				/*
+				 * delegate = new ChromeDriver(); driver = SelfHealingDriver.create(delegate);
+				 */
 	            break;
-	        case "FIREFOX":
-	            FirefoxOptions ffOptions = new FirefoxOptions();
-	            ffOptions.addArguments("--headless");
-	            capabilities = new DesiredCapabilities();
-	            capabilities.setCapability(ChromeOptions.CAPABILITY, ffOptions);
-	            ffOptions.merge(capabilities);
-	            WebDriverManager.firefoxdriver().setup();
-	            driver = new FirefoxDriver();
-	            break;
-	        case "EDGE":
-	            WebDriverManager.edgedriver().setup();
-	            driver = new EdgeDriver();
-	            break;
-	        case "IE":
-	            WebDriverManager.iedriver().setup();
-	            driver = new InternetExplorerDriver();
-	            break;
+	            
+	            //Comment by Prakritesh - start
+			
+			  case "FIREFOX": FirefoxOptions ffOptions = new FirefoxOptions();
+			  ffOptions.addArguments("--headless"); capabilities = new
+			  DesiredCapabilities(); capabilities.setCapability(ChromeOptions.CAPABILITY,
+			  ffOptions); ffOptions.merge(capabilities);
+			  WebDriverManager.firefoxdriver().setup(); driver = new FirefoxDriver();
+			  break; case "EDGE": WebDriverManager.edgedriver().setup(); driver = new
+			  EdgeDriver(); break; case "IE": WebDriverManager.iedriver().setup(); driver =
+			  new InternetExplorerDriver(); break;
+			 
+	            //Comment by Prakritesh - end
 	        }
 	        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	        driver.manage().window().maximize();

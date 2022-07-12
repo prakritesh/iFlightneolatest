@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
+import pageObjects.IFlightNeo_SAW;
 import utilities.CollectTestData;
 import utilities.Driver;
 
@@ -43,16 +44,20 @@ public class NeoOps_AAF_New_TC001 {
 			String mode = "New Scenario";
 			int tabOpenCount = 4;
 
-			//Login
+			// Login
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+
+			// Verify and delete Local world Dashlet
+			IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
+			IFlightNeo_SAW.deleteAllLocalWorlds(driver);
+
 			// Opening the Gantt Screen and Finding the Flight
 			IFlightNeo_HomePage.selectGantt(driver);
 			// Open LWS Gantt 4 times
 			for (int index = 0; index < tabOpenCount; index++) {
 				IFlightNeo_Gantt.changeGanttMode(driver, mode);
 			}
-
 		}
 
 		catch (Exception e) {
@@ -64,7 +69,9 @@ public class NeoOps_AAF_New_TC001 {
 	}
 
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+	  driver.manage().deleteAllCookies();
+	  Thread.sleep(7000);
 		Driver.tearDownTestExecution(driver);
 	}
 

@@ -21,6 +21,7 @@ import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
 import pageObjects.IFlightNeo_ManageFilter;
 import pageObjects.IFlightNeo_MessageList;
+import pageObjects.IFlightNeo_SAW;
 import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
@@ -53,7 +54,7 @@ public class NeoOps_FMO_TC043_1 {
    		String password = CollectTestData.password;
    		String flightNo = CollectTestData.flightNumber;
    		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
-   		String flightDate = com.dateCalendarEntry(-4,0,0);
+   		String flightDate = com.dateCalendarEntry(-6,0,0);
    		String messageDate= com.dateCalendarEntry(0,0,0);
    		String depCode = CollectTestData.origin;
    		String arrCode = CollectTestData.destination;
@@ -98,16 +99,21 @@ public class NeoOps_FMO_TC043_1 {
    						
    					}
    					Thread.sleep(2000);
+   					
+   				// Verify and delete Local world Dashlet
+   					IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
+   					IFlightNeo_SAW.deleteAllLocalWorlds(driver);
+
    			IFlightNeo_HomePage.selectGantt(driver);
    			//IFlightNeo_HomePage.select_Newscenariomode(driver);
    			//Thread.sleep(5000);
    			// Switch to New Scenario mode in Gantt
    			if(IFlightNeo_Gantt.changeGanttMode(driver, "New Scenario")) {
-   				Thread.sleep(5000);
+   				Thread.sleep(8000);
    				System.out.println("In New Scenario Mode");
    				// Close Default LW
-   				BusinessFunctions.closeTab(driver, 0, false);
-   				Thread.sleep(3000);
+   				BusinessFunctions.closeTab(driver, 1, false);
+   				Thread.sleep(5000);
    				// Find Flight
    				IFlightNeo_Gantt.findFlightInGantt(driver, "" + flightNo, flightDate, depCode, arrCode);	
    				// Flight Detail

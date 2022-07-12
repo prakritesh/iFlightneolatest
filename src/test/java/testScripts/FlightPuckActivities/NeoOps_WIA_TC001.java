@@ -18,6 +18,7 @@ import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
 import pageObjects.IFlightNeo_ManageFilter;
 import pageObjects.IFlightNeo_MessageList;
+import pageObjects.IFlightNeo_SAW;
 import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
@@ -106,13 +107,16 @@ public class NeoOps_WIA_TC001 {
 					Thread.sleep(2000);
 					
 		
-		
+					// Verify and delete Local world Dashlet
+					IFlightNeo_HomePage.selectSeasonalAwarenessWindow(driver);
+					IFlightNeo_SAW.deleteAllLocalWorlds(driver);
+
 		IFlightNeo_HomePage.selectGantt(driver);
 		htmlLib.logReport("Gantt Screen Opened", "Gantt Screen Open success", "Pass", driver, true);
 		IFlightNeo_HomePage.select_Newscenariomode(driver);
-		Thread.sleep(5000);
+		Thread.sleep(8000);
 		// Close Default LW
-		BusinessFunctions.closeTab(driver, 0, false);
+		BusinessFunctions.closeTab(driver, 1, false);
 		Thread.sleep(3000);
 		Screen scn = new Screen();
         scn.mouseMove(500, 500);
@@ -210,8 +214,9 @@ public class NeoOps_WIA_TC001 {
 		 comm.performAction(driver, IFlightNeo_Gantt.changeListExpand(driver), "click", "", "Clicked on change list details");
 		 //Wait for the visibility of change list
 		 IFlightNeo_Gantt.changelistdetails(driver);
-		 //Close the Change list 
-		 
+		
+		//Close change list 
+			comm.performAction(driver, IFlightNeo_HomePage.closeChangeList(driver), "click", "", "Clicked on Close button of change list details");
 		
 
         //publish local world

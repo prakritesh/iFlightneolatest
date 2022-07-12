@@ -35,7 +35,7 @@ public class NeoOps_MTCE_TC035 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=50)
+	@Test(priority=52)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data
@@ -43,7 +43,8 @@ public class NeoOps_MTCE_TC035 {
 			String password = CollectTestData.password;
 			String activityIDMISC = "102";
 			String station = "AUH";
-			String imageOfItemCreated = System.getProperty("user.dir") + "\\TestData\\NeoOps_MTCE_TC035\\MiscActivity.PNG";
+			String imageOfItemCreated = System.getProperty("user.dir")
+					+ "\\TestData\\NeoOps_MTCE_TC035\\MiscActivity.PNG";
 
 			// Login as Admin role
 			IFlightNeo_LoginPage.login(driver, username, password);
@@ -54,9 +55,9 @@ public class NeoOps_MTCE_TC035 {
 			// Right click on the empty area on the line of flying of an aircraft, select
 			// "Add Miscellaneous"
 			IFlightNeo_Gantt.addMiscellaneous(driver, activityIDMISC, station);
-			
-			//Verify Image Created
-			IFlightNeo_Gantt.verifyItemCreatedInGantt(driver,imageOfItemCreated);
+
+			// Verify Image Created
+			IFlightNeo_Gantt.verifyItemCreatedInGantt(driver, imageOfItemCreated);
 		}
 
 		catch (Exception e) {

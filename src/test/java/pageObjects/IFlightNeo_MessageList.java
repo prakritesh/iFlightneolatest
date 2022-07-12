@@ -740,6 +740,33 @@ public class IFlightNeo_MessageList {
 	}
 	
 	/**
+	 * scroll and view details in the search result grid
+	 * 
+	 * @param driver
+	 */
+	public static void scrollAndViewelement(WebDriver driver, int tabnumber) {
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		WebElement Element = driver.findElements(By.xpath("//td[contains(@aria-describedby,'GridActions')]")).get(20);
+		js.executeScript("arguments[0].scrollIntoView();", Element);
+		Element.click();
+	
+		// click on the button
+		com.performAction(driver,btn_dropdown(driver, tabnumber), "CLICK", "click on DROPDOWN button", "click on DROPDOWN button");
+		
+		try {
+			Thread.sleep(2000);
+		}
+		catch (Exception e) {
+			
+		}
+		
+		// click on the EDIT button
+		com.performAction(driver,btn_ViewDetails(driver, tabnumber), "CLICK", "click on EDIT button", "click on EDIT button");
+		
+	}
+	
+	/**
 	 * get the "button" to open the dropdown for an element in the search result grid
 	 * 
 	 * @param driver

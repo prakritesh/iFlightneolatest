@@ -41,7 +41,7 @@ public class NeoOps_AAF_TC057 {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority=33)
+	@Test(priority=31)
 	//script is refactored on 21st jan,22 to achieve better performance
 	public void NeoOps_AAF_TC057_Test() throws Exception {
 		try {

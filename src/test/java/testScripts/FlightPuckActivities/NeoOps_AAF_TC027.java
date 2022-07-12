@@ -98,7 +98,10 @@ public class NeoOps_AAF_TC027 {
 		
 	
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+		driver.manage().deleteAllCookies();
+		  Thread.sleep(7000);
+
 		Driver.tearDownTestExecution(driver);
 	}
 }
