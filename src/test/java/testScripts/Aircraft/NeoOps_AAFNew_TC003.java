@@ -37,7 +37,7 @@ public class NeoOps_AAFNew_TC003 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=56)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data

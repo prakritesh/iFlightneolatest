@@ -49,14 +49,14 @@ public class NeoOps_AAF_TC067 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-    @Test
+    @Test(priority=42)
    	public void mainMethod() throws Exception {
    		// Collect Test Data
    		String username = CollectTestData.userName;
    		String password = CollectTestData.password;
    		String flightNo = CollectTestData.flightNumber;
    		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
-   		String flightDate = com.dateCalendarEntry(-23,0,0);
+   		String flightDate = com.dateCalendarEntry(-1,0,0);
    		String messageDate= com.dateCalendarEntry(0,0,0);
    		String depCode = CollectTestData.origin;
    		String arrCode = CollectTestData.destination;
@@ -65,7 +65,7 @@ public class NeoOps_AAF_TC067 {
    		String selectedFlightImg = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_NoOOOITime.PNG";
    		String actualOutTimeImg = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_ActualOutTime.PNG";
    		String actualOffTimeImg = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_ActualOffTime.PNG";
-   		String returnlegImg= System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"A_1.PNG";
+   		String returnlegImg= System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"A_3.PNG";
    		String newlegImg= System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_Newleg.PNG";
    		String OverflyedImg=System.getProperty("user.dir")+"\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_Overfly.PNG";
 
@@ -185,7 +185,7 @@ public class NeoOps_AAF_TC067 {
    				Actions action1 = new Actions(driver);
    				action1.moveToElement(IFlightNeo_HomePage.menuOption_Reroutestationset(driver)).build().perform();
    				com.performAction(driver, IFlightNeo_HomePage.menuOption_Reroutestationset(driver),"SET", reroutestation, "Setting diverted station");
-   				com.performAction(driver, IFlightNeo_HomePage.menuOption_Rerouteselect(driver), "Click", "",
+   				com.performAction(driver, IFlightNeo_HomePage.menuOption_Rerouteselect(driver,reroutestation), "Click", "",
 						"Clicking on selected Diverted station");
    				String divertedflightlegscharrTime = bizCom.updateDate(actOutTime, 1, 00);
    				String createdFlightLegSchdepTime = bizCom.updateDate(actOutTime, 2, 00);
@@ -445,10 +445,10 @@ public class NeoOps_AAF_TC067 {
 
 
        
-   	/*@AfterMethod
+   	@AfterMethod
    	public void closeTest() {
    		Driver.tearDownTestExecution(driver);
-   	}*/
+   	}
    	
    	/**
 	 * Method to update Out, Off, On, In time in flight leg details dialog
@@ -495,7 +495,7 @@ public class NeoOps_AAF_TC067 {
 	    	return true;
     	}
     	catch (Exception e) {
-    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e.getMessage(), "FATAL", driver, true);
+    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e, "Fail", driver, true);
 			e.printStackTrace();
 			return false;
 		}

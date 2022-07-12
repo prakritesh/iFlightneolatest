@@ -40,7 +40,7 @@ public class NeoOps_AAF_TC040 {
 		String url = CollectTestData.url;
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
-	
+	@Test(priority=28)
 	public void mainMethod() throws Exception {
 		try {
 		// Collect Test Data
@@ -51,7 +51,7 @@ public class NeoOps_AAF_TC040 {
 		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
 		departureAirport = CollectTestData.origin;
 		arrivalAirport = CollectTestData.destination;
-		imagePath = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_2.PNG";
+		imagePath = System.getProperty("user.dir") + "\\TestData\\NeoOps_VerifyFlightPucks\\EY"+flightNo+"_1.PNG";
 		String filter_name;
 		
 		// Login
@@ -131,7 +131,7 @@ public class NeoOps_AAF_TC040 {
 			e.printStackTrace();
 		}
 	}
-	
+	/*@Test(priority=29)
 	void login2() throws InterruptedException {
 		try {
 		String username2 = CollectTestData.userName.split(",")[1];
@@ -192,11 +192,15 @@ public class NeoOps_AAF_TC040 {
 		{
 			System.out.println("The exception occured for this TC is"+e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 		}
-	}
+	}*/
 	
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+		driver.manage().deleteAllCookies();
+		  Thread.sleep(7000);
+
 		Driver.tearDownTestExecution(driver);
 	}
 

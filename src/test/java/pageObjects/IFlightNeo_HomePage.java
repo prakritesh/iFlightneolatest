@@ -1,3 +1,4 @@
+
 package pageObjects;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class IFlightNeo_HomePage {
 	public static CommonLibrary com = new CommonLibrary();
 	private static WebElement element = null;
 	private static By locator;
+	private static By locator1,locator2;
 	private static WebDriverWait wait;
 	static int rows,popupappear;
 
@@ -575,9 +577,7 @@ public class IFlightNeo_HomePage {
 
 	public static WebElement btn_CloseFlightDetailsWindow(WebDriver driver) {
 		wait = new WebDriverWait(driver, 60);
-		List<WebElement> Allclose_button = driver.findElements(By.xpath("//div[contains(@class,'ui-dialog-titlebar')]//button[@title='Close']"));
-		// The webelement list size changed in any of the recent release to 83 from 82 , hence changed that on 1st feb,22
-		WebElement close_button=Allclose_button.get(Allclose_button.size()-83);
+		WebElement close_button = driver.findElement(By.xpath("//span[contains(text(),'-Flight Leg Details   [FFL001]')]/following-sibling::div/button"));
 		wait.until(ExpectedConditions.visibilityOf(close_button));
 		return close_button;
 	}
@@ -780,7 +780,7 @@ public class IFlightNeo_HomePage {
 		geographicaldiscontinuity(driver);
 		confirm_DeleteFlightPopup(driver);
 		Yes_DeleteFlight(driver).click();
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		//modified below piece of code on 24th Jan,22 in order to avoid extra wait after deleting flight
 		if(driver.findElement(By.xpath("//span[text()='Rule Warning']")).isDisplayed())
 		{
@@ -1540,6 +1540,20 @@ public class IFlightNeo_HomePage {
         element = driver.findElement(By.xpath("//button[contains(text(),'Publish')]"));
         return element;
 	}
+	
+	/******************************************************************************************************************
+	 * Description	: When publish option is selected 
+	 * @param 		: driver
+	 * @return		: element
+	 ******************************************************************************************************************/
+	public static WebElement btn_Publishinautooff(WebDriver driver){
+		wait=new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@ng-if='toShowChangePublishReason']//button[contains(text(),'Publish')]")));
+        element = driver.findElement(By.xpath("//div[@ng-if='toShowChangePublishReason']//button[contains(text(),'Publish')]"));
+        return element;
+	}
+
+	
 
 
 	 public static WebElement container_swapList(WebDriver driver){
@@ -1650,6 +1664,15 @@ public class IFlightNeo_HomePage {
 		Thread.sleep(2000);
 		
 		
+	}
+	private static WebElement button_Publish(WebDriver driver) {
+		// TODO Auto-generated method stub
+		return driver.findElement(By.xpath("//button[text()='Publish']"));
+	}
+
+	private static WebElement confirm_forcepublish(WebDriver driver) {
+		// TODO Auto-generated method stub
+		return driver.findElement(By.xpath("//button[@ng-click='forcePublish()']"));
 	}
 
 	private static WebElement btn_Yespublishsim(WebDriver driver) {
@@ -1947,6 +1970,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		return element;
 	}
 	
+	
 	// The webelement position in the list changed in 2nd Feb release , hence changed that on 4th Feb,22 & created this new method
 	public static WebElement btn_CloseFlightmessagelist(WebDriver driver) {
 		// TODO Auto-generated method stub
@@ -2111,7 +2135,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 		
 	}
 
-	public static WebElement menuOption_Rerouteselect(WebDriver driver) {
+	public static WebElement menuOption_Rerouteselect(WebDriver driver, String reroutestation) {
 		// TODO Auto-generated method stub
 		wait = new WebDriverWait(driver,300);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[text()='" + reroutestation + "']"))));
@@ -2189,7 +2213,7 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 	public static WebElement closeChangeList(WebDriver driver) {
 		// TODO Auto-generated method stub
 		wait = new WebDriverWait(driver, 120);
-		locator = By.xpath("(//span[text()='Change List'])[1]/following-sibling::div/butt");
+		locator = By.xpath("(//span[text()='Change List'])[1]/following-sibling::div/button");
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 		
 		return driver.findElement(locator);
@@ -2261,9 +2285,63 @@ public static WebElement mainMenu_Hub(WebDriver driver) {
 			htmlLib.logReport("Verify that as the roles are removed now those are not available in the Assign Role dropdown", userRole+" Roles are not available", "PASS", driver, true);
 		}
 	}
+	
+
+	public static void confirmChangeforAutoof(WebDriver driver) {
+		// TODO Auto-generated method stub
+		wait = new WebDriverWait(driver, 30);
+		locator1 = By.xpath("//button[contains(text(),'ForcePublish')]");
+		locator2 = By.xpath("//span[contains(text(),'YES')]");
+		try
+		{
+		wait.until(ExpectedConditions.elementToBeClickable(locator1));
+		driver.findElement(locator1).click();
+		}
+		catch(Exception e3)
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(locator2));
+			driver.findElement(locator2).click();
+		}
+        
+        
+        try
+		  {
+			  final List<WebElement> list_Reason = driver.findElements(By.xpath("//table[@class='table table-bordered table-responsive']/tbody//td[2]"));
+	   	         // Select Global Reason
+	   	         list_Reason.get(0).click();
+	   	         Thread.sleep(1000);
+	   	         // Filter Reason
+	   	         com.performAction(driver, txtBx_Reason(driver), "SET", "ATC", "Reason as ATC");
+	   	         list_ReasonResult(driver).click();
+	   	         // Publish
+	   	         com.performAction(driver,btn_Publishinautooff(driver), "Click", "", "Publish Button");
+	   	         Thread.sleep(4000L);
+		  }
+		  
+		  catch (Exception e6)
+		  
+		  {
+			  System.out.println("No change pop-up appeared");
+		  }
+        
+		
+		
+		
+	}
+
+	public static WebElement Flight_remarks(WebDriver driver) {
+		// TODO Auto-generated method stub
+		
+		wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h4[text()='Remarks']/following-sibling::textarea"))));
+		WebElement remarks = driver.findElement(By.xpath("//h4[text()='Remarks']/following-sibling::textarea"));
+		return remarks ;
+
+	}
 
 	
 }
+
 
 
 

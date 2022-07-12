@@ -8,7 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.epam.healenium.SelfHealingDriver;
+
 
 import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
@@ -37,7 +37,7 @@ public class NeoOps_RND_TC065_1 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=53)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data

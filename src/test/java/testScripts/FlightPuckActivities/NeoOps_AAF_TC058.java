@@ -45,7 +45,7 @@ public class NeoOps_AAF_TC058 {
 	}
 	
 	@SuppressWarnings("unused")
-	@Test
+	@Test(priority=34)
 	public void NeoOps_AAF_TC058_Test2() throws Exception 
 	{      try
 	          {
@@ -95,13 +95,6 @@ public class NeoOps_AAF_TC058 {
 			IFlightNeo_HomePage.selectGantt(driver);
 			driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
 		 //Opening the Gantt Screen and Finding the Flight
-		// IFlightNeo_HomePage.selectGantt(driver);
-		 //IFlightNeo_Gantt.findFlightInGantt(driver, flighNo[0], Date[0], departureAirport[0], arrivalAirport[0]);
-		 //WebElement aircraft=driver.findElement(By.xpath("//li[@title='Find Aircraft']"));
-		 //wait = new WebDriverWait(driver, 60);
-		 //wait.until(ExpectedConditions.visibilityOf(aircraft));
-		 //aircraft.click();
-		 
 		 htmlLib.logReport("Gantt Screen Opened", "Gantt Screen Open success", "Pass", driver, true);
 		 //calculate date range for customize zoom
 		 newdate_zoom=IFlightNeo_Gantt.calculatecustomized_Zoomdate(driver,date_zoom);
@@ -144,39 +137,7 @@ public class NeoOps_AAF_TC058 {
 			scn.keyUp(Key.CTRL);
 			Pattern Flight4_color = new Pattern(img_flight4_color);
 			scn.rightClick(Flight4_color.similar(0.77));
-		 //Scrolling down or up for next flight trip
-		 /*int scroll_cnt=45;
-		 for(int i=0; i<scroll_cnt;i++) 
-		 {
-		  scn.wheel(Button.WHEEL_UP, 3);		  
-		  Pattern Flight3 = new Pattern(img_flight3);
-		  Match m = scn.exists(Flight3.similar(0.97));
-		  if(m!=null) 
-		  {   scn.wheel(Button.WHEEL_UP, 1);
-			  scn.keyDown(Key.CTRL);  
-			  try 
-			  {		
-				  	// If flight image found with flight number
-				  	Pattern Flight4 = new Pattern(img_flight4);
-					scn.dragDrop(Flight3.similar(0.97).targetOffset(-35,0), Flight4.targetOffset(0, 10));
-					scn.keyUp(Key.CTRL);
-					Pattern Flight4_color = new Pattern(img_flight4_color);
-					scn.rightClick(Flight4_color.similar(0.95));
-			  } 
-			  catch (FindFailed e) 
-			  {
-				  	// If flight image found without flight number
-					Pattern Flight4 = new Pattern(img_flight4);
-					scn.dragDrop(Flight3.similar(0.97).targetOffset(-35,0), Flight4.targetOffset(0, 10));
-					scn.keyUp(Key.CTRL);
-					Pattern Flight4_color = new Pattern(img_flight4_color);
-					scn.rightClick(Flight4_color.similar(0.95));
-				}
-			  htmlLib.logReport("Selected multiple flights and right clicked", "Selected multiple flights and right clicked success", "Pass", driver, true);
-			  scn.keyUp(Key.CTRL);
-			  break; 
-		  }
-		 }*/
+		 
 			 htmlLib.logReport("Selected multiple flights and right clicked", "Selected multiple flights and right clicked success", "Pass", driver, true);
 			  scn.keyUp(Key.CTRL);
 			  
@@ -188,7 +149,11 @@ public class NeoOps_AAF_TC058 {
 		 //Identifying the flight using images and performing double mouse click
 		 scn.wait(Flight1, 9000);
 		 scn.doubleClick(Flight1);
+		//wait till screenshot is taken perfectly 
+		 Thread.sleep(5000);
 		 htmlLib.logReport("Flight details open", "Aircraft registration screen shot taken", "Pass", driver, true);
+		 //wait till screenshot is taken perfectly 
+		 Thread.sleep(3000);
 		 //gets aircraft registration of first flight after swap
 		 String aircraftRegistrationafter=IFlightNeo_HomePage.AfterreadAircraftReg(driver);
 		 comm.performAction(driver, IFlightNeo_HomePage.btn_CloseFlightDetailsWindow2ndsearch(driver), "click", "", "Closed the flight details");
@@ -223,16 +188,17 @@ public class NeoOps_AAF_TC058 {
 	{
 		System.out.println("The exception occured for this TC is"+e);
 		e.printStackTrace();
+		htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);
 		
 	}
 	 }
 	
-	@AfterMethod
+	/*@AfterMethod
 	public void closeTest() {
 
 		Driver.tearDownTestExecution(driver);
 
 	}
-	
+	*/
 }
 

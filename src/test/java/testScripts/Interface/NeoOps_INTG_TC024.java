@@ -45,7 +45,7 @@ public class NeoOps_INTG_TC024 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=19)
+	@Test(priority=20)
 	public void login() throws Exception {
 		try {
 			String username = CollectTestData.userName;
@@ -79,11 +79,11 @@ public class NeoOps_INTG_TC024 {
 			
 			//  remove the aircraft registration
 			IFlightNeo_EditFlight.removeACReg(driver, 2);
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 
 			// click the SAVE button
 			IFlightNeo_EditFlight.saveChangesACRemoval(driver);
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 
 			// click on the OK button to close the Edit Flight Popup
 			IFlightNeo_EditFlight.click_EditFlightPopupOK(driver);

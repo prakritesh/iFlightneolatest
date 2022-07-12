@@ -45,7 +45,7 @@ public class NeoOps_INTG_TC014 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=15)
+	@Test(priority=16)
 	public void login() throws Exception {
 		try {
 			String Image_Path_Filtered_Flight = System.getProperty("user.dir")

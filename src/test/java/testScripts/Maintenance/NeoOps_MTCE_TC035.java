@@ -1,4 +1,4 @@
-package testScripts.FlightPuckActivities;
+package testScripts.Maintenance;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +35,7 @@ public class NeoOps_MTCE_TC035 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=52)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data
@@ -63,6 +63,7 @@ public class NeoOps_MTCE_TC035 {
 		catch (Exception e) {
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e.getMessage(), "Fail", driver, true);
 
 		}
 

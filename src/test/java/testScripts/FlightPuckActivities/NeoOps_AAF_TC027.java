@@ -32,8 +32,9 @@ public class NeoOps_AAF_TC027 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 	
-	@Test(priority=26)
+	@Test(priority=27)
 	public void mainMethod() throws Exception {
+		try {
 		// Collect Test Data
 		String username = CollectTestData.userName;
 		String password = CollectTestData.password;
@@ -81,11 +82,26 @@ public class NeoOps_AAF_TC027 {
 					htmlLib.logReport("Verify Background Colour of Local World", "Background Colour is NOT Pink", "FAIL", driver, true);
 				}
 			}
+	
+		}
+		
+		}
+		
+		catch(Exception e)
+		
+		{
+			System.out.println("The exception occured for this TC is"+e);
+			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e, "Fail", driver, true);	
 		}
 	}
+		
 	
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+		driver.manage().deleteAllCookies();
+		  Thread.sleep(7000);
+
 		Driver.tearDownTestExecution(driver);
 	}
 }

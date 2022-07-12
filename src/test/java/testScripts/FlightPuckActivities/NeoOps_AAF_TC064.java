@@ -46,14 +46,14 @@ public class NeoOps_AAF_TC064 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-    @Test
+    @Test(priority=39)
    	public void mainMethod() throws Exception {
    		// Collect Test Data
    		String username = CollectTestData.userName;
    		String password = CollectTestData.password;
    		String flightNo = CollectTestData.flightNumber;
    		String[] flightNoforfilter = CollectTestData.flightNumber.split(",", 1);
-   		String flightDate = com.dateCalendarEntry(-11,0,0);
+   		String flightDate = com.dateCalendarEntry(-3,0,0);
    		String messageDate= com.dateCalendarEntry(0,0,0);
    		String depCode = CollectTestData.origin;
    		String arrCode = CollectTestData.destination;
@@ -144,19 +144,7 @@ public class NeoOps_AAF_TC064 {
    				
    				
    				
-   				// Flight Detail
-   				/*if(IFlightNeo_Gantt.selectFlightInGantt(driver, actualOutTimeImg, "DoubleClick") && proceed) {
-   					// Update Off time
-   					String estOffTime = bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_offEstTime");
-   					String actOffTime = bizCom.updateDate(estOffTime, 0, 1);
-   					if(updateOOOITime(driver, "Off Time", actOffTime, "")) {
-   						Thread.sleep(2000);
-   						System.out.println(actOffTime);
-   					}
-   				}
-   				else {
-   					proceed = false;
-   				}*/
+   				
    				
    				Screen scn=new Screen();
    			     scn.hover();
@@ -171,12 +159,21 @@ public class NeoOps_AAF_TC064 {
    				
   
    				String actgroundreturnTime = bizCom.updateDate(actOutTime, 0, 50);
-   				String revisedouttime = bizCom.updateDate(actOutTime, 1, 00);
+   				String revisedouttime = bizCom.updateDate(actOutTime, 2, 00);
    				String revisedintime = bizCom.updateDate(actOutTime, 6, 00);
    				com.performAction(driver, IFlightNeo_HomePage.groundReturn_timeforRamp(driver),"SET", actgroundreturnTime, "Setting groundreturn time");
+   				Thread.sleep(2000);
    				com.performAction(driver, IFlightNeo_HomePage.Revisedout_timeforRamp(driver),"SET", revisedouttime, "Setting Revised Out time");
+   				Thread.sleep(2000);
    				com.performAction(driver, IFlightNeo_HomePage.Revisedin_timeforRamp(driver),"SET", revisedintime, "Setting Revised In time");
+   				Thread.sleep(2000);
    				com.performAction(driver, IFlightNeo_HomePage.Flight_Suffix(driver),"SET", "A", "Setting Flight Suffix for the returned flight");
+   				Thread.sleep(2000);
+   				com.performAction(driver, IFlightNeo_HomePage.Flight_remarks(driver),"SET", "Testing Ramp Return", "Setting Remarks for the flight");
+   				Thread.sleep(2000);
+   				String HistoryContent = IFlightNeo_Gantt.checkHistorycontent(driver);
+   				htmlLib.logReport("Validate the History Content", "The history content is:" +HistoryContent, "INFO", driver, true);
+   			
    				com.performAction(driver, IFlightNeo_HomePage.saveoption_FlightReturnContinue(driver), "Click", "",
 						"Clicking on Save button of flight return & continue");
    				Actions action = new Actions(driver);
@@ -198,17 +195,23 @@ public class NeoOps_AAF_TC064 {
    					Thread.sleep(1000);
    					
    				}
-   				  
+   				// wait statement to view the visibiliy of GANTT
+   				//IFlightNeo_Gantt.waituntillflightpuckdisplayed(driver);
+   				Thread.sleep(7000);
+   				htmlLib.logReport("Now Gantt have 2 flight pucks", "Gantt has 2 flight pucks", "INFO", driver, true);	
+   				Screen scn1=new Screen();
+   				scn1.hover();
    				if(IFlightNeo_Gantt.selectFlightInGantt(driver, returnlegImg, "DoubleClick"))
 						
 					{
 						System.out.println("image found");	
 						String Fltstatus = bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_flightStatus");
 						String Opsstatus= bizCom.readDisabledValuesInFlightLegDetails(driver, "flightLegDetailsWidgetModel_deptStatus");
+						String flightSuffix= driver.findElements(By.xpath("//input[contains(@id,'flightIdComponent')]")).get(2).getAttribute("value");
 						
-						if (Fltstatus.equalsIgnoreCase("OFBL")&& Opsstatus.equalsIgnoreCase("RR"))
+						if (Fltstatus.equalsIgnoreCase("OFBL")&& Opsstatus.equalsIgnoreCase("RR")&&flightSuffix.equalsIgnoreCase("A"))
 						{
-						htmlLib.logReport("Open flight leg details Screen", "Flight leg details Open success & the Ground Return Flight Status is:"+Fltstatus+"ops status is:" +Opsstatus, "Pass", driver, true);	
+						htmlLib.logReport("Open flight leg details Screen", "Flight leg details Open success & the Ground Return Flight Status is: "+Fltstatus+"ops status is: " +Opsstatus+"Flight Suffix is "+flightSuffix, "Pass", driver, true);	
 						}
 						
 						else
@@ -272,10 +275,10 @@ public class NeoOps_AAF_TC064 {
    				
    	}
        
-   	/*@AfterMethod
+   	@AfterMethod
    	public void closeTest() {
    		Driver.tearDownTestExecution(driver);
-   	}*/
+   	}
    	
    	/**
 	 * Method to update Out, Off, On, In time in flight leg details dialog
@@ -322,8 +325,9 @@ public class NeoOps_AAF_TC064 {
 	    	return true;
     	}
     	catch (Exception e) {
-    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e.getMessage(), "FATAL", driver, true);
+    		htmlLib.logReport("Verify Update Complete", "Unable to Update due to "+e, "Fail", driver, true);
 			e.printStackTrace();
+			
 			return false;
 		}
     }

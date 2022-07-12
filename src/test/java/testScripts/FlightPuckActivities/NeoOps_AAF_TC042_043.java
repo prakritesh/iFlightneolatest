@@ -34,7 +34,7 @@ public class NeoOps_AAF_TC042_043 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 	
-	@Test (priority=1)
+	@Test
 	public void mainMethod() throws Exception {
 		// Collect Test Data
 		String username = CollectTestData.userName;

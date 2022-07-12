@@ -1,4 +1,4 @@
-package testScripts.FlightPuckActivities;
+package testScripts.Maintenance;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,14 +34,16 @@ public class NeoOps_MTCE_TC029 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=51)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
-			String imageOfItemCreated = System.getProperty("user.dir")
-					+ "\\TestData\\NeoOps_MTCE_TC029\\Unservicable.PNG";
+			String imageOfItemCreated = System.getProperty("user.dir")+ "\\TestData\\NeoOps_MTCE_TC029\\Unservicable.PNG";
+
+
+
 
 			// Login as Admin role
 			IFlightNeo_LoginPage.login(driver, username, password);
@@ -49,18 +51,26 @@ public class NeoOps_MTCE_TC029 {
 			// Navigate to Gantt
 			// Opening the Gantt Screen and Finding the Flight
 			IFlightNeo_HomePage.selectGantt(driver);
+
+			//Right click on the empty area on the line of flying of an aircraft, select "Add Miscellaneous"
+			IFlightNeo_Gantt.addUnservicable(driver );
+			
+			// Verify Image Created
+			IFlightNeo_Gantt.verifyItemCreatedInGantt(driver, imageOfItemCreated);
+			
+
 			// Right click on the empty area on the line of flying of an aircraft, select
 			// "Add Miscellaneous"
 			IFlightNeo_Gantt.addUnservicable(driver);
 
 			// Verify Image Created
 			IFlightNeo_Gantt.verifyItemCreatedInGantt(driver, imageOfItemCreated);
-
 		}
 
 		catch (Exception e) {
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e.getMessage(), "Fail", driver, true);
 
 		}
 

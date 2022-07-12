@@ -37,7 +37,7 @@ public class NeoOps_AAF_TC001 {
 		 */
 	}
 
-	@Test(priority=24)
+	@Test(priority=54)
 	public void login() throws Exception {
 		try
 		{

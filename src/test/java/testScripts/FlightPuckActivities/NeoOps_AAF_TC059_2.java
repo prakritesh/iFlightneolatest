@@ -35,13 +35,13 @@ public class NeoOps_AAF_TC059_2 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=35)
 	public void mainMethod() throws Exception {
 		try {
 		// Collecting data from Excel and FlightImages Path
 		String username = CollectTestData.userName;
 		String password = CollectTestData.password;
-		String date = comm.dateCalendarEntry(1,0,0);//CollectTestData.flightDate;
+		String Date = CollectTestData.flightDate;
 //		String date_zoom = date;
 		String[] flightNo = CollectTestData.flightNumber.split(",", 4);
 		String departureAirport = CollectTestData.origin;
@@ -103,7 +103,7 @@ public class NeoOps_AAF_TC059_2 {
 			// Again finding the first trip flight to verify the aircraft registration change
 			// add wait to handle the pop-ups appearing while changing registration on 1st Feb,22
 			Thread.sleep(11000);
-			IFlightNeo_Gantt.findFlightInGantt(driver, "" + flightNo[0], date, departureAirport, arrivalAirport);
+			IFlightNeo_Gantt.findFlightInGantt(driver, "" + flightNo[0], Date, departureAirport, arrivalAirport);
 			Screen scn=new Screen();
 			 scn.hover();
 			scn.wait(Flight1, 9000);

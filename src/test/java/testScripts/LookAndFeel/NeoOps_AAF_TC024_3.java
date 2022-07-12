@@ -74,6 +74,7 @@ public class NeoOps_AAF_TC024_3 {
 		} catch (Exception e) {
 			System.out.println("The exception occured for this TC is" + e);
 			e.printStackTrace();
+			htmlLib.logReport("Status of Test Case", "Test Case Failed"+e.getMessage(), "Fail", driver, true);
 		}
 
 	}

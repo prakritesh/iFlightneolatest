@@ -15,7 +15,7 @@ import pageObjects.IFlightNeo_SAW;
 import utilities.CollectTestData;
 import utilities.Driver;
 
-public class NeoOps_AAFNew_TC001 {
+public class NeoOps_AAF_New_TC001 {
 
 	public utilities.ReportLibrary htmlLib = new utilities.ReportLibrary();
 	public utilities.CommonLibrary com = new utilities.CommonLibrary();
@@ -35,7 +35,7 @@ public class NeoOps_AAFNew_TC001 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=44)
 	public void login() throws Exception {
 		try {
 			// Collect Test Data
@@ -69,7 +69,9 @@ public class NeoOps_AAFNew_TC001 {
 	}
 
 	@AfterMethod
-	public void closeTest() {
+	public void closeTest() throws InterruptedException {
+	  driver.manage().deleteAllCookies();
+	  Thread.sleep(7000);
 		Driver.tearDownTestExecution(driver);
 	}
 

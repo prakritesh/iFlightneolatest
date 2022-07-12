@@ -15,7 +15,9 @@ import pageObjects.IFlightNeo_CancelledActivitiesList;
 import pageObjects.IFlightNeo_Gantt;
 import pageObjects.IFlightNeo_HomePage;
 import pageObjects.IFlightNeo_LoginPage;
+import pageObjects.IFlightNeo_ManageFilter;
 import pageObjects.IFlightNeo_MessageList;
+import utilities.BusinessFunctions;
 import utilities.CollectTestData;
 import utilities.Driver;
 
@@ -50,9 +52,11 @@ public class NeoOps_INTG_TC016 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test
+	@Test(priority=23)
 	public void login() throws Exception {
 		try {
+			String Image_Path_Filtered_Flight = System.getProperty("user.dir")
+					+ "\\TestData\\NeoOps_INTG_TC005\\SELECTED_FLIGHT.PNG";
 			String username = CollectTestData.userName;
 			String password = CollectTestData.password;
 			String flightNumber = CollectTestData.flightNumber;
@@ -60,6 +64,58 @@ public class NeoOps_INTG_TC016 {
 			IFlightNeo_LoginPage.login(driver, username, password);
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 			htmlLib.logReport("Login Functionality is success", "Login sucess", "Pass", driver, true);
+			
+			// open Manage Filter screen
+						//Moved the menuItem_ManageFilter(driver) method in IFlightNeo_ManageFilter Page object on 23rd Aug,21
+						IFlightNeo_HomePage.menuItem_ManageFilter(driver);
+						Thread.sleep(2000);
+						htmlLib.logReport("Main Filter Screen Opened", "Main Filter Screen Open success", "Pass", driver, true);
+
+						// apply filter for Flight
+						IFlightNeo_ManageFilter.addFilterForFlightNo(driver, flightNumber);
+						Thread.sleep(2000);
+
+						// close Manage Filter screen
+						IFlightNeo_ManageFilter.closeFilter(driver);
+						Thread.sleep(2000);
+						driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+						// in case there is a pop up, when closing the "Manage Filter" screen, then we
+						// are closing that popup
+						IFlightNeo_ManageFilter.btn_YesToOverrideChanges(driver);
+						Thread.sleep(2000);
+
+						// open Gantt
+						IFlightNeo_HomePage.selectGantt(driver);
+						Thread.sleep(2000);
+						driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+						// right click on Flight
+						if (IFlightNeo_Gantt.selectFlightInGantt(driver, Image_Path_Filtered_Flight, "RIGHTCLICK") == false) {
+							// Filtered flight could not be found. Test case failed.
+							Thread.sleep(2000);
+							htmlLib.logReport("Filtered flight could not be found. Test case failed",
+									"Filtered flight could not be found. Test case failed", "Fail", driver, true);
+
+							return;
+						}
+
+						// cancel flight
+						IFlightNeo_Gantt.cancelFlightFromGantt(driver);
+						Thread.sleep(2000);
+						driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+						// clear the applied filters
+						IFlightNeo_Gantt.clearFilter(driver);
+						Thread.sleep(2000);
+						driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+						// close Gantt
+						BusinessFunctions.closeTab(driver, 0, false);
+						Thread.sleep(2000);
+
+						
+
 
 			// open the "Cancelled Activities List" screen
 			IFlightNeo_HomePage.selectCancelledActivities(driver);

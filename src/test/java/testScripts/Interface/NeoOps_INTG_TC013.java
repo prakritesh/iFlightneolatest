@@ -43,7 +43,7 @@ public class NeoOps_INTG_TC013 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=21)
+	@Test(priority=22)
 	public void login() throws Exception {
 		try {
 			String username = CollectTestData.userName;

@@ -47,7 +47,7 @@ public class NeoOps_INTG_TC010 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=12)
+	@Test(priority=13)
 	public void login() throws Exception {
 		try {
 			String Image_Path = System.getProperty("user.dir") + "\\TestData\\NeoOps_INTG_TC010\\A6EIT.PNG";

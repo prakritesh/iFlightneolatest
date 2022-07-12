@@ -47,7 +47,7 @@ public class NeoOps_INTG_TC025 {
 		driver = IFlightNeo_LoginPage.launchApplication(browser, url);
 	}
 
-	@Test(priority=22)
+	@Test(priority=24)
 	public void login() throws Exception {
 		try {
 			String inputfile = System.getProperty("user.dir") + "\\TestData\\NeoOps_INTG_TC025\\"+System.currentTimeMillis()+".txt";
